@@ -1,0 +1,39 @@
+{
+  "name": "post-it",
+  "version": "0.0.1",
+  "description": "postit is a simple application that post notification to members of a group",
+  "main": "app.js",
+  "scripts": {
+    "start": "nodemon ./www",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Jchinonso/Checkpoint1-Post-IT.git"
+  },
+  "author": "johnson chinonso",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Jchinonso/Checkpoint1-Post-IT/issues"
+  },
+  "homepage": "https://github.com/Jchinonso/Checkpoint1-Post-IT#readme",
+  "dependencies": {
+    "bcrypt": "^1.0.2",
+    "body-parser": "^1.17.2",
+    "cookie-parser": "^1.4.3",
+    "debug": "^2.6.8",
+    "dotenv": "^4.0.0",
+    "express": "^4.15.3",
+    "express-session": "^1.15.3",
+    "morgan": "^1.8.2",
+    "passport": "^0.3.2",
+    "passport-local": "^1.0.0",
+    "passport-session": "^1.0.2",
+    "pg": "^6.2.4",
+    "pg-hstore": "^2.3.2",
+    "sequelize": "^4.1.0"
+  },
+  "devDependencies": {
+    "nodemon": "^1.11.0"
+  }
+}
