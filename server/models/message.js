@@ -1,11 +1,11 @@
 
-module.exports = function(sequelize, DataTypes){
-  var Message = sequelize.define('Message', {
+module.exports = (sequelize, DataTypes) => {
+  var Messages = sequelize.define('Messages', {
     content: {
       allowNull: false,
       type: DataTypes.STRING,
     },
-    groupId: {
+    creatorId: {
       allowNull: false,
       type: DataTypes.INTEGER,
     },
@@ -16,11 +16,11 @@ module.exports = function(sequelize, DataTypes){
   }, {
     classMethods: {
       associate: (models) => {
-        Message.belongsTo(models.Group, {
-          foreignKey: 'groupId'
+        Message.belongsTo(models.Users, {
+          foreignKey: 'creatorId'
         });
       }
     }
   });
-  return Message;
+  return Messages;
 };

@@ -1,27 +1,28 @@
+'use strict';
 module.exports = {
-  up(queryInterface, Sequelize) {
-    return queryInterface.createTable('Messages', {
+  up: function(queryInterface, Sequelize) {
+    return queryInterface.createTable('UserGroups', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      content: {
-        allowNull: false,
-        type: Sequelize.STRING
-      },
-       creatorId: {
+      userId: {
         type: Sequelize.INTEGER,
         references: {
           model: 'Users',
           key: 'id',
-          as: 'creatorId'
+          as: 'userId'
         }
       },
-      isRead: {
-        allowNull: false,
-        type: Sequelize.BOOLEAN
+      groupId: {
+        type: Sequelize.INTEGER,
+        references: {
+          model: 'Groups',
+          key: 'id',
+          as: 'groupId'
+        }
       },
       createdAt: {
         allowNull: false,
@@ -33,7 +34,7 @@ module.exports = {
       }
     });
   },
-  down(queryInterface) {
-    return queryInterface.dropTable('Messages');
+  down: function(queryInterface, Sequelize) {
+    return queryInterface.dropTable('UserGroups');
   }
 };

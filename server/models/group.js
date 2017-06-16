@@ -1,21 +1,25 @@
-'use strict';
-module.exports = function(sequelize, DataTypes) {
-  var Group = sequelize.define('Group', {
+
+module.exports = (sequelize, DataTypes) => {
+  var Groups = sequelize.define('Groups', {
     name: {
       allowNull: false,
-      type: DataTypes.STRING,
+      type: DataTypes.STRING
     },
+    description: {
+      allowNull: false,
+      type: DataTypes.STRING
+    }
   }, {
     classMethods: {
       associate: (models) => {
-        Group.hasMany(models.User, {
+        Groups.hasMany(models.UserGroups, {
           foreignKey: 'groupId',
         });
-        Group.hasMany(models.Message, {
+        Groups.hasMany(model.GroupMessages, {
           foreignKey: 'groupId',
         });
       }
     }
   });
-  return Group;
+  return Groups;
 };

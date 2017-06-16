@@ -3,8 +3,8 @@ const path = require('path');
 const Sequelize = require('sequelize');
 const dotenv = require('dotenv');
 
-const env = process.env.NODE_ENV || 'production';
-const config = require('../config/config.js')[env];
+const env = process.env.NODE_ENV || 'development';
+const config = require('../config/config')[env];
 
 const basename = path.basename(module.filename);
 

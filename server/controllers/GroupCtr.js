@@ -24,6 +24,22 @@ const GroupCtrl = {
   })
       
    },
+    
+    /** Add User To Group
+   * @param {Object} req Request Object
+   * @param {Object} res Response Object
+   * @returns {object} Returns User
+   */
+
+   addUser(req, res) {
+     const id = req.params.id;
+     db.Users.findOne({where:{groupId: id, username: req.body.username}}).then(user =>{
+       if(user){
+         return res.status(200).send({message:"User Already Belongs to Group"});
+       }
+       db.Users.save()
+     })
+    }
 }
  
 

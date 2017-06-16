@@ -1,7 +1,7 @@
 const bcrypt = require('bcrypt');
 
-module.exports = function(sequelize, DataTypes){
-  const User = sequelize.define('User', {
+module.exports = (sequelize, DataTypes) => {
+  const Users = sequelize.define('Users', {
     username: {
       allowNull: false,
       type: DataTypes.STRING,
@@ -14,43 +14,31 @@ module.exports = function(sequelize, DataTypes){
     password: {
       allowNull: false,
       type: DataTypes.STRING,
-    },
-    groupId: {
-      allowNull: false,
-      type: DataTypes.INTEGER,
     }
   }, {
     classMethods: {
       associate(models) {
-        User.belongsTo(models.Group, {
-          foreignKey: 'groupId',
-          onDelete: 'CASCADE',
+        User.hasMany(models.UserGroups, {
+          foreignKey: 'userId',
         });
+         User.hasMany(models.Messages, {
+          foreignKey: 'creatorId',
+        })
       }
     },
 
-    instanceMethods: {
-      validPassword(password) {
-        return bcrypt.compareSync(password, this.password);
-      },
-
-      hashPassword() {
-        this.password = bcrypt.hashSync(this.password, bcrypt.genSaltSync(8));
-      }
-    },
 
     hooks: {
-      beforeCreate(user) {
-        user.hashPassword();
+       beforeCreate: (user, options) => {
+        user.password = bcrypt.hashSync(user.password, bcrypt.genSaltSync(8));
       },
 
       beforeUpdate(user) {
-        /* eslint-disable no-underscore-dangle*/
         if (user._changed.password) {
           user.hashPassword();
         }
       }
     }
   });
-  return User;
+  return Users;
 };
