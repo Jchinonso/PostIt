@@ -13,12 +13,19 @@ module.exports = {
       },
       email: {
         allowNull: false,
-        unique: true,
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
       },
       password: {
         allowNull: false,
         type: Sequelize.STRING
+      },
+      groupId: {
+        type: Sequelize.INTEGER,
+        references: {
+          model: 'Group',
+          key: 'id',
+          as: 'groupId'
+        }
       },
       createdAt: {
         allowNull: false,
@@ -27,14 +34,10 @@ module.exports = {
       updatedAt: {
         allowNull: false,
         type: Sequelize.DATE
-      },
-      groupId: {
-        type: Sequelize.INTEGER,
-        allowNull: false
-      },
+      }
     });
   },
-  down(queryInterface) {
+  down(queryInterface, Sequelize) {
     return queryInterface.dropTable('Users');
   }
 };

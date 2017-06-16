@@ -13,8 +13,12 @@ module.exports = {
       },
        groupId: {
         type: Sequelize.INTEGER,
-        allowNull: false,
-       },
+        references: {
+          model: 'Group',
+          key: 'id',
+          as: 'groupId'
+        }
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE
