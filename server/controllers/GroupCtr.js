@@ -33,11 +33,23 @@ const GroupCtrl = {
 
    addUser(req, res) {
      const id = req.params.id;
-     db.Users.findOne({where:{groupId: id, username: req.body.username}}).then(user =>{
+     db.Users.findOne({where:{username: req.body.username}}).then(user =>{
        if(user){
-         return res.status(200).send({message:"User Already Belongs to Group"});
+         const newUserId = user.id;
+         db.UserGroups.findOrCreate(
+            {where: {userId: newUserId, groupId: id}, defaults:
+            {userId: newUserId,
+            groupId: id}})
+        .spread((userGroup, created) => {
+          if(!created){
+            return res.status(409).send({message: "user already exist"})
+          } else {
+            return res.status(201).send(userGroup)
+          }
+        })
        }
-       db.Users.save()
+     }).catch(e => {
+       return res.status(404).send({message: "This User does not exist"});
      })
     }
 }
