@@ -26,7 +26,7 @@ const UsersCtrl = {
  },
  
  /**
-   * signn - Log in a user
+   * signin - Log in a user
    * @param {Object} req Request Object
    * @param {Object} res Response Object
    * @returns {void} Returns void
@@ -40,14 +40,13 @@ const UsersCtrl = {
       .then( user => {
           if(user && helper.validatePassword(user, password)){
              res.status(200)
-                .send({message: "You have been loggedin successfully"});
+              .send({message: "You have been loggedin successfully"});
           } else {
             res.status(400)
-                  .send({message: "incorrect Email and password"});
-          } 
-      })
-         
-   }
+              .send({message: "incorrect Email and password"});
+            } 
+         }) 
+      }
 
 }
 
