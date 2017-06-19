@@ -5,19 +5,24 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false,
       type: DataTypes.STRING,
     },
-    creatorId: {
+    priority: {
+      allowNull: false,
+      type: DataTypes.STRING,
+    },
+    groupId: {
       allowNull: false,
       type: DataTypes.INTEGER,
     },
-    is_read: {
-      allowNull: false,
+    isRead: {
       type: DataTypes.BOOLEAN,
+      defaultValue: false
     }
   }, {
     classMethods: {
       associate: (models) => {
-        Message.belongsTo(models.Users, {
-          foreignKey: 'creatorId'
+        Messages.belongsTo(models.Groups, {
+          foreignKey: 'groupId',
+          onDelete: 'CASCADE'
         });
       }
     }
