@@ -2,10 +2,12 @@ import GroupCtrl from '../controllers/GroupCtr'
 
 const GroupRoutes = (router) => {
     router.route('/group')
-    .post(GroupCtrl.create);
+      .post(GroupCtrl.createGroup);
 
     router.route('/group/:id/user')
-    .post(GroupCtrl.addUser);
+      .post(GroupCtrl.addUserToGroup)
+      .get(GroupCtrl.retrieveGroupUsers);
+
 }
 
 export default GroupRoutes;
