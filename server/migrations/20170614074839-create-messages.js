@@ -11,17 +11,22 @@ module.exports = {
         allowNull: false,
         type: Sequelize.STRING
       },
-       creatorId: {
+      priority: {
+      allowNull: false,
+      type: Sequelize.STRING,
+     },
+      groupId: {
         type: Sequelize.INTEGER,
+        onDelete: 'CASCADE',
         references: {
-          model: 'Users',
+          model: 'Groups',
           key: 'id',
-          as: 'creatorId'
+          as: 'groupId'
         }
       },
       isRead: {
-        allowNull: false,
-        type: Sequelize.BOOLEAN
+        type: Sequelize.BOOLEAN,
+        defaultValue: false
       },
       createdAt: {
         allowNull: false,
