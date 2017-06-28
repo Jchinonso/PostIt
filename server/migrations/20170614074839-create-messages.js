@@ -8,12 +8,11 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       content: {
-        allowNull: false,
         type: Sequelize.STRING
       },
       priority: {
-      allowNull: false,
       type: Sequelize.STRING,
+      defaultValue: 'normal',
      },
       groupId: {
         type: Sequelize.INTEGER,
