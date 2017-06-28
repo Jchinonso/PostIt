@@ -1,4 +1,6 @@
-const bcrypt = require('bcrypt');
+import bcrypt  from 'bcrypt';
+import jwt from 'jsonwebtoken'
+
 
 module.exports = (sequelize, DataTypes) => {
   const Users = sequelize.define('Users', {
@@ -30,7 +32,7 @@ module.exports = (sequelize, DataTypes) => {
         user.password = bcrypt.hashSync(user.password, bcrypt.genSaltSync(8));
       },
 
-      beforeUpdate(user) {
+      beforeUpdate: (user) => {
         if (user._changed.password) {
           user.hashPassword();
         }
