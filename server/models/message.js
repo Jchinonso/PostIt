@@ -2,12 +2,11 @@
 module.exports = (sequelize, DataTypes) => {
   var Messages = sequelize.define('Messages', {
     content: {
-      allowNull: false,
       type: DataTypes.STRING,
     },
     priority: {
-      allowNull: false,
       type: DataTypes.STRING,
+      defaultValue: 'normal',
     },
     groupId: {
       allowNull: false,
