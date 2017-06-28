@@ -14,7 +14,7 @@ const GroupCtrl = {
      db.Groups.findOrCreate({
        where: {name: req.body.name}, 
        defaults: {
-         description: req.body.description
+         description: req.body.description,
         }})
         .spread((group, created) => {
           if(!created){
