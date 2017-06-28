@@ -1,9 +1,25 @@
 
 import db from '../models';
-import helper from './helper';
+import helper from './helper'
 
 
 const UsersCtrl = {
+
+  /**
+   * showUsers
+   * @desc gets details for all users
+   * @param {Object} req request object
+   * @param {Object} res response object
+   * @returns {void}
+   */
+  showUsers(req, res) {
+    db.Users.findAll({
+        attributes: ['id', 'username', 'email', 'createdAt', 'updatedAt']
+      })
+      .then(users => res.send({
+        users,
+      }));
+  },
 
   /**
    * signUp - Create a user
@@ -17,10 +33,10 @@ const UsersCtrl = {
        {username: req.body.username,
        password: req.body.password}})
   .spread((user, created) => {
-    if(!created){
-      return res.status(409).send({message: "user already exist"})
-    } else {
+    if(created){
       return res.status(201).send(user)
+    } else {
+      return res.status(409).send({message: "user already exist"})
     }
   })
  },
@@ -38,10 +54,9 @@ const UsersCtrl = {
 
     db.Users.findOne({where:{email}})
       .then( user => {
-          if(user && helper.validatePassword(user, password)){
-             res.status(200)
-              .send({message: "You have been loggedin successfully"});
-          } else {
+        if(user && helper.validatePassword(user, password)){
+          res.status(200).send({message: "You have been loggedin successfully"});
+        } else {
             res.status(400)
               .send({message: "incorrect Email and password"});
             } 
