@@ -9,15 +9,6 @@ The API has routes, each dedicated to a single task that uses HTTP response code
 
 The following features make up the PostIt Application Api:
 
-###### Authentication
-
-- It uses JSON Web Token (JWT) for authentication.  
-
-- It generates a token on successful login or account creation and returns it to the consumer.  
-
-- It verifies the token to ensures a user is authenticated to access protected endpoints.
-
-
 ###### Users
 
 - It allows users to be created.  
@@ -45,10 +36,10 @@ The following features make up the PostIt Application Api:
 EndPoint                        |   Functionality
 ------------------------------  |------------------------
 POST /api/user/signup           |   create users.
-POST /api/users/signin          |   Login user.
+POST /api/user/signin           |   Login user.
 GET /api/user                   |   get all users.
 POST /api/group                 |   creates group.
-POST /api/group/<groupid>/user  |   add created user to group.
-POST/api/group/<groupid>/message|   add message to group.
-GET /api/group/<groupid>/message|   get all created message
+POST /api/group/groupid/user    |   add created user to group.
+POST/api/group/groupid/message  |   add message to group.
+GET /api/group/groupid/message  |   get all created message
 
