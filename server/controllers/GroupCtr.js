@@ -12,7 +12,7 @@ const GroupCtrl = {
    */
   createGroup(req, res) {
      db.Groups.findOrCreate({
-       where: {name: req.body.name}, 
+       where: {name: req.body.name }, 
        defaults: {
          description: req.body.description,
         }})
@@ -22,7 +22,7 @@ const GroupCtrl = {
                message: "Group already exist"
               })}
                else {
-                 return res.status(200).send(group)
+                 return res.status(200).send({group, message:"Group successfully created"})
               }
             })
    },
