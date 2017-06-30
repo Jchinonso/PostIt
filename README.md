@@ -26,6 +26,46 @@ The following features make up the PostIt Application Api:
 
 - It ensures members of group can add and retrieve messages to group and from group 
 
-
 ## Hosted App on Heroku
-[Heroku
+[Heroku Link](https://postit-myapi.herokuapp.com/)
+
+---
+
+## Below are the API endpoints and their functions
+EndPoint                       |   Functionality
+------------------------------ |------------------------
+POST /api/user/signin          |   Logs a user in.
+POST /api/user/signup          |   Create a new user.            
+GET /api/user                  |   Get all users.
+POST /api/group                |   Creates a new group.
+POST /api/group/groupid/user   |   Add user to group.
+POST /api/group/groupid/message|   Add message to group.
+GET /api/group/groupid/message |   Get all messages that belongs to group.
+
+#### Routes
+* POST `/api/user/signup` Use this route to create an account. The following fields are required:
+  * `username` The first name of the new user
+  * `email`     Email address of the new user
+  * `password` A secure password
+
+* POST `/api/user/signin` Use this route to sign in to the application. The following fields are required:
+  * `email`     Email address of the new user
+  * `password` A secure password
+
+* POST `/api/group` Use this route to create a new group. The following fields are required:
+  * `name`  The title of the group
+  * `description`     A description of the purpose of the group
+
+* POST `/api/group/<groupId>/user` Use this route to add a user to a pre-existing group
+  * `username` The username of a user registered on the application
+  
+
+* POST `/api/group/<groupId>/message` Use this route to post a message to a group
+  * `content` The body of the message to be posted to the group
+
+
+* GET `/api/group/<groupId>/messages` Use this route to get messages made to a group
+* GET `/api/user` Use this route to load all registered members 
+
+
+
