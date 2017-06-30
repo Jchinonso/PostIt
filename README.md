@@ -16,7 +16,7 @@ The following features make up the PostIt Application Api:
 - It allows users to login  
 
 
-###### Documents
+###### Groups
 
 - It allows new Group to be created by users.  
 
