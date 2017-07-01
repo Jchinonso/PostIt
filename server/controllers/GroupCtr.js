@@ -22,8 +22,10 @@ const GroupCtrl = {
                message: "Group already exist"
               })}
                else {
-                 return res.status(200).send({group, message:"Group successfully created"})
+                 return res.status(200).send(group);
               }
+            }).catch(err => {
+              res.send({message:"property mising"})
             })
    },
 
