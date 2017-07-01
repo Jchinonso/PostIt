@@ -14,7 +14,7 @@ const UsersCtrl = {
    */
   showUsers(req, res) {
     db.Users.findAll({
-        attributes: ['id', 'username', 'email', 'createdAt', 'updatedAt']
+        where:{}
       })
       .then(users => res.send({
         users,
@@ -38,7 +38,10 @@ const UsersCtrl = {
     } else {
       return res.status(409).send({message: "user already exist"})
     }
-  })
+  }).catch(err => res.send({
+      message: "property mising"
+    }) 
+  )
  },
  
  /**
@@ -57,10 +60,10 @@ const UsersCtrl = {
         if(user && helper.validatePassword(user, password)){
           res.status(200).send({message: "You have been loggedin successfully"});
         } else {
-            res.status(400)
+            res.status(409)
               .send({message: "incorrect Email and password"});
             } 
-         }) 
+         });
       }
 
 }
