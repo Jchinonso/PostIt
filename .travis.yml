@@ -1,11 +1,15 @@
 language: node_js
-before_script:
-  - psql -c 'create database postItTest;' -U postgres
-  - npm run migrations
-after_script:
-  - npm run coverage
+node_js:
+  - "7"
 services:
   - postgresql
-node_js:
-  - "node"
-  - "6"
+before_script:
+  - npm install -g sequelize-cli
+  - psql -c 'create database postit;' -U postgres
+  - psql -c 'create database postit_test;' -U postgres
+script: 
+  - npm install
+  - npm test
+  - npm run coverage
+after_success:
+  - npm run coveralls
