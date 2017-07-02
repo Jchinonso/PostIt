@@ -1,6 +1,6 @@
 language: node_js
 before_script:
-  - psql -c 'create database travis_ci_test;' -U postgres
+  - psql -c 'create database postItTest;' -U postgres
   - npm run migrations
 after_script:
   - npm run coverage
@@ -9,14 +9,3 @@ services:
 node_js:
   - "node"
   - "6"
-env:
-  global:
-    - CXX=g++-4.8
-    - NODE_ENV=test
-    - URL_TEST=postgres://postgres@localhost/travis_ci_test
-addons:
-  apt:
-    sources:
-      - ubuntu-toolchain-r-test
-    packages:
-      - g++-4.8
