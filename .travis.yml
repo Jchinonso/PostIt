@@ -9,7 +9,7 @@ before_script:
   - psql -c 'create database postit_test;' -U postgres
 script: 
   - npm install
+  - npm run migrations
   - npm test
-  - npm run coverage
 after_success:
   - npm run coveralls
