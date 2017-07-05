@@ -4,6 +4,7 @@
   "description": "postit is a simple application that post notification to members of a group",
   "main": "app.js",
   "scripts": {
+    "export": "export ",
     "start": "npm run build && node dist/server.js",
     "build": "rm -rf dist/ && babel ./ --out-dir dist/ --ignore ./node_modules,./tests,./coverage --copy-files",
     "start:dev": "babel-watch server/index.js",
@@ -49,6 +50,7 @@
   },
   "devDependencies": {
     "chai": "^4.0.2",
+    "coveralls": "^2.13.1",
     "eslint": "^3.19.0",
     "eslint-config-airbnb": "^15.0.1",
     "eslint-plugin-import": "^2.6.0",
