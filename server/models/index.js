@@ -1,8 +1,7 @@
+require('dotenv').config();
 const fs = require('fs');
 const path = require('path');
 const Sequelize = require('sequelize');
-const dotenv = require('dotenv');
-
 const env = process.env.NODE_ENV || 'development';
 const config = require('../config/config')[env];
 
@@ -10,7 +9,7 @@ const basename = path.basename(module.filename);
 
 const db = {};
 
-dotenv.config();
+
 let sequelize;
 
 if (config.url) {
