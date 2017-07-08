@@ -1,10 +1,14 @@
-import express from 'express'
-import logger from 'morgan'
-import bodyParser from 'body-parser'
-import Routes from '../routes/index'
+
+import express from 'express';
+import logger from 'morgan';
+import bodyParser from 'body-parser';
+import Routes from '../routes/index';
+
+require('dotenv').config();
+
 
 const app = express();
-const router = express.Router()
+const router = express.Router();
 
 app.use(logger('dev'));
 app.use(bodyParser.json());
