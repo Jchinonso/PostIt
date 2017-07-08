@@ -11,9 +11,9 @@ module.exports = {
         type: Sequelize.STRING
       },
       priority: {
-      type: Sequelize.STRING,
-      defaultValue: 'normal',
-     },
+        type: Sequelize.STRING,
+        defaultValue: 'normal',
+      },
       groupId: {
         type: Sequelize.INTEGER,
         onDelete: 'CASCADE',
