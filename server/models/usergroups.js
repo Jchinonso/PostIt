@@ -1,13 +1,13 @@
-'use strict';
-module.exports = function(sequelize, DataTypes) {
-  var UserGroups = sequelize.define('UserGroups', {
-     userId: {
+
+module.exports = (sequelize, DataTypes) => {
+  const UserGroups = sequelize.define('UserGroups', {
+    userId: {
       allowNull: false,
-      type: DataTypes.STRING
+      type: DataTypes.INTEGER
     },
-     groupId: {
+    groupId: {
       allowNull: false,
-      type: DataTypes.STRING
+      type: DataTypes.INTEGER
     }
   }, {
     classMethods: {
@@ -15,7 +15,7 @@ module.exports = function(sequelize, DataTypes) {
         UserGroups.belongsTo(models.Users, {
           foreignKey: 'userId',
         });
-         UserGroups.belongsTo(models.Groups, {
+        UserGroups.belongsTo(models.Groups, {
           foreignKey: 'groupId',
         });
       },
