@@ -2,9 +2,7 @@ import db from '../models';
 
 
 const MessageCtrl = {
-    
-    
-      /** Creates Message that partains to a group
+  /** Creates Message that partains to a group
    * @param {Object} req Request Object
    * @param {Object} res Response Object
    * @returns {object} Returns created message
