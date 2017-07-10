@@ -30,5 +30,8 @@ module.exports = {
     username: 'tayo192',
 	  email: 'tayo12'
   },
+  userName: {
+    username: 'jdoe'
+  }
 
 };
