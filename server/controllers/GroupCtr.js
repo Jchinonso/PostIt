@@ -36,31 +36,41 @@ const GroupCtrl = {
 
   addUserToGroup(req, res) {
     const id = req.params.id;
-    db.Users.find({
+    db.Groups.findOne({
       where: {
-        username: req.body.username,
+        id: req.params.id
       }
-    }).then((user) => {
-      if (user) {
-        db.UserGroups.findOrCreate({
+    }).then((group) => {
+      if (group) {
+        db.Users.findOne({
           where: {
-            userId: user.id, groupId: id 
+            username: req.body.username,
           }
-        }).spread((userGroup, created) => {
-          if (created) {
-            return res.status(201).send({
-              message: 'user successfully added to group'
+        }).then((user) => {
+          if (user) {
+            db.UserGroups.findOrCreate({
+              where: {
+                userId: user.id, groupId: id 
+              }
+            }).spread((userGroup, created) => {
+              if (created) {
+                return res.status(201).send({
+                  message: 'user successfully added to group'
+                });
+              } else {
+                return res.status(400).send({
+                  message: 'unable to add user to group'
+                });
+              }
             });
           } else {
-            return res.status(400).send({
-              message: 'unable to add user to group'
+            return res.status(409).send({
+              message: 'user does not exist'
             });
           }
         });
       } else {
-        return res.status(409).send({
-          message: 'user doesnt exist'
-        });
+        return res.send({ message: 'Group does not exist' });
       }
     });
   },
@@ -73,15 +83,23 @@ const GroupCtrl = {
    */
 
   retrieveGroupUsers(req, res) {
-    db.UserGroups.findAll({
+    db.Groups.findOne({
       where: {
-        groupId: req.params.id
+        id: req.params.id
       }
-    }).then((users) => {
-      return res.status(200).send(users);
-    }).catch((err) => {
-      return res.status(404).send(err);
-    });
+    }).then((group) => {
+      if (group) {
+        db.UserGroups.findAll({
+          where: {
+            groupId: req.params.id
+          }
+        }).then((users) => {
+          return res.status(200).send(users);
+        });
+      } else {
+        return res.status(404).send({ message: 'Group does not exist' });
+      }
+    });  
   },
 };
 
