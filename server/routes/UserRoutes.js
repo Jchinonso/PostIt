@@ -1,14 +1,14 @@
-import UsersCtrl from '../controllers/UserCtr'
+import UsersCtrl from '../controllers/UserCtr';
 
 const UserRoutes = (router) => {
-    router.route('/user')
+  router.route('/user')
     .get(UsersCtrl.showUsers);
 
-    router.route('/user/signup')
+  router.route('/user/signup')
     .post(UsersCtrl.signUp);
 
-    router.route('/user/signin')
+  router.route('/user/signin')
     .post(UsersCtrl.signIn);
-}
+};
 
 export default UserRoutes;
