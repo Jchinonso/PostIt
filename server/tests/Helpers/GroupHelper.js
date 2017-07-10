@@ -1,11 +1,14 @@
 import faker from 'faker';
 
 module.exports = {
-  goodGroup: {
-    name: 'logo',
-    description: 'talks about andela logo',
+  goodGroup1: {
+    name: 'lagos',
+    description: 'talks about andela nigeria',
   },
-
+  goodGroup2: {
+    name: 'kenya',
+    description: 'talks about andela kenya',
+  },
   badGroup: {
     description: 'incomplete'
   }
