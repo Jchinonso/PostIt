@@ -6,6 +6,9 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       unique: true
     },
+    creatorId: {
+      type: DataTypes.INTEGER
+    },
     description: {
       allowNull: false,
       type: DataTypes.STRING,
@@ -20,6 +23,9 @@ module.exports = (sequelize, DataTypes) => {
         Groups.hasMany(models.Messages, {
           foreignKey: 'groupId',
           as: 'groupMessages'
+        });
+        Groups.belongsTo(models.Users, {
+          foreignKey: 'creatorId',
         });
       }
     }
