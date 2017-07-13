@@ -1,5 +1,4 @@
 import GroupCtrl from '../controllers/GroupCtr';
-import Auth from '../middleware/Auth';
 
 const GroupRoutes = (router) => {
   router.route('/group')
