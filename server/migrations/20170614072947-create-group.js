@@ -13,6 +13,9 @@ module.exports = {
         allowNull: false,
         unique: true
       },
+      creatorId: {
+        type: Sequelize.INTEGER,
+      },
       description: {
         type: Sequelize.STRING,
         allowNull: false,
