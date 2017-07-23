@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/Jchinonso/PostIt.svg?branch=development)](https://travis-ci.org/Jchinonso/PostIt)
+[![Build Status](https://travis-ci.org/Jchinonso/PostIt.svg?branch=server-side)](https://travis-ci.org/Jchinonso/PostIt)
 [![Coverage Status](https://coveralls.io/repos/github/Jchinonso/PostIt/badge.svg?branch=development)](https://coveralls.io/github/Jchinonso/PostIt?branch=development)
 ## PostIt
 
