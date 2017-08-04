@@ -18,7 +18,10 @@ const GroupCtrl = {
       }
     }).spread((group, created) => {
       if (created) {
-        return res.status(200).send(group);
+        return res.status(200).send({
+          name: group.name,
+          description: group.description
+        });
       }
       return res.status(409).send({ message: 'Group already exist' });
     }).catch((err) => {
@@ -99,7 +102,7 @@ const GroupCtrl = {
       } else {
         return res.status(404).send({ message: 'Group does not exist' });
       }
-    });  
+    });
   },
 };
 

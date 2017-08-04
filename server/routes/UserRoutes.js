@@ -1,8 +1,9 @@
 import UsersCtrl from '../controllers/UserCtr';
+import Auth from '../middleware/Auth';
 
 const UserRoutes = (router) => {
   router.route('/user')
-    .get(UsersCtrl.showUsers);
+    .get(Auth.verifyToken, UsersCtrl.showUsers);
 
   router.route('/user/signup')
     .post(UsersCtrl.signUp);
