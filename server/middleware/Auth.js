@@ -1,29 +1,41 @@
-import db from '../models';
 import jwt from 'jsonwebtoken';
+import db from '../models';
 
 
 const secret = process.env.JWT_SECRET_TOKEN || 'Keep my secret';
 
 const Auth = {
-  isAuthenticated(req, res, next){
-    const authToken = req.header('x-auth');
-    if(!authToken){
-      return res.status(401).send({ message: 'Unauthorized Access' });
+  verifyToken(request, response, next) {
+    const token = request.body.token ||
+      request.headers.authorization ||
+      request.headers['x-access-token'];
+    if (token) {
+      jwt.verify(token, secret, (error, decoded) => {
+        if (error) {
+          response.status(401).send({
+            message: 'Invalid token'
+          });
+        } else {
+          request.decoded = decoded;
+          next();
+        }
+      });
+    } else {
+      response.status(401).send({
+        message: 'Token required to access this route'
+      });
     }
-    jwt.verify(authToken, secret, (err, decoded) => {
-      if (err) {
-        return res.status(401).send({ message: 'Invalid Token' })
-      }
-     db.Users.findById(decoded.UserId).then(user => {
-      if(!user){
-       return res.status(401).send({ message: 'please login' }); 
-      }
-      req.decoded = decoded;
-      req.user = user;
-      next();
-    })
-   });
-    
-  }
-}
+  },
+  /**
+   * generateToken generates token for authentication
+   * @param {Object} user object
+   * @returns {Object} jwt
+   */
+  generateToken(user) {
+    return jwt.sign({
+      userId: user.id,
+      email: user.email,
+    }, secret, { expiresIn: '2 days' });
+  },
+};
 export default Auth;
