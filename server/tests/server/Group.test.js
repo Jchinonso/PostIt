@@ -40,18 +40,19 @@ describe('POST api/group', () => {
   it('should create a new group', (done) => {
     request.post('/api/group')
     .send(anotherGroup)
+    .set({ Authorization: userResponse.token })
     .end((err, res) => {
       if (err) return err;
       expect(res.status).to.equal(200);
       expect(res.body).to.have.property('name');
       expect(res.body).to.have.property('description');
-      expect(res.body).to.have.property('createdAt');
       done();
     });
-  }); 
+  });
   it('should not create group with missing property ', (done) => {
     request.post('/api/group')
     .send(badGroup)
+    .set({ Authorization: userResponse.token })
     .end((err, res) => {
       expect(res.body.message).to.equal('unexpected error occured');
       return done();
@@ -60,6 +61,7 @@ describe('POST api/group', () => {
   it('should not create a group if already exist ', (done) => {
     request.post('/api/group')
     .send(goodGroup)
+    .set({ Authorization: userResponse.token })
     .end((err, res) => {
       expect(res.status).to.equal(409);
       expect(res.body.message).to.equal('Group already exist');
@@ -69,78 +71,88 @@ describe('POST api/group', () => {
   it('should add users to group', (done) => {
     request.post('/api/group/1/user')
     .send(username)
+    .set({ Authorization: userResponse.token })
     .end((err, res) => {
       expect(res.status).to.equal(201);
       done();
-    }); 
+    });
   });
   it('should not add user to group if user has not signup', (done) => {
     request.post('/api/group/1/user')
     .send(userDoesntExist)
+    .set({ Authorization: userResponse.token })
     .end((err, res) => {
       expect(res.status).to.equal(409);
       done();
-    }); 
+    });
   });
   it('should not add user to group if user already exist', (done) => {
     request.post('/api/group/1/user')
     .send(username)
+    .set({ Authorization: userResponse.token })
     .end((err, res) => {
       expect(res.status).to.equal(400);
       done();
-    }); 
+    });
   });
   it('should get all users in a group', (done) => {
     request.get('/api/group/1/user')
+    .set({ Authorization: userResponse.token })
     .end((err, res) => {
       expect(res.body.length).to.equal(1);
       done();
-    }); 
+    });
   });
   it('should not get user if group doesnt exist', (done) => {
     request.get('/api/group/3/user')
+    .set({ Authorization: userResponse.token })
     .end((err, res) => {
       expect(res.status).to.equal(404);
       done();
-    }); 
+    });
   });
   it('should add message to group', (done) => {
     request.post('/api/group/1/message')
     .send(goodMessage)
+    .set({ Authorization: userResponse.token })
     .end((err, res) => {
       expect(res.status).to.equal(201);
       done();
-    }); 
+    });
   });
   it('should not add message to non existing group', (done) => {
     request.post('/api/group/4/message')
     .send(goodMessage)
+    .set({ Authorization: userResponse.token })
     .end((err, res) => {
       expect(res.status).to.equal(409);
       done();
-    }); 
+    });
   });
   it('should send error code for null content', (done) => {
     request.post('/api/group/1/message')
     .send()
+    .set({ Authorization: userResponse.token })
     .end((err, res) => {
       expect(res.status).to.equal(400);
       done();
-    }); 
+    });
   });
   it('should get messages that belongs to group', (done) => {
     request.get('/api/group/1/message')
+    .set({ Authorization: userResponse.token })
     .end((err, res) => {
       expect(res.status).to.equal(200);
       done();
-    }); 
+    });
   });
   it('should not get message if group doesnt exist', (done) => {
     request.get('/api/group/3/message')
+    .set({ Authorization: userResponse.token })
     .end((err, res) => {
       expect(res.status).to.equal(404);
       done();
-    }); 
+    });
   });
 
 
@@ -160,8 +172,6 @@ describe('POST api/group', () => {
   //         });
   //       });
   //   });
-
-    
   // });
 });
 

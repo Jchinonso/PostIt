@@ -31,8 +31,6 @@ describe('POST api/user/signup', () => {
       expect(res.status).to.equal(201);
       expect(res.body).to.have.property('username');
       expect(res.body).to.have.property('email');
-      expect(res.body).to.have.property('password');
-      expect(res.body).to.have.property('createdAt');
       done();
     });
   }); 
