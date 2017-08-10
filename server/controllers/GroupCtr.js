@@ -12,13 +12,16 @@ const GroupCtrl = {
    */
   createGroup(req, res) {
     db.Groups.findOrCreate({
-      where: { name: req.body.name }, 
+      where: { name: req.body.name },
       defaults: {
         description: req.body.description,
       }
     }).spread((group, created) => {
       if (created) {
-        return res.status(200).send(group);
+        return res.status(200).send({
+          name: group.name,
+          description: group.description
+        });
       }
       return res.status(409).send({ message: 'Group already exist' });
     }).catch((err) => {
@@ -26,8 +29,15 @@ const GroupCtrl = {
         message: 'unexpected error occured'
       });
     });
-  },  
-    
+  },
+  /** Retrieve all Group of a User
+   * @param {Object} req Request Object
+   * @param {Object} res Response Object
+   * @returns {object} Returns all user Groups
+   */
+
+  retrieveAllUserGroup
+
   /** Add User To Group
    * @param {Object} req Request Object
    * @param {Object} res Response Object
@@ -50,7 +60,7 @@ const GroupCtrl = {
           if (user) {
             db.UserGroups.findOrCreate({
               where: {
-                userId: user.id, groupId: id 
+                userId: user.id, groupId: id
               }
             }).spread((userGroup, created) => {
               if (created) {
@@ -99,7 +109,7 @@ const GroupCtrl = {
       } else {
         return res.status(404).send({ message: 'Group does not exist' });
       }
-    });  
+    });
   },
 };
 
