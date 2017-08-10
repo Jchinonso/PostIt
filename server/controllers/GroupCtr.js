@@ -12,7 +12,7 @@ const GroupCtrl = {
    */
   createGroup(req, res) {
     db.Groups.findOrCreate({
-      where: { name: req.body.name }, 
+      where: { name: req.body.name },
       defaults: {
         description: req.body.description,
       }
@@ -29,8 +29,18 @@ const GroupCtrl = {
         message: 'unexpected error occured'
       });
     });
-  },  
-    
+  },
+  /** Retrieve all Group of a User
+   * @param {Object} req Request Object
+   * @param {Object} res Response Object
+   * @returns {object} Returns all user Groups
+   */
+
+  retrieveAllGroup(req, res) {
+    db.findAll({
+
+    });
+  },
   /** Add User To Group
    * @param {Object} req Request Object
    * @param {Object} res Response Object
@@ -53,7 +63,7 @@ const GroupCtrl = {
           if (user) {
             db.UserGroups.findOrCreate({
               where: {
-                userId: user.id, groupId: id 
+                userId: user.id, groupId: id
               }
             }).spread((userGroup, created) => {
               if (created) {
