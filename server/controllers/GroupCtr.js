@@ -30,13 +30,13 @@ const GroupCtrl = {
       });
     });
   },
-  /** Retrieve all Group of a User
-   * @param {Object} req Request Object
-   * @param {Object} res Response Object
-   * @returns {object} Returns all user Groups
-   */
+  // /** Retrieve all Group of a User
+  //  * @param {Object} req Request Object
+  //  * @param {Object} res Response Object
+  //  * @returns {object} Returns all user Groups
+  //  */
 
-  retrieveAllUserGroup
+  // retrieveAllUserGroup
 
   /** Add User To Group
    * @param {Object} req Request Object
