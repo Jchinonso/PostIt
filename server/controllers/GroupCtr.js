@@ -15,29 +15,45 @@ const GroupCtrl = {
       where: { name: req.body.name },
       defaults: {
         description: req.body.description,
+        creator: req.decoded.username
       }
     }).spread((group, created) => {
       if (created) {
-        return res.status(200).send({
+        group.addUser(req.decoded.userId);
+        return res.status(201).send({
+          id: group.id,
           name: group.name,
-          description: group.description
+          description: group.description,
+          creator: group.creator
         });
       }
       return res.status(409).send({ message: 'Group already exist' });
-    }).catch((err) => {
-      res.status(409).send({
-        message: 'unexpected error occured'
-      });
     });
   },
-  // /** Retrieve all Group of a User
-  //  * @param {Object} req Request Object
-  //  * @param {Object} res Response Object
-  //  * @returns {object} Returns all user Groups
-  //  */
+  /** Retrieve all Group of a User
+   * @param {Object} req Request Object
+   * @param {Object} res Response Object
+   * @returns {object} Returns all user Groups
+   */
 
-  // retrieveAllUserGroup
-
+  retrieveAllGroup(req, res) {
+    db.Users.findOne({
+      where: {
+        username: req.decoded.username
+      }
+    }).then((user) => {
+      user.getGroups().then((groups) => {
+        if (groups.length === 0) {
+          return res.status(200).send({
+            message: 'You do not belong to any group'
+          });
+        }
+        return res.status(200).send(groups);
+      });
+    }).catch(error => res.status(500).send({
+      message: 'server error'
+    }));
+  },
   /** Add User To Group
    * @param {Object} req Request Object
    * @param {Object} res Response Object
@@ -45,10 +61,10 @@ const GroupCtrl = {
    */
 
   addUserToGroup(req, res) {
-    const id = req.params.id;
+    const groupId = req.params.id;
     db.Groups.findOne({
       where: {
-        id: req.params.id
+        id: groupId
       }
     }).then((group) => {
       if (group) {
@@ -59,28 +75,34 @@ const GroupCtrl = {
         }).then((user) => {
           if (user) {
             db.UserGroups.findOrCreate({
-              where: {
-                userId: user.id, groupId: id
+              where: { $and: {
+                groupId: req.params.id,
+                userId: user.id
+              } },
+              defaults: {
+                groupId: req.params.id,
+                userId: user.id
               }
             }).spread((userGroup, created) => {
               if (created) {
                 return res.status(201).send({
-                  message: 'user successfully added to group'
-                });
-              } else {
-                return res.status(400).send({
-                  message: 'unable to add user to group'
+                  message: 'successfully added user to group'
                 });
               }
+              return res.status(409).send({
+                message: 'user already exist'
+              });
             });
           } else {
-            return res.status(409).send({
-              message: 'user does not exist'
+            return res.status(400).send({
+              message: 'User does not exist'
             });
           }
         });
       } else {
-        return res.send({ message: 'Group does not exist' });
+        return res.status(400).send({
+          message: 'Group does not exist'
+        });
       }
     });
   },
@@ -92,20 +114,15 @@ const GroupCtrl = {
    * @returns {object} Returns Group Users
    */
 
-  retrieveGroupUsers(req, res) {
+  retrieveGroupMembers(req, res) {
     db.Groups.findOne({
       where: {
         id: req.params.id
       }
     }).then((group) => {
       if (group) {
-        db.UserGroups.findAll({
-          where: {
-            groupId: req.params.id
-          }
-        }).then((users) => {
-          return res.status(200).send(users);
-        });
+        group.getUsers()
+         .then(groups => res.status(200).send(groups));
       } else {
         return res.status(404).send({ message: 'Group does not exist' });
       }

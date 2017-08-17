@@ -12,23 +12,23 @@ module.exports = (sequelize, DataTypes) => {
     description: {
       allowNull: false,
       type: DataTypes.STRING,
-      unique: true
-    }
-  }, {
-    classMethods: {
-      associate: (models) => {
-        Groups.hasMany(models.UserGroups, {
-          foreignKey: 'groupId',
-        });
-        Groups.hasMany(models.Messages, {
-          foreignKey: 'groupId',
-          as: 'groupMessages'
-        });
-        Groups.belongsTo(models.Users, {
-          foreignKey: 'creatorId',
-        });
-      }
+      unique: false,
+    },
+    creator: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      unique: false
     }
   });
+  Groups.associate = (models) => {
+    Groups.belongsToMany(models.Users, {
+      through: 'UserGroups',
+      foreignKey: 'groupId',
+    });
+    Groups.hasMany(models.Messages, {
+      foreignKey: 'groupId',
+      as: 'groupMessages'
+    });
+  };
   return Groups;
 };

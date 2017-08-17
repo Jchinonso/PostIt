@@ -17,15 +17,12 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.BOOLEAN,
       defaultValue: false
     }
-  }, {
-    classMethods: {
-      associate: (models) => {
-        Messages.belongsTo(models.Groups, {
-          foreignKey: 'groupId',
-          onDelete: 'CASCADE'
-        });
-      }
-    }
   });
+  Messages.associate = (models) => {
+    Messages.belongsTo(models.Groups, {
+      foreignKey: 'groupId',
+      onDelete: 'CASCADE'
+    });
+  };
   return Messages;
 };
