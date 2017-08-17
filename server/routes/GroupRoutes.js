@@ -3,11 +3,12 @@ import Auth from '../middleware/Auth';
 
 const GroupRoutes = (router) => {
   router.route('/group')
-      .post(Auth.verifyToken, GroupCtrl.createGroup);
+      .post(Auth.verifyToken, GroupCtrl.createGroup)
+      .get(Auth.verifyToken, GroupCtrl.retrieveAllGroup);
 
   router.route('/group/:id/user')
       .post(Auth.verifyToken, GroupCtrl.addUserToGroup)
-      .get(Auth.verifyToken, GroupCtrl.retrieveGroupUsers);
+      .get(Auth.verifyToken, GroupCtrl.retrieveGroupMembers);
 };
 
 export default GroupRoutes;
