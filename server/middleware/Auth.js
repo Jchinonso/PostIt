@@ -33,6 +33,7 @@ const Auth = {
    */
   generateToken(user) {
     return jwt.sign({
+      username: user.username,
       userId: user.id,
       email: user.email,
     }, secret, { expiresIn: '2 days' });
