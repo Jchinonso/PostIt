@@ -18,15 +18,17 @@ const MessageCtrl = {
           content: req.body.content,
           priority: req.body.priority,
           groupId: req.params.id
-        }).then((messageCreated) => {
-          return res.status(201).send(messageCreated);
-        }).catch((err) => {
-          return res.status(400).send(err);
-        });
+        }).then(messageCreated => res.status(201).send({
+          id: messageCreated.id,
+          content: messageCreated.content,
+          priority: messageCreated.priority,
+          isRead: messageCreated.isRead,
+          createdAt: messageCreated.createdAt
+        }));
       } else {
         return res.status(409).send({ message: 'Group doesnt exist' });
       }
-    });  
+    });
   },
 
     /** Retrieve all message that partains to Group
@@ -45,14 +47,12 @@ const MessageCtrl = {
           where: {
             groupId: req.params.id
           }
-        }).then((messages) => {
-          return res.status(200).send(messages);
-        });
+        }).then(messages => res.status(200).send(messages));
       } else {
-        return res.status(404).send({ message: 'Group not found' }); 
+        return res.status(404).send({ message: 'Group not found' });
       }
     });
-  }   
+  }
 };
 
 export default MessageCtrl;

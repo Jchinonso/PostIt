@@ -34,7 +34,7 @@ describe('POST api/group', () => {
         if (err) return err;
         done();
       });
-    }); 
+    });
   });
   after(() => db.sequelize.sync({ force: true }));
   it('should create a new group', (done) => {

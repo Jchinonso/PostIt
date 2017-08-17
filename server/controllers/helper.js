@@ -3,7 +3,7 @@ import jwt from 'jsonwebtoken';
 
 
 const secret = process.env.JWT_SECRET_TOKEN || 'Keep my secret';
-const helper= {
+const helper = {
 
     /** validate plain password against hashed password
      * @param {object} user
@@ -13,19 +13,10 @@ const helper= {
   validatePassword: (user, password) => {
     return bcrypt.compareSync(password, user.password);
   },
- 
-  /** generate token
-     * @param {object} user
-     * @return {object} return token
-     */
-  generateAuthToken: (user) => {
-    return jwt.sign({
-      UserId: user.id,
-    }, secret, {
-       expiresIn: 172800,
-    });
-  },
 
-}
+  hashedPassword: (password) => {
+    return bcrypt.hashSync(password, bcrypt.genSaltSync(8));
+  }
+};
 
 export default helper;
