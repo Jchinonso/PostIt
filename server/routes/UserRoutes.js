@@ -10,6 +10,8 @@ const UserRoutes = (router) => {
 
   router.route('/user/signin')
     .post(UsersCtrl.signIn);
+  router.route('/user/signOut')
+    .post(UsersCtrl.signOut);
 };
 
 export default UserRoutes;
