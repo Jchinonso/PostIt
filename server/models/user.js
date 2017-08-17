@@ -1,7 +1,3 @@
-import bcrypt from 'bcryptjs';
-import jwt from 'jsonwebtoken';
-
-
 module.exports = (sequelize, DataTypes) => {
   const Users = sequelize.define('Users', {
     username: {
@@ -23,28 +19,19 @@ module.exports = (sequelize, DataTypes) => {
     password: {
       allowNull: false,
       type: DataTypes.STRING,
-    }
-  }, {
-    classMethods: {
-      associate(models) {
-        Users.hasMany(models.UserGroups, {
-          foreignKey: 'userId',
-        });
-      }
     },
-
-
-    hooks: {
-      beforeCreate: (user, options) => {
-        user.password = bcrypt.hashSync(user.password, bcrypt.genSaltSync(8));
-      },
-
-      beforeUpdate: (user) => {
-        if (user._changed.password) {
-          user.hashPassword();
-        }
-      }
+    phoneNumber: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      unique: false
     }
   });
+  Users.associate = (models) => {
+    Users.belongsToMany(models.Groups, {
+      through: 'UserGroups',
+      foreignKey: 'userId',
+    });
+  };
   return Users;
 };
+
