@@ -35,20 +35,21 @@ const UsersCtrl = {
       },
       defaults: {
         username: req.body.username,
-        password: req.body.password
+        password: helper.hashedPassword(req.body.password),
+        phoneNumber: req.body.phoneNumber
       }
     })
-  .spread((user, created) => {
-    if (created) {
-      return res.status(201).send({
-        username: user.username,
-        email: user.email,
-        token: Auth.generateToken(user)
-      });
-    }
-    return res.status(409).send({ message: 'user already exist' });
-  }).catch(err => res.status(400).send({ message: 'Unexpected error occured' })
-);
+    .spread((user, created) => {
+      if (created) {
+        return res.status(201).send({
+          username: user.username,
+          email: user.email,
+          phonenumber: user.phoneNumber,
+          token: Auth.generateToken(user)
+        });
+      }
+      return res.status(409).send({ message: 'user already exist' });
+    });
   },
  /**
    * signin - Log in a user
@@ -59,7 +60,7 @@ const UsersCtrl = {
   signIn(req, res) {
     const email = req.body.email;
     const password = req.body.password;
-    db.Users.findOne({ 
+    db.Users.findOne({
       where: {
         email
       }
@@ -70,13 +71,25 @@ const UsersCtrl = {
           token: Auth.generateToken(user)
         });
       } else {
-        res.status(409).send({
+        res.status(403).send({
           message: 'incorrect Email and password'
         });
       }
     });
-  }
+  },
+  /**
+   * signOut - Log Out a user
+   * @param {Object} req Request Object
+   * @param {Object} res Response Object
+   * @returns {void} Returns void
+   */
+  signOut(req, res) {
+    res.status(200).send({
+      message: 'User successfully logged out'
+    });
+  },
 
 };
+
 
 export default UsersCtrl;
