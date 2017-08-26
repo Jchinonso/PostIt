@@ -28,7 +28,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 Routes(router);
 
 // prefix /api for all routes
-app.use('/api', router);
+app.use('/api/v1', router);
 
 app.get('*', (req, res) => res.status(200).sendFile(path.join(
   __dirname, '../../client', 'index.html')

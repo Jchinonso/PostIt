@@ -49,6 +49,10 @@ const UsersCtrl = {
         });
       }
       return res.status(409).send({ message: 'user already exist' });
+    }).catch((err) => {
+      return res.send({
+        message: 'provide the necessary input'
+      });
     });
   },
  /**
