@@ -1,9 +1,10 @@
 import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
+import toastr from 'toastr';
 import {
    Modal, Button, Form, Input
    } from 'react-bootstrap';
-import { signUp } from '../actions/authActions';
+import { signUp, signIn } from '../actions/authActions';
 
 
 class HomePage extends React.Component {
@@ -22,7 +23,9 @@ class HomePage extends React.Component {
     this.CloseSignUpModal = this.CloseSignUpModal.bind(this);
     this.CloseSignInModal = this.CloseSignInModal.bind(this);
     this.handleSignUpSubmit = this.handleSignUpSubmit.bind(this);
-    this.handleChange = this.handleChange.bind(this);
+    this.handleSignInSubmit = this.handleSignInSubmit.bind(this);
+    this.handleSignUpChange = this.handleSignUpChange.bind(this);
+    this.handleSignInChange = this.handleSignInChange.bind(this);
   }
   OpenSignUpModal() {
     this.setState({ showSignUpModal: true });
@@ -48,13 +51,36 @@ class HomePage extends React.Component {
       };
       this.props.signUp(userObj)
       .then(() => {
-        console.log('registration successful');
+        toastr.success('Account Created Successfully');
       }, (err) => {
-        console.log(err.response.message);
+        console.log(err);
       });
     }
   }
-  handleChange(event) {
+  handleSignInSubmit(event) {
+    event.preventDefault();
+    console.log(this.state);
+
+    if (this.state.email.length && this.state.password.length) {
+      const userObj = {
+        password: this.state.password,
+        email: this.state.email,
+      };
+      this.props.signIn(userObj)
+      .then(() => {
+        toastr.error('login in successful').position('top-center');
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+    }
+  }
+  handleSignUpChange(event) {
+    this.setState({
+      [event.target.name]: event.target.value
+    });
+  }
+  handleSignInChange(event) {
     this.setState({
       [event.target.name]: event.target.value
     });
@@ -66,39 +92,52 @@ class HomePage extends React.Component {
           <Modal.Title>Sign Up</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <form onSubmit={this.handleSignUpSubmit} >
-            <Input
-              type="text"
-              name="username"
-              ref="usernameInput"
-              placeholder="Enter username"
-              value={this.state.username}
-              onChange={this.handleChange}
-            />
-            <Input
-              type="password"
-              name="password"
-              ref="passwordInput"
-              placeholder="Enter password"
-              value={this.state.password}
-              onChange={this.handleChange}
-            />
-            <Input
-              ref="emailInput"
-              type="email"
-              name="email"
-              placeholder="Enter Email"
-              value={this.state.email}
-              onChange={this.handleChange}
-            />
-            <Input
-              ref="telephoneInput"
-              type="tel"
-              name="phoneNumber"
-              placeholder="Enter Phone number"
-              value={this.state.phoneNumber}
-              onChange={this.handleChange}
-            />
+          <form onSubmit={this.handleSignUpSubmit} horizontal>
+            <div style={{ marginBottom: 25 }} className="input-group">
+              <span className="input-group-addon"><i className="glyphicon glyphicon-user" /></span>
+              <Input
+                type="text"
+                name="username"
+                ref="usernameInput"
+                placeholder="Enter username"
+                value={this.state.username}
+                onChange={this.handleSignUpChange}
+              />
+            </div>
+            <div style={{ marginBottom: 25 }} className="input-group">
+              <span className="input-group-addon"><i className="glyphicon glyphicon-lock" /></span>
+              <Input
+                type="password"
+                name="password"
+                ref="passwordInput"
+                placeholder="Enter password"
+                value={this.state.password}
+                onChange={this.handleSignUpChange}
+              />
+            </div>
+            <div style={{ marginBottom: 25 }} className="input-group">
+              <span className="input-group-addon"><i className="glyphicon glyphicon-envelope" /></span>
+              <Input
+                ref="emailInput"
+                type="email"
+                name="email"
+                placeholder="Enter Email"
+                value={this.state.email}
+                onChange={this.handleSignUpChange}
+              />
+            </div>
+            <div style={{ marginBottom: 25 }} className="input-group">
+              <span className="input-group-addon"><i className="glyphicon glyphicon-phone" /></span>
+              <Input
+                ref="telephoneInput"
+                type="text"
+                pattern="^\d{3}-\d{4}-\d{4}$"
+                name="phoneNumber"
+                placeholder="Phone Number (Format 080-0000-0000)"
+                value={this.state.phoneNumber}
+                onChange={this.handleSignUpChange}
+              />
+            </div>
             <Button
               bsStyle="success"
               style={{ width: '100%', height: '4rem', marginTop: '2rem' }}
@@ -109,9 +148,6 @@ class HomePage extends React.Component {
             </Button>
           </form>
         </Modal.Body>
-        <Modal.Footer>
-          <Button onClick={this.CloseSignUpModal}>Close</Button>
-        </Modal.Footer>
       </Modal>
     );
     const SignInModal = (
@@ -120,28 +156,20 @@ class HomePage extends React.Component {
           <Modal.Title>Sign In</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <form horizontal>
+          <form onSubmit={this.handleSignInSubmit}>
             <Input
-              type="text"
-              name="username"
-              placeholder="Enter username"
-              value={this.state.username}
-              onChange={this.handleChange}
+              type="email"
+              name="email"
+              placeholder="Enter Email"
+              value={this.state.email}
+              onChange={this.handleSignInChange}
             />
             <Input
               type="password"
               name="password"
               placeholder="Enter password"
               value={this.state.password}
-              onChange={this.handleChange}
-            />
-            <Input
-              ref="emailInput"
-              type="email"
-              name="email"
-              placeholder="Enter Email"
-              value={this.state.email}
-              onChange={this.handleChange}
+              onChange={this.handleSignInChange}
             />
             <Button
               bsStyle="success"
@@ -149,13 +177,10 @@ class HomePage extends React.Component {
               name="submitButton"
               type="submit"
             >
-              <p style={{ color: 'white', margin: '0', padding: '0', fontSize: '1.5em' }} >Sign Up</p>
+              <p style={{ color: 'white', margin: '0', padding: '0', fontSize: '1.5em' }} >Sign In</p>
             </Button>
           </form>
         </Modal.Body>
-        <Modal.Footer>
-          <Button onClick={this.CloseSignInModal}>Close</Button>
-        </Modal.Footer>
       </Modal>
     );
     return (
@@ -195,5 +220,5 @@ class HomePage extends React.Component {
 }
 
 
-export default connect(() => ({}), { signUp })(HomePage);
+export default connect(() => ({}), { signUp, signIn })(HomePage);
 

@@ -38,7 +38,7 @@ export function signUp(user) {
 
 export function signIn(user) {
   return (dispatch) => {
-    return axios.post('/api/v1/user/signin')
+    return axios.post('/api/v1/user/signin', user)
     .then((response) => {
       const token = response.data.token;
       window.localStorage.setItem('tokenize', token);
