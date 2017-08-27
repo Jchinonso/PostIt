@@ -19,141 +19,80 @@ export function receiveRawMessage(message) {
   };
 }
 
-export function receiveRawChannel(channel) {
+export function receiveRawGroup(group) {
   return {
-    type: types.RECEIVE_CHANNEL,
-    channel
+    type: types.RECEIVE_GROUP,
+    group
   };
 }
 
-function addChannel(channel) {
+function addGroup(group) {
   return {
-    type: types.ADD_CHANNEL,
-    channel
+    type: types.ADD_GROUP,
+    group
   };
 }
 
-export function typing(username) {
+
+export function changeGroup(group) {
   return {
-    type: types.TYPING,
-    username
+    type: types.CHANGE_GROUP,
+    group
   };
 }
 
-export function stopTyping(username) {
+
+function requestGroups() {
   return {
-    type: types.STOP_TYPING,
-    username
+    type: types.LOAD_GROUPS
   };
 }
 
-export function changeChannel(channel) {
+function receiveGroups(json) {
   return {
-    type: types.CHANGE_CHANNEL,
-    channel
-  };
-}
-
-// NOTE:Data Fetching actions
-
-export function welcomePage(username) {
-  return {
-    type: types.SAVE_USERNAME,
-    username
-  };
-}
-
-function requestChannels() {
-  return {
-    type: types.LOAD_CHANNELS
-  }
-}
-
-function receiveChannels(json) {
-  return {
-    type: types.LOAD_CHANNELS_SUCCESS,
+    type: types.LOAD_GROUPS_SUCCESS,
     json
   }
 }
 
-export function fetchChannels(user) {
-  return dispatch => {
-    dispatch(requestChannels())
-    return fetch(`/api/channels/${user}`)
-      .then(response => response.json())
-      .then(json => dispatch(receiveChannels(json)))
+export function fetchGroups() {
+  return (dispatch) => {
+    dispatch(requestGroups());
+    return axios.get('/api/group/')
+      .then(response => dispatch(receiveGroups(response.data)))
       .catch(error => {throw error});
-  }
+  };
 }
 
 
 function requestMessages() {
   return {
     type: types.LOAD_MESSAGES
-  }
+  };
 }
 
-export function fetchMessages(channel) {
-  return dispatch => {
-    dispatch(requestMessages())
-    return fetch(`/api/messages/${channel}`)
-      .then(response => response.json())
-      .then(json => dispatch(receiveMessages(json, channel)))
-      .catch(error => {throw error});
-  }
-}
 
-function receiveMessages(json, channel) {
+function receiveMessages(json, groupId) {
   const date = moment().format('lll');
   return {
     type: types.LOAD_MESSAGES_SUCCESS,
     json,
-    channel,
+    groupId,
     date
-  }
+  };
 }
 
-function shouldFetchMessages(state) {
-  const messages = state.messages.data;
-  if (!messages) {
-    return true
-  }
+export function fetchMessages(groupId) {
+  return ((dispatch) => {
+    dispatch(requestMessages());
+    return axios.get(`/api/v1/group/${groupId}/message`)
+      .then((response) => {
+        dispatch(receiveMessages(response.data, groupId));
+      })
+      .catch((error) => { throw error; });
+  });
 }
 
-export function fetchMessagesIfNeeded() {
-  return (dispatch, getState) => {
-    if (shouldFetchMessages(getState())) {
-      return dispatch(fetchMessages())
-    }
-  }
-}
-
-function loadingValidationList() {
-  return {
-    type: types.LOAD_USERVALIDATION
-  }
-}
-
-function receiveValidationList(json) {
-  return {
-    type: types.LOAD_USERVALIDATION_SUCCESS,
-    json
-  }
-}
-
-export function usernameValidationList() {
-  return dispatch => {
-    dispatch(loadingValidationList())
-    return fetch('/api/all_usernames')
-      .then(response => {
-        return response.json()
-    })
-      .then(json => {
-        return dispatch(receiveValidationList(json.map((item) => item.local.username)))
-    })
-      .catch(error => {throw error});
-  }
-}
 
 export function createMessage(message) {
   return dispatch => {
@@ -165,18 +104,20 @@ export function createMessage(message) {
       },
       body: JSON.stringify(message)})
       .catch(error => {throw error});
-  }
+  };
 }
 
-export function createChannel(channel) {
+export function createGroup(group) {
   return dispatch => {
-    dispatch(addChannel(channel))
+    dispatch(addChannel(group))
     return fetch ('/api/channels/new_channel', {
       method: 'post',
       headers: {
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify(channel)})
-      .catch(error => {throw error});
-  }
+      body: JSON.stringify(group) })
+      .catch((error) => {
+        throw error;
+      });
+  };
 }

@@ -21,8 +21,7 @@ export function signOut() {
 }
 
 export function signUp(user) {
-  return (dispatch) => {
-    return axios.post('/api/v1/user/signup', user)
+  return dispatch => axios.post('/api/v1/user/signup', user)
     .then((response) => {
       const token = response.data.token;
       window.localStorage.setItem('tokenize', token);
@@ -32,20 +31,17 @@ export function signUp(user) {
     .catch((error) => {
       throw (error);
     });
-  };
 }
 
 
 export function signIn(user) {
-  return (dispatch) => {
-    return axios.post('/api/v1/user/signin', user)
+  return (dispatch => axios.post('/api/v1/user/signin', user)
     .then((response) => {
       const token = response.data.token;
       window.localStorage.setItem('tokenize', token);
       setAuthorizationToken(token);
       dispatch(setCurrentUser(jwtDecode(token)));
     })
-    .catch((error) => { throw error; });
-  };
+    .catch((error) => { throw error; }));
 }
 
