@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Modal, DropdownButton, MenuItem, Button } from 'react-bootstrap';
-
+import io from 'socket.io-client';
 export default class Chat extends Component {
   constructor(props) {
     super(props);

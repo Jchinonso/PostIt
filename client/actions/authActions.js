@@ -13,7 +13,7 @@ export function setCurrentUser(user) {
 
 export function signOut() {
   return (dispatch) => {
-    localStorage.removeItem('tokenize');
+    window.localStorage.removeItem('tokenize');
     setAuthorizationToken(false);
     dispatch(setCurrentUser({ user: {}
     }));
