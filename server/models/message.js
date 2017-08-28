@@ -13,6 +13,10 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false,
       type: DataTypes.INTEGER,
     },
+    sender: {
+      allowNull: false,
+      type: DataTypes.STRING
+    },
     isRead: {
       type: DataTypes.BOOLEAN,
       defaultValue: false

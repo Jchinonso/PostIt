@@ -17,10 +17,12 @@ const MessageCtrl = {
         db.Messages.create({
           content: req.body.content,
           priority: req.body.priority,
-          groupId: req.params.id
+          groupId: req.params.id,
+          sender: req.decoded.username
         }).then(messageCreated => res.status(201).send({
           id: messageCreated.id,
           content: messageCreated.content,
+          sender: messageCreated.sender,
           priority: messageCreated.priority,
           isRead: messageCreated.isRead,
           createdAt: messageCreated.createdAt

@@ -24,9 +24,13 @@ module.exports = {
           as: 'groupId'
         }
       },
+      sender: {
+        allowNull: false,
+        type: Sequelize.STRING
+      },
       isRead: {
-        type: Sequelize.BOOLEAN,
-        defaultValue: false
+        allowNull: false,
+        type: Sequelize.BOOLEAN
       },
       createdAt: {
         allowNull: false,
