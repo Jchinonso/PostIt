@@ -1,25 +1,28 @@
-import faker from 'faker';
 
 module.exports = {
   goodUser: {
     username: 'johnny19',
 	  email: 'chinonso@example.com',
     password: 'abacus3456',
+    phoneNumber: '09081890018'
   },
   anotherUser: {
     username: 'jdoe',
 	  email: 'jdoe@example.com',
     password: 'abacus3456',
+    phoneNumber: '09081890018'
   },
   anotherUserTwo: {
     username: 'jdoe',
 	  email: 'mkdoe@example.com',
     password: 'abacus3456',
+    phoneNumber: '09081890018'
   },
   userDoesntExist: {
     username: 'mkdim',
 	  email: 'mkdim@example.com',
     password: 'abacus3456',
+    phoneNumber: '09081890018'
   },
 
   badUser1: {

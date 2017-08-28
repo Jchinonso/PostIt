@@ -15,7 +15,7 @@ const anotherUser2 = userHelper.anotherUser2;
 
 describe('POST api/user/signup', () => {
   beforeEach((done) => {
-    request.post('/api/user/signup')
+    request.post('/api/v1/user/signup')
     .send(goodUser)
     .end((err, res) => {
       if (err) return err;
@@ -24,7 +24,7 @@ describe('POST api/user/signup', () => {
   });
   after(() => db.sequelize.sync({ force: true }));
   it('should create a new user', (done) => {
-    request.post('/api/user/signup')
+    request.post('/api/v1/user/signup')
     .send(anotherUser)
     .end((err, res) => {
       if (err) return err;
@@ -33,10 +33,10 @@ describe('POST api/user/signup', () => {
       expect(res.body).to.have.property('email');
       done();
     });
-  }); 
-  
+  });
+
   it('should not create user with missing property ', (done) => {
-    request.post('/api/user/signup')
+    request.post('/api/v1/user/signup')
     .send(badUser1)
     .end((err, res) => {
       expect(res.body.message).to.equal('Unexpected error occured');
@@ -44,7 +44,7 @@ describe('POST api/user/signup', () => {
     });
   });
   it('should not create a user if already exist ', (done) => {
-    request.post('/api/user/signup')
+    request.post('/api/v1/user/signup')
     .send(goodUser)
     .end((err, res) => {
       expect(res.status).to.equal(409);
@@ -53,7 +53,7 @@ describe('POST api/user/signup', () => {
     });
   });
   it('should signin a user', (done) => {
-    request.post('/api/user/signin')
+    request.post('/api/v1/user/signin')
     .send(goodUser)
     .end((err, res) => {
       expect(res.status).to.equal(200);
@@ -62,7 +62,7 @@ describe('POST api/user/signup', () => {
     });
   });
   it('should not signin a user if user does not exist', (done) => {
-    request.post('/api/user/signin')
+    request.post('/api/v1/user/signin')
     .send(userDoesntExist)
     .end((err, res) => {
       expect(res.status).to.equal(409);
@@ -71,14 +71,14 @@ describe('POST api/user/signup', () => {
     });
   });
   it('should get all existing users', (done) => {
-    request.get('/api/user')
+    request.get('/api/v1/user')
     .end((err, res) => {
       expect(res.body.users.length).to.equal(2);
       return done();
     });
   });
   it('should validate email address', (done) => {
-    request.post('/api/user/signup')
+    request.post('/api/v1/user/signup')
     .send(badUser2)
     .end((err, res) => {
       if (err) return err;
@@ -87,7 +87,7 @@ describe('POST api/user/signup', () => {
     });
   });
   it('should unique username', (done) => {
-    request.post('/api/user/signup')
+    request.post('/api/v1/user/signup')
     .send(anotherUser2)
     .end((err, res) => {
       if (err) return err;
