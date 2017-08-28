@@ -1,6 +1,6 @@
 
 import jwt from 'jsonwebtoken';
-import Auth from '../middleware/Auth'
+import Auth from '../middleware/Auth';
 import db from '../models';
 import helper from './helper';
 
