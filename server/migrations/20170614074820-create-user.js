@@ -26,11 +26,23 @@ module.exports = {
       phoneNumber: {
         type: Sequelize.STRING,
         allowNull: false,
-        unique: false
+        unique: false,
+        validate: {
+          len: {
+            args: [6, 255],
+            msg: 'password must be at least six characters long'
+          }
+        }
       },
       password: {
         allowNull: false,
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
+        validate: {
+          len: {
+            args: [6, 255],
+            msg: 'password must be at least six characters long'
+          }
+        }
       },
       createdAt: {
         allowNull: false,
