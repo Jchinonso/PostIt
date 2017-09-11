@@ -11,19 +11,19 @@ function addGroup(group) {
 }
 
 export function createGroup(group) {
-  return (dispatch) => {
-    dispatch(addGroup(group));
-    return axios.post('/api/v1/group', group)
-      .catch((error) => {
-        throw error;
-      });
-  };
+  return dispatch => axios.post('/api/v1/group', group)
+    .then((response) => {
+      dispatch(addGroup(response.data));
+    })
+    .catch((error) => {
+      throw error;
+    });
 }
 
-export function changeGroup(group) {
+export function changeGroup(groupId) {
   return {
     type: types.CHANGE_GROUP,
-    group
+    groupId
   };
 }
 
@@ -72,11 +72,9 @@ function requestMessages() {
 }
 
 function receiveMessages(messages) {
-  const date = moment().format('lll');
   return {
     type: types.LOAD_MESSAGES_SUCCESS,
     messages,
-    date
   };
 }
 
