@@ -12,7 +12,7 @@ const initialState = {
   data: []
 };
 
-export default function Groups(state = initialState, action) {
+export default function groups(state = initialState, action) {
   switch (action.type) {
   case ADD_GROUP:
     if (state.data.filter(group => group.name === action.group.name).length !== 0) {

@@ -30,7 +30,7 @@ export default function messages(state = initialState, action) {
       loading: false,
       loaded: true,
       fetchHistory: [...state.fetchHistory, { lastFetch: action.date, groupName: action.group }],
-      data: [...state.data.filter(message => message.channelID !== action.channel), ...action.json]
+      data: [...state.data.filter(message => message.groupId !== action.group), ...action.json]
     };
   default:
     return state;
