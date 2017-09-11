@@ -12,8 +12,8 @@ const Auth = {
     if (token) {
       jwt.verify(token, secret, (error, decoded) => {
         if (error) {
-          response.status(401).send({
-            message: 'Invalid token'
+          response.status(401).json({
+            msg: 'Invalid token'
           });
         } else {
           request.decoded = decoded;
@@ -21,8 +21,8 @@ const Auth = {
         }
       });
     } else {
-      response.status(401).send({
-        message: 'You are not authorized kindly login or sign up'
+      response.status(401).json({
+        msg: 'You are not authorized kindly login or sign up'
       });
     }
   },
