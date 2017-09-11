@@ -17,7 +17,7 @@ const UsersCtrl = {
   showUsers(req, res) {
     db.Users.findAll({
       where: {}
-    }).then(users => res.send({
+    }).then(users => res.json({
       users,
     }));
   },
@@ -41,15 +41,15 @@ const UsersCtrl = {
     })
     .spread((user, created) => {
       if (created) {
-        return res.status(201).send({
+        return res.status(201).json({
           username: user.username,
           email: user.email,
           phonenumber: user.phoneNumber,
           token: Auth.generateToken(user)
         });
       }
-      return res.status(409).send({ message: 'user already exist' });
-    }).catch(err => res.send(err));
+      return res.status(409).json({ msg: 'user already exist' });
+    }).catch(err => res.json({ msg: err.errors[0].message }));
   },
  /**
    * signin - Log in a user
@@ -66,16 +66,16 @@ const UsersCtrl = {
       }
     }).then((user) => {
       if (user && helper.validatePassword(user, password)) {
-        res.status(200).send({
-          message: 'You have been loggedin successfully',
+        res.status(200).json({
+          msg: 'You have been loggedin successfully',
           token: Auth.generateToken(user)
         });
       } else {
-        res.status(403).send({
-          message: 'incorrect Email and password'
+        res.status(401).json({
+          msg: 'incorrect Email and password'
         });
       }
-    });
+    }).catch((err => res.json({ msg: err.errors.message })));
   },
   /**
    * signOut - Log Out a user
@@ -84,8 +84,8 @@ const UsersCtrl = {
    * @returns {void} Returns void
    */
   signOut(req, res) {
-    res.status(200).send({
-      message: 'User successfully logged out'
+    res.status(200).json({
+      msg: 'User successfully logged out'
     });
   },
 

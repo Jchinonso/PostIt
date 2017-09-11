@@ -20,14 +20,14 @@ const GroupCtrl = {
     }).spread((group, created) => {
       if (created) {
         group.addUser(req.decoded.userId);
-        return res.status(201).send({
+        return res.status(201).json({
           id: group.id,
           name: group.name,
           description: group.description,
           creator: group.creator
         });
       }
-      return res.status(409).send({ message: 'Group already exist' });
+      return res.status(409).json({ message: 'Group already exist' });
     });
   },
   /** Retrieve all Group of a User
@@ -44,13 +44,13 @@ const GroupCtrl = {
     }).then((user) => {
       user.getGroups().then((groups) => {
         if (groups.length === 0) {
-          return res.status(200).send({
+          return res.status(200).json({
             message: 'You do not belong to any group'
           });
         }
-        return res.status(200).send(groups);
+        return res.status(200).json(groups);
       });
-    }).catch(error => res.status(500).send({
+    }).catch(error => res.status(500).json({
       message: 'server error'
     }));
   },
@@ -85,22 +85,22 @@ const GroupCtrl = {
               }
             }).spread((userGroup, created) => {
               if (created) {
-                return res.status(201).send({
+                return res.status(201).json({
                   message: 'successfully added user to group'
                 });
               }
-              return res.status(409).send({
+              return res.status(409).json({
                 message: 'user already exist'
               });
             });
           } else {
-            return res.status(400).send({
+            return res.status(404).json({
               message: 'User does not exist'
             });
           }
         });
       } else {
-        return res.status(400).send({
+        return res.status(404).json({
           message: 'Group does not exist'
         });
       }
@@ -122,9 +122,9 @@ const GroupCtrl = {
     }).then((group) => {
       if (group) {
         group.getUsers()
-         .then(groups => res.status(200).send(groups));
+         .then(groups => res.status(200).json(groups));
       } else {
-        return res.status(404).send({ message: 'Group does not exist' });
+        return res.status(404).json({ message: 'Group does not exist' });
       }
     });
   },
