@@ -20,6 +20,12 @@ module.exports = (sequelize, DataTypes) => {
     password: {
       allowNull: false,
       type: DataTypes.STRING,
+      validate: {
+        len: {
+          args: [6, 255],
+          msg: 'password must be at least six characters long'
+        }
+      }
     },
     phoneNumber: {
       type: DataTypes.STRING,
