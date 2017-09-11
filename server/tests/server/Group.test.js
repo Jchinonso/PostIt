@@ -44,7 +44,7 @@ describe('POST api/group', () => {
     .set({ Authorization: userResponse.token })
     .end((err, res) => {
       if (err) return err;
-      expect(res.status).to.equal(200);
+      expect(res.status).to.equal(201);
       expect(res.body).to.have.property('name');
       expect(res.body).to.have.property('description');
       done();
