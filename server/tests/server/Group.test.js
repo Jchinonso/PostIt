@@ -30,6 +30,7 @@ describe('POST api/group', () => {
       userResponse = res.body;
       request.post('/api/v1/group')
       .set({ Authorization: userResponse.token })
+      .set('Accept', 'application/json')
       .send(goodGroup)
       .end((err, res) => {
         if (err) return err;
@@ -42,6 +43,7 @@ describe('POST api/group', () => {
     request.post('/api/v1/group')
     .send(anotherGroup)
     .set({ Authorization: userResponse.token })
+    .set('Accept', 'application/json')
     .end((err, res) => {
       if (err) return err;
       expect(res.status).to.equal(201);
@@ -82,6 +84,7 @@ describe('POST api/group', () => {
     request.post('/api/v1/group/1/user')
     .send(userDoesntExist)
     .set({ Authorization: userResponse.token })
+    .set('Accept', 'application/json')
     .end((err, res) => {
       expect(res.status).to.equal(409);
       done();
@@ -91,6 +94,7 @@ describe('POST api/group', () => {
     request.post('/api/v1/group/1/user')
     .send(username)
     .set({ Authorization: userResponse.token })
+    .set('Accept', 'application/json')
     .end((err, res) => {
       expect(res.status).to.equal(400);
       done();
@@ -99,6 +103,7 @@ describe('POST api/group', () => {
   it('should get all users in a group', (done) => {
     request.get('/api/v1/group/1/user')
     .set({ Authorization: userResponse.token })
+    .set('Accept', 'application/json')
     .end((err, res) => {
       expect(res.body.length).to.equal(1);
       done();
@@ -107,6 +112,7 @@ describe('POST api/group', () => {
   it('should not get user if group doesnt exist', (done) => {
     request.get('/api/v1/group/3/user')
     .set({ Authorization: userResponse.token })
+    .set('Accept', 'application/json')
     .end((err, res) => {
       expect(res.status).to.equal(404);
       done();
@@ -116,6 +122,7 @@ describe('POST api/group', () => {
     request.post('/api/v1/group/1/message')
     .send(goodMessage)
     .set({ Authorization: userResponse.token })
+    .set('Accept', 'application/json')
     .end((err, res) => {
       expect(res.status).to.equal(201);
       done();
@@ -125,6 +132,7 @@ describe('POST api/group', () => {
     request.post('/api/v1/group/4/message')
     .send(goodMessage)
     .set({ Authorization: userResponse.token })
+    .set('Accept', 'application/json')
     .end((err, res) => {
       expect(res.status).to.equal(409);
       done();
@@ -134,6 +142,7 @@ describe('POST api/group', () => {
     request.post('/api/v1/group/1/message')
     .send()
     .set({ Authorization: userResponse.token })
+    .set('Accept', 'application/json')
     .end((err, res) => {
       expect(res.status).to.equal(400);
       done();
@@ -142,6 +151,7 @@ describe('POST api/group', () => {
   it('should get messages that belongs to group', (done) => {
     request.get('/api/v1/group/1/message')
     .set({ Authorization: userResponse.token })
+    .set('Accept', 'application/json')
     .end((err, res) => {
       expect(res.status).to.equal(200);
       done();
@@ -150,6 +160,7 @@ describe('POST api/group', () => {
   it('should not get message if group doesnt exist', (done) => {
     request.get('/api/v1/group/3/message')
     .set({ Authorization: userResponse.token })
+    .set('Accept', 'application/json')
     .end((err, res) => {
       expect(res.status).to.equal(404);
       done();
