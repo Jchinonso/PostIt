@@ -70,4 +70,22 @@ GET /api/group/groupid/message |   Get all messages that belongs to group.
 * GET `/api/user` Use this route to load all registered members 
 
 
+Development
+-----------
+The application was developed with [NodeJs](http://nodejs.org) and [Express](http://expressjs.com) is used for routing. The [Postgres](http://postgresql.com) database was used with [sequelize](http://sequelizejs.com) as the ORM
+
+Installation
+------------
+1.  Ensure you have NodeJs and postgres installed
+2.  Clone the repository `https://github.com/jchinonso/PostIt`
+3.  Change your directory `cd PostIt`
+4.  Install all dependencies `npm install`
+5.  Start the app `npm run start:dev` for development Or
+6.  Run `npm start` to use transpiled code
+7.  Use [postman](https://www.getpostman.com/) to consume the API
+
+Tests
+-----
+*  The tests have been written using Mocha framework and Chai assertion library
+*  Run the test with `npm test`
 

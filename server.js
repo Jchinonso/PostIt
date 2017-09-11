@@ -15,5 +15,3 @@ const server = app.listen(port, (err) => {
     open(`http://localhost:${port}`);
   }
 });
-const io = new SocketIo(server, { path: '/api/chat' });
-socketEvents(io);
