@@ -22,7 +22,7 @@ const Auth = {
       });
     } else {
       response.status(401).send({
-        message: 'Token required to access this route'
+        message: 'You are not authorized kindly login or sign up'
       });
     }
   },
