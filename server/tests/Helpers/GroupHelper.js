@@ -1,4 +1,3 @@
-import faker from 'faker';
 
 module.exports = {
   goodGroup1: {

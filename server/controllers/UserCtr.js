@@ -1,6 +1,6 @@
 
 import jwt from 'jsonwebtoken';
-import Auth from '../middleware/Auth'
+import Auth from '../middleware/Auth';
 import db from '../models';
 import helper from './helper';
 
@@ -49,7 +49,7 @@ const UsersCtrl = {
         });
       }
       return res.status(409).send({ message: 'user already exist' });
-    });
+    }).catch(err => res.send(err));
   },
  /**
    * signin - Log in a user

@@ -14,9 +14,11 @@ const helper = {
     return bcrypt.compareSync(password, user.password);
   },
 
-  hashedPassword: (password) => {
-    return bcrypt.hashSync(password, bcrypt.genSaltSync(8));
-  }
+  /** validate plain password against hashed password
+     * @param {String} password
+     * @return {Boolean} return validity of the password
+     */
+  hashedPassword: password => bcrypt.hashSync(password, bcrypt.genSaltSync(8))
 };
 
 export default helper;
