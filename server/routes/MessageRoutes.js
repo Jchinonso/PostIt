@@ -1,10 +1,10 @@
-import MessageCtrl from '../controllers/MessageCtr';
+import MessageController from '../controllers/MessageController';
 import Auth from '../middleware/Auth';
 
 const MessageRoutes = (router) => {
   router.route('/group/:id/message')
-    .post(Auth.verifyToken, MessageCtrl.createMessage)
-    .get(Auth.verifyToken, MessageCtrl.retrieveAllMessages);
+    .post(Auth.verifyToken, MessageController.createMessage)
+    .get(Auth.verifyToken, MessageController.retrieveAllMessages);
 };
 
 export default MessageRoutes;
