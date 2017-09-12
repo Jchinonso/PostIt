@@ -2,7 +2,7 @@
 import db from '../models';
 
 
-const GroupCtrl = {
+const GroupController = {
 
   /**
    *  - Create a user
@@ -130,4 +130,4 @@ const GroupCtrl = {
   },
 };
 
-export default GroupCtrl;
+export default GroupController;

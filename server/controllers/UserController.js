@@ -5,7 +5,7 @@ import db from '../models';
 import helper from './helper';
 
 
-const UsersCtrl = {
+const UsersController = {
 
   /**
    * showUsers
@@ -75,7 +75,7 @@ const UsersCtrl = {
           msg: 'incorrect Email and password'
         });
       }
-    }).catch((err => res.json({ msg: err.errors.message })));
+    }).catch((err => res.json({ msg: err.errors[0].message })));
   },
   /**
    * signOut - Log Out a user
@@ -92,4 +92,4 @@ const UsersCtrl = {
 };
 
 
-export default UsersCtrl;
+export default UsersController;
