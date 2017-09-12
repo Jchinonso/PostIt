@@ -45,7 +45,7 @@
     "omit": "^1.0.1",
     "pg": "^6.2.4",
     "pg-hstore": "^2.3.2",
-    "sequelize": "^4.1.0",
+    "sequelize": "^4.0.0",
     "superagent": "^3.5.2",
     "supertest": "^3.0.0"
   },
