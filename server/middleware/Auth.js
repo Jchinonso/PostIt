@@ -12,7 +12,7 @@ const Auth = {
     if (token) {
       jwt.verify(token, secret, (error, decoded) => {
         if (error) {
-          response.status(401).json({
+          response.send({
             msg: 'Invalid token'
           });
         } else {
