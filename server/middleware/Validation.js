@@ -15,7 +15,6 @@ export default class Validation {
    */
   static validateSignUpInput(request, response, next) {
     request.checkBody('username', 'Username is required').notEmpty();
-    request.checkBody('username', 'Username cannot be a number').isAlpha();
     request.checkBody('password', 'Password is required').notEmpty();
     request.checkBody('email', 'Invalid email').isEmail();
     request.checkBody('email', 'Email is required').notEmpty();
@@ -23,7 +22,6 @@ export default class Validation {
 
     /* eslint-disable no-useless-escape */
     request.checkBody('phoneNumber', 'Phone number must not be a string').matches(/^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/im);
-
     const errors = request.validationErrors();
     if (errors) {
       const unwanted = ['param', 'value', 'location'];
@@ -48,8 +46,49 @@ export default class Validation {
     request.checkBody('password', 'Password is required').notEmpty();
 
     const errors = request.validationErrors();
+  
     if (errors) {
-      const unwanted = ['param', 'value'];
+      const unwanted = ['param', 'value', 'location'];
+      const errorMsg = errors.map(omit(unwanted));
+      return response.status(400).json(errorMsg);
+    }
+    return next();
+  }
+
+  /**
+   * @param {Object} request request from client
+   * @param {Object} response server response
+   * @param {callback} next
+   * @returns {json} returns the error (if there's any) in a JSON format
+   * @memberof Validation
+   */
+  static validateGroupInput(request, response, next) {
+    request.checkBody('name', 'Group name is required').notEmpty();
+    request.checkBody('description', 'description is required').notEmpty();
+
+    const errors = request.validationErrors();
+  
+    if (errors) {
+      const unwanted = ['param', 'value', 'location'];
+      const errorMsg = errors.map(omit(unwanted));
+      return response.status(400).json(errorMsg);
+    }
+    return next();
+  }
+
+    /**
+   * @param {Object} request request from client
+   * @param {Object} response server response
+   * @param {callback} next
+   * @returns {json} returns the error (if there's any) in a JSON format
+   * @memberof Validation
+   */
+  static validateMessageInput(request, response, next) {
+    request.checkBody('content', 'Message content is required').notEmpty();
+
+    const errors = request.validationErrors();
+    if (errors) {
+      const unwanted = ['param', 'value', 'location'];
       const errorMsg = errors.map(omit(unwanted));
       return response.status(400).json(errorMsg);
     }
