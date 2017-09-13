@@ -2,15 +2,19 @@ require('dotenv').config();
 
 module.exports = {
   development: {
-    url: process.env.DATABASE_URL,
-    dialect: 'postgres'
+    dialect: 'postgres',
+    database: 'PostIt',
+    username: 'postgres',
+    password: 'poly12345',
+    host: 'localhost',
+    port: 5433
   },
   test: {
-    url: process.env.TEST_DB_URL,
+    use_env_variable: 'TEST_DB_URL',
     dialect: 'postgres'
   },
   production: {
-    url: process.env.DATABASE_URL,
+    use_env_variable: 'DATABASE_URL',
     dialect: 'postgres'
   }
 };

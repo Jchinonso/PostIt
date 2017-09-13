@@ -38,7 +38,6 @@ class SignUp extends React.Component {
    */
   handleOnSubmit(event) {
     event.preventDefault();
-    event.preventDefault();
     if (this.state.username.length && this.state.password.length && this.state.phoneNumber.length && this.state.email.length) {
       const userObj = {
         username: this.state.username,

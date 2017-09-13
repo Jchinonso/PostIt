@@ -1,15 +1,34 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
+import $ from 'jquery';
+import Proptypes from 'prop-types';
 import { connect } from 'react-redux';
 import CreateGroupModal from './CreateGroupModal';
 import GroupListItem from './GroupListItem';
-import
+import { fetchGroups } from '../../actions/groupActions';
 
-export class SideBarComponent extends React.Component{
+
+class SideBarComponent extends React.Component {
   constructor(props) {
     super(props);
-  }
-  handleChangeGroup() {
+    this.state = {
+      selectedGroup: null,
+      priority: 'normal'
+    };
 
+    this.handleChangeGroup = this.handleChangeGroup.bind(this);
+  }
+  componentDidMount() {
+    this.props.fetchGroups();
+  }
+   /**
+   * @method selectGroup
+   * @returns {void}
+   * @memberof TwoColumnDiv
+   * @param {Object} event
+   */
+  handleChangeGroup(event) {
+    event.preventDefault();
+    this.setState({ selectedGroup: event.target.id });
   }
   render() {
     return (
@@ -19,7 +38,7 @@ export class SideBarComponent extends React.Component{
             <div className="row">
               <i className="fa fa-user-circle fa-4x" style={{ marginTop: '5%' }} width={100} height={100} aria-hidden="true" />
               <p>
-                { user.username}
+                {this.props.username }
               </p>
             </div>
           </div>
@@ -29,31 +48,19 @@ export class SideBarComponent extends React.Component{
           <a className="secondary-content modal-trigger" href="#modal1"><span className="caption"> + </span></a>
           <CreateGroupModal />
         </li>
-        <GroupListItem onClick={() => {handleChangeGroup(group)}}/>
+        <GroupListItem handleChangeGroup={this.handleChangeGroup} groups={this.props.groups} />
       </ul>
     );
   }
 }
 
-const mapStateToProps = state =>
-  ({
-    isAuthenticated: state.auth.isAuthenticated,
-    user: state.auth.user,
-    groups: state.userGroups,
-    selectedGroup: state.activeGroup,
-  });
-
-const mapDispatchToProps = dispatch =>
-({
-  exploreGroup: (group) => {
-    dispatch(selectGroup(group));
-    dispatch(getGroupMessages());
-    dispatch(getGroupUsers());
-  },
-  loadUserGroups: () => {
-    dispatch(fetchUserGroups());
-  }
+const mapStateToProps = state => ({
+  groups: state.groups,
+  username: state.auth.user.username
 });
+SideBarComponent.propTypes = {
+  groups: Proptypes.objectOf.isRequired,
+  username: Proptypes.string.isRequired,
+};
 
-
-export default connect(mapStateToProps, mapDispatchToProps)(SideBarComponent);
+export default connect(mapStateToProps, { fetchGroups })(SideBarComponent);

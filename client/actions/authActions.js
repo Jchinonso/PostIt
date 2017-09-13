@@ -51,7 +51,7 @@ export function signUp(user) {
       setAuthorizationToken(token);
       dispatch(setCurrentUser(jwtDecode(token)));
       toastr.success('signed up successfully');
-      browserHistory.push('/dashboard');
+      browserHistory.push('/sidebar');
     })
     .catch((error) => {
       toastr.error(error.response.data.message);
@@ -74,7 +74,7 @@ export function signIn(user) {
       setAuthorizationToken(token);
       dispatch(setCurrentUser(jwtDecode(token)));
       toastr.success('Signed in Succesfully');
-      browserHistory.push('/dashboard');
+      browserHistory.push('/sidebar');
     })
     .catch((error) => {
       throw (error);

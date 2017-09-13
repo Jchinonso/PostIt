@@ -2,12 +2,12 @@ import { combineReducers } from 'redux';
 import auth from './auth';
 import activeGroup from './activeGroup';
 import groups from './groups';
-import messages from './messages';
+import activeGroupmessages from './activeGroupmessages';
 
 const rootReducer = combineReducers({
   auth,
   activeGroup,
-  messages,
+  activeGroupmessages,
   groups
 });
 

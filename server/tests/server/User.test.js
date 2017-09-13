@@ -26,6 +26,7 @@ describe('POST api/user/signup', () => {
   it('should create a new user', (done) => {
     request.post('/api/v1/user/signup')
     .send(anotherUser)
+    .set('Accept', 'application/json')
     .end((err, res) => {
       if (err) return err;
       expect(res.status).to.equal(201);
@@ -38,6 +39,7 @@ describe('POST api/user/signup', () => {
   it('should not create user with missing property ', (done) => {
     request.post('/api/v1/user/signup')
     .send(badUser1)
+    .set('Accept', 'application/json')
     .end((err, res) => {
       expect(res.body.message).to.equal('Unexpected error occured');
       return done();
@@ -46,6 +48,7 @@ describe('POST api/user/signup', () => {
   it('should not create a user if already exist ', (done) => {
     request.post('/api/v1/user/signup')
     .send(goodUser)
+    .set('Accept', 'application/json')
     .end((err, res) => {
       expect(res.status).to.equal(409);
       expect(res.body.message).to.equal('user already exist');
@@ -55,6 +58,7 @@ describe('POST api/user/signup', () => {
   it('should signin a user', (done) => {
     request.post('/api/v1/user/signin')
     .send(goodUser)
+    .set('Accept', 'application/json')
     .end((err, res) => {
       expect(res.status).to.equal(200);
       expect(res.body.message).to.equal('You have been loggedin successfully');
@@ -64,6 +68,7 @@ describe('POST api/user/signup', () => {
   it('should not signin a user if user does not exist', (done) => {
     request.post('/api/v1/user/signin')
     .send(userDoesntExist)
+    .set('Accept', 'application/json')
     .end((err, res) => {
       expect(res.status).to.equal(409);
       expect(res.body.message).to.equal('incorrect Email and password');
@@ -80,6 +85,7 @@ describe('POST api/user/signup', () => {
   it('should validate email address', (done) => {
     request.post('/api/v1/user/signup')
     .send(badUser2)
+    .set('Accept', 'application/json')
     .end((err, res) => {
       if (err) return err;
       expect(res.body.message).to.equal('Unexpected error occured');
@@ -89,6 +95,7 @@ describe('POST api/user/signup', () => {
   it('should unique username', (done) => {
     request.post('/api/v1/user/signup')
     .send(anotherUser2)
+    .set('Accept', 'application/json')
     .end((err, res) => {
       if (err) return err;
       expect(res.body.message).to.equal('Unexpected error occured');

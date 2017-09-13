@@ -4,7 +4,12 @@ module.exports = (sequelize, DataTypes) => {
     name: {
       allowNull: false,
       type: DataTypes.STRING,
-      unique: true
+      unique: true,
+      validate: {
+        notEmpty: {
+          msg: 'Group name cannot be an empty string'
+        }
+      }
     },
     creatorId: {
       type: DataTypes.INTEGER

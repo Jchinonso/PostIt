@@ -1,23 +1,26 @@
-import React, { PropTypes } from 'react';
-import classnames from 'classnames';
-import { Button } from 'react-bootstrap';
+import React from 'react';
+import Proptypes from 'prop-types';
 
 const GroupListItem = (props) => {
-  const { onClick, group } = props;
+  const { handleChangeGroup, groups } = props;
   return (
-    <li id="dashboard">
-      <a
-        className="card"
-        onClick={onClick}
-        href="#?"
-      ><span>{ group.name}</span></a>
-    </li>
+    <ul>
+      {groups.map(group =>
+        (<li id="dashboard">
+          <a
+            className="card"
+            onClick={handleChangeGroup}
+            href="#?"
+          ><span>{ group.name}</span></a>
+        </li>)
+      )}
+    </ul>
   );
 };
 
 GroupListItem.propTypes = {
-  group: PropTypes.objectOf.isRequired,
-  onClick: PropTypes.func.isRequired
+  groups: Proptypes.arrayOf(Proptypes.object).isRequired,
+  handleChangeGroup: Proptypes.func.isRequired
 };
 
 

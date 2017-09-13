@@ -5,6 +5,7 @@ import express from 'express';
 import webpack from 'webpack';
 import config from '../../webpack.config.dev';
 
+import expressValidator from 'express-validator';
 import Routes from '../routes/index';
 
 require('dotenv').config();
@@ -24,6 +25,7 @@ app.use(require('webpack-hot-middleware')(compiler));
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
+app.use(expressValidator());
 
 Routes(router);
 

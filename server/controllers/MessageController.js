@@ -1,7 +1,7 @@
 import db from '../models';
 
 
-const MessageCtrl = {
+const MessageController = {
   /** Creates Message that partains to a group
    * @param {Object} req Request Object
    * @param {Object} res Response Object
@@ -57,4 +57,4 @@ const MessageCtrl = {
   }
 };
 
-export default MessageCtrl;
+export default MessageController;

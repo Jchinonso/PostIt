@@ -1,8 +1,6 @@
 // This will be our application entry. We'll setup our server here.
 import open from 'open';
-import SocketIo from 'socket.io';
 import app from './server/config/app';
-import socketEvents from './socketEvents';
 
 
 require('dotenv').config();

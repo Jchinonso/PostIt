@@ -1,59 +1,70 @@
-import React, { Component, PropTypes } from 'react';
-import moment from 'moment';
-import { Input } from 'react-bootstrap';
+import React, { Component } from 'react';
+import Proptypes from 'prop-types';
 
-export default class MessageComposer extends Component {
-
-  constructor(props, context) {
-    super(props, context);
+/**
+ * @class MessageComposer
+ * @extends {Component}
+ */
+class MessageComposer extends Component {
+  /**
+   * Creates an instance of MessageComposer.
+   * @param {any} props
+   * @memberof ChatInput
+   */
+  constructor(props) {
+    super(props);
     this.state = {
-      content: '',
+      message: ''
     };
+    this.handleInputChange = this.handleInputChange.bind(this);
+    this.clearMessage = this.clearMessage.bind(this);
   }
-  handleSubmit(event) {
-    const { user, activeGroup } = this.props;
-    const content = event.target.value.trim();
-    if (event.which === 13) {
-      event.preventDefault();
-      const newMessage = {
-        groupId: this.props.activeGroup.id,
-        content,
-        sender
-      };
-      this.props.onSave(newMessage);
-      this.setState({ content: '' });
-    }
+
+  /**
+   *
+   * @method handleInputChange
+   * @memberof MessageComposer
+   * @param {any} event
+   * @returns {void}
+   */
+  handleInputChange(event) {
+    this.setState({ message: event.target.value });
   }
-  handleChange(event) {
-    this.setState({ content: event.target.value });
+
+  /**
+   *
+   * @method clearMessage
+   * @memberof MessageComposer
+   * @param {any} event
+   * @returns {void}
+   */
+  clearMessage() {
+    this.setState({ message: '' });
   }
+
+  /**
+   *
+   * @returns {Object} a JSX Object
+   * @memberof MessageComposer
+   */
   render() {
+    const { onSubmit } = this.props;
+    const { message } = this.state;
     return (
-      <div style={{
-        zIndex: '52',
-        left: '21.1rem',
-        right: '1rem',
-        width: '100%',
-        flexShrink: '0',
-        order: '2',
-        marginTop: '0.5em'
-      }}>
-        <Input
-          style={{
-            height: '100%',
-            fontSize: '2em',
-            marginBottom: '1em'
-          }}
-          type="textarea"
-          name="message"
-          ref="messageComposer"
-          autoFocus="true"
-          placeholder="Type here to chat!"
-          value={this.state.content}
-          onChange={this.handleChange.bind(this)}
-          onKeyDown={this.handleSubmit.binnd(this)}
-        />
+      <div className="input-container">
+        <div id="message-input">
+          <textarea type="text" onChange={this.handleInputChange} value={message} />
+        </div>
+        <button className="waves-effect waves-light btn" onClick={() => onSubmit(message, this.clearMessage)}>
+          Send
+        </button>
       </div>
     );
   }
 }
+
+MessageComposer.propTypes = {
+  onSubmit: Proptypes.func.isRequired
+};
+
+export default MessageComposer;

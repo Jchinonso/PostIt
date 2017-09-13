@@ -12,8 +12,8 @@ const Auth = {
     if (token) {
       jwt.verify(token, secret, (error, decoded) => {
         if (error) {
-          response.status(401).send({
-            message: 'Invalid token'
+          response.send({
+            msg: 'Invalid token'
           });
         } else {
           request.decoded = decoded;
@@ -22,7 +22,7 @@ const Auth = {
       });
     } else {
       response.status(401).send({
-        message: 'Token required to access this route'
+        msg: 'You are not authorized kindly login or sign up'
       });
     }
   },

@@ -1,19 +1,15 @@
-import { CHANGE_GROUP } from '../constants/ActionTypes';
+import {
+  SELECT_GROUP
+} from '../constants/ActionTypes';
 
-const initialState = {
-  name: 'General',
-  id: 0
-};
-
-export default function activeGroup(state = initialState, action) {
+const activeGroup = (state = null, action) => {
   switch (action.type) {
-  case CHANGE_GROUP:
-    return {
-      name: action.group.name,
-      id: action.group.id
-    };
-
+  case SELECT_GROUP: {
+    return action.groupId;
+  }
   default:
     return state;
   }
-}
+};
+
+export default activeGroup;

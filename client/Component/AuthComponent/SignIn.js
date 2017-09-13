@@ -68,7 +68,7 @@ class SignIn extends React.Component {
           <div className="card-panel">
             <h4 className="header2 center">Sign In</h4>
             <div className="row">
-              <form className="col s12" action="POST" onSubmit={this.handleOnSubmit}>
+              <form className="col s12" onSubmit={this.handleOnSubmit}>
                 <div className="row">
                   <div className="input-field col s12" style={{ margin: 0 }}>
                     <i className="material-icons prefix">email</i>
