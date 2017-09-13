@@ -11,7 +11,12 @@ module.exports = {
       name: {
         type: Sequelize.STRING,
         allowNull: false,
-        unique: true
+        unique: true,
+        validate: {
+          notEmpty: {
+            msg: 'Group name cannot be an empty string'
+          }
+        }
       },
       creatorId: {
         type: Sequelize.INTEGER,

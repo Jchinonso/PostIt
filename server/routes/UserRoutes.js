@@ -1,17 +1,18 @@
-import UsersCtrl from '../controllers/UserCtr';
+import UsersController from '../controllers/UserController';
 import Auth from '../middleware/Auth';
+import Validation from '../middleware/Validation';
 
 const UserRoutes = (router) => {
   router.route('/user')
-    .get(Auth.verifyToken, UsersCtrl.showUsers);
+    .get(Auth.verifyToken, UsersController.showUsers);
 
   router.route('/user/signup')
-    .post(UsersCtrl.signUp);
+    .post(Validation.validateSignUpInput, UsersController.signUp);
 
   router.route('/user/signin')
-    .post(UsersCtrl.signIn);
+    .post(Validation.validateSignInInput, UsersController.signIn);
   router.route('/user/signOut')
-    .post(UsersCtrl.signOut);
+    .post(UsersController.signOut);
 };
 
 export default UserRoutes;

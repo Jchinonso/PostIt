@@ -1,14 +1,15 @@
 import Auth from '../middleware/Auth';
-import GroupCtrl from '../controllers/GroupCtr';
+import GroupController from '../controllers/GroupController';
+import Validation from '../middleware/Validation';
 
 const GroupRoutes = (router) => {
   router.route('/group')
-      .post(Auth.verifyToken, GroupCtrl.createGroup)
-      .get(Auth.verifyToken, GroupCtrl.retrieveAllGroup);
+      .post(Validation.validateGroupInput, Auth.verifyToken, GroupController.createGroup)
+      .get(Auth.verifyToken, GroupController.retrieveAllGroup);
 
   router.route('/group/:id/user')
-      .post(Auth.verifyToken, GroupCtrl.addUserToGroup)
-      .get(Auth.verifyToken, GroupCtrl.retrieveGroupMembers);
+      .post(Auth.verifyToken, GroupController.addUserToGroup)
+      .get(Auth.verifyToken, GroupController.retrieveGroupMembers);
 };
 
 export default GroupRoutes;
