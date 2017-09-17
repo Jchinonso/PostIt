@@ -1,20 +1,29 @@
 require('dotenv').config();
 
+const {
+  DB_USERNAME,
+  password,
+  database,
+  host,
+  port
+} = process.env;
+
 module.exports = {
   development: {
-    dialect: 'postgres',
-    database: 'PostIt',
-    username: 'postgres',
-    password: 'poly12345',
-    host: 'localhost',
-    port: 5433
+    password,
+    database,
+    host,
+    port,
+    username: DB_USERNAME,
+    dialect: 'postgres'
   },
   test: {
-    use_env_variable: 'TEST_DB_URL',
+    use_env_variable: 'URL_TEST',
     dialect: 'postgres'
   },
   production: {
-    use_env_variable: 'DATABASE_URL',
+    use_env_variable: 'URL',
     dialect: 'postgres'
   }
 };
+
