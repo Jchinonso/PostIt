@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const Header = ({ signOut }) => (
+const HeaderComponent = ({ signOut }) => (
   <header>
     <nav className="indigo">
       <div className="nav-wrapper">
@@ -21,11 +21,11 @@ const Header = ({ signOut }) => (
   </header>
 );
 
-Header.propTypes = {
+HeaderComponent.propTypes = {
   signOut: PropTypes.func
 };
-Header.defaultProps = {
+HeaderComponent.defaultProps = {
   signOut: null
 };
 
-export default Header;
+export default HeaderComponent;

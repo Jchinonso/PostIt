@@ -5,9 +5,10 @@ const GroupListItem = (props) => {
   const { handleChangeGroup, groups } = props;
   return (
     <ul>
-      {groups.map(group =>
-        (<li id="dashboard">
+      {groups.length !== 0 && groups.map(group =>
+        (<li key={group.id} id="dashboard">
           <a
+            id={group.id}
             className="card"
             onClick={handleChangeGroup}
             href="#?"

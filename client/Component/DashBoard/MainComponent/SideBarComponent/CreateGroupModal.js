@@ -1,6 +1,6 @@
 import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
-import { createGroup } from '../../actions/actions';
+import { createGroup } from '../../../../actions/actions';
 
 class CreateGroupModal extends React.Component {
   constructor(props) {
