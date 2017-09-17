@@ -5,10 +5,12 @@ import db from '../models';
 const GroupController = {
 
   /**
-   *  - Create a user
+   *  - Create a group
+   * @method
+   * @memberof GroupController
    * @param {Object} req Request Object
    * @param {Object} res Response Object
-   * @returns {void} Returns void
+   * @return {function} a response object of the group created
    */
   createGroup(req, res) {
     db.Groups.findOrCreate({
@@ -30,7 +32,10 @@ const GroupController = {
       return res.status(409).json({ message: 'Group already exist' });
     });
   },
-  /** Retrieve all Group of a User
+
+  /** Retrieve all Group the User belongs to
+   * @method
+   * @memberof GroupController
    * @param {Object} req Request Object
    * @param {Object} res Response Object
    * @returns {object} Returns all user Groups
@@ -42,22 +47,18 @@ const GroupController = {
         username: req.decoded.username
       }
     }).then((user) => {
-      user.getGroups().then((groups) => {
-        if (groups.length === 0) {
-          return res.status(200).json({
-            message: 'You do not belong to any group'
-          });
-        }
-        return res.status(200).json(groups);
-      });
+      user.getGroups().then(groups => res.status(200).json(groups));
     }).catch(error => res.status(500).json({
       message: 'server error'
     }));
   },
+
   /** Add User To Group
+   * @method
+   * @memberof GroupController
    * @param {Object} req Request Object
    * @param {Object} res Response Object
-   * @returns {object} Returns User
+   * @returns {object} Returns User object that was added to a group
    */
 
   addUserToGroup(req, res) {
@@ -86,32 +87,34 @@ const GroupController = {
             }).spread((userGroup, created) => {
               if (created) {
                 return res.status(201).json({
-                  message: 'successfully added user to group'
+                  msg: 'successfully added user to group'
                 });
               }
               return res.status(409).json({
-                message: 'user already exist'
+                msg: 'user already exist'
               });
             });
           } else {
             return res.status(404).json({
-              message: 'User does not exist'
+              msg: 'User does not exist'
             });
           }
         });
       } else {
         return res.status(404).json({
-          message: 'Group does not exist'
+          msg: 'Group does not exist'
         });
       }
     });
   },
 
 
-    /** Retrieves all Users of a Group
+   /** Retrieves all Users of a Group
+   *  @method
+   * @memberof GroupController
    * @param {Object} req Request Object
    * @param {Object} res Response Object
-   * @returns {object} Returns Group Users
+   * @returns {object} Returns all Group members
    */
 
   retrieveGroupMembers(req, res) {
