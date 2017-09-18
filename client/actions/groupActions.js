@@ -3,7 +3,6 @@ import axios from 'axios';
 import toastr from 'toastr';
 import * as types from '../constants/ActionTypes';
 
-
 /**
  * create action: select a group
  * @function selectGroup
@@ -23,7 +22,7 @@ export function selectGroup(groupId) {
  * @returns {object} action: type and response
  */
 
-function createGroupSuccess(group) {
+export function createGroupSuccess(group) {
   return {
     type: types.CREATE_GROUP_SUCCESS,
     group
