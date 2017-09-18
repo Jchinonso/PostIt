@@ -5,6 +5,7 @@ import { bindActionCreators } from 'redux';
 import MessageBoardComponent from './MessageBoardComponent/Index';
 import CreateGroupModal from './SideBarComponent/CreateGroupModal';
 import SideBarComponent from './SideBarComponent/Index';
+import AddGroupUser from './AddGroupUser/Index';
 import { getAllGroupMessages } from '../../../actions/messageActions';
 import { selectGroup } from '../../../actions/groupActions';
 
@@ -18,6 +19,7 @@ class MainComponent extends React.Component {
     this.handleChangeGroup = this.handleChangeGroup.bind(this);
   }
 
+
   handleChangeGroup(event) {
     event.preventDefault();
     this.props.selectGroup(event.target.id);
@@ -27,6 +29,7 @@ class MainComponent extends React.Component {
     return (
       <main>
         <SideBarComponent handleChangeGroup={this.handleChangeGroup} />
+        <AddGroupUser />
         <CreateGroupModal />
         <MessageBoardComponent messages={this.props.messages} username={this.props.username} />
       </main>
@@ -38,6 +41,7 @@ function mapStateToProps(state) {
   return {
     messages: state.activeGroupmessages,
     username: state.auth.user.username,
+    groups: state.groups
   };
 }
 

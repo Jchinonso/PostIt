@@ -5,7 +5,7 @@ const MessageBoardComponent = (props) => {
   const { messages, username } = props;
   return (
     <div className="message-board" >
-      {messages.map(message =>
+      {messages.length !== 0 && messages.map(message =>
         (<div className="message-box card" priority="urgent">
           <div className="message-text">
             <a href><span className="author-name">{username}</span></a>
