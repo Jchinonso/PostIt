@@ -13,24 +13,29 @@ const GroupController = {
    * @return {function} a response object of the group created
    */
   createGroup(req, res) {
-    db.Groups.findOrCreate({
-      where: { name: req.body.name },
-      defaults: {
-        description: req.body.description,
-        creator: req.decoded.username
-      }
-    }).spread((group, created) => {
-      if (created) {
-        group.addUser(req.decoded.userId);
-        return res.status(201).json({
-          id: group.id,
-          name: group.name,
-          description: group.description,
-          creator: group.creator
-        });
-      }
-      return res.status(409).json({ message: 'Group already exist' });
-    });
+    const { name, description } = req.body;
+    if (name && description) {
+      db.Groups.findOrCreate({
+        where: { name },
+        defaults: {
+          description,
+          creator: req.decoded.username
+        }
+      }).spread((group, created) => {
+        if (created) {
+          group.addUser(req.decoded.userId);
+          return res.status(201).json({
+            id: group.id,
+            name: group.name,
+            description: group.description,
+            creator: group.creator
+          });
+        }
+        return res.status(409).json({ msg: 'Group already exist' });
+      }).catch(err => res.status(400).json({ msg: err.errors[0] }));
+    } else {
+      res.json({ msg: 'Name, Description required' });
+    }
   },
 
   /** Retrieve all Group the User belongs to
