@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import { signIn, signUp } from '../../actions/authActions';
 import SignIn from './SignIn';
 import SignUp from './SignUp';
+import ForgetPassword from './ForgetPassword';
 
 /**
  * @class
@@ -18,10 +19,12 @@ class Authentication extends React.Component {
     super(props);
     this.state = {
       showSignin: true,
-      showSignup: false
+      showSignup: false,
+      showResetPassword: false
     };
     this.handleShowSignin = this.handleShowSignin.bind(this);
     this.handleShowSignup = this.handleShowSignup.bind(this);
+    this.handleShowResetPassword = this.handleShowResetPassword.bind(this);
   }
   /**
    * @method showLogin
@@ -30,7 +33,8 @@ class Authentication extends React.Component {
   handleShowSignin() {
     this.setState({
       showSignin: true,
-      showSignup: false
+      showSignup: false,
+      showResetPassword: false
     });
   }
   /**
@@ -39,6 +43,18 @@ class Authentication extends React.Component {
    */
   handleShowSignup() {
     this.setState({
+      showSignin: false,
+      showResetPassword: false,
+      showSignup: true
+    });
+  }
+    /**
+   * @method showResetPassword
+   * @returns {void}
+   */
+  handleShowResetPassword() {
+    this.setState({
+      showResetPassword: true,
       showSignin: false,
       showSignup: true
     });
@@ -61,6 +77,7 @@ class Authentication extends React.Component {
         (
           <SignIn
             signIn={this.props.signIn}
+            showResetPassword={this.handleShowResetPassword}
             showSignup={this.handleShowSignup}
           />
         ) : this.state.showSignup ?
