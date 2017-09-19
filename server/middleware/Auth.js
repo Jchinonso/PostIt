@@ -21,7 +21,7 @@ const Auth = {
         }
       });
     } else {
-      response.status(401).json({
+      response.status(401).send({
         msg: 'You are not authorized kindly login or sign up'
       });
     }
