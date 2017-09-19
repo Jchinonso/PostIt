@@ -1,7 +1,20 @@
 import { browserHistory } from 'react-router';
 import axios from 'axios';
+import toastr from 'toastr';
 import * as types from '../constants/ActionTypes';
 
+/**
+ * create action: select a group
+ * @function selectGroup
+ * @param {string} groupId
+ * @returns {object} action: type and groupId
+ */
+export function selectGroup(groupId) {
+  return {
+    type: types.SELECT_GROUP,
+    groupId
+  };
+}
 /**
  * create action: create a group: success
  * @function createGroupSuccess
@@ -9,7 +22,7 @@ import * as types from '../constants/ActionTypes';
  * @returns {object} action: type and response
  */
 
-function createGroupSuccess(group) {
+export function createGroupSuccess(group) {
   return {
     type: types.CREATE_GROUP_SUCCESS,
     group
@@ -30,7 +43,7 @@ export function createGroup(group) {
       dispatch(createGroupSuccess(response.data));
     })
     .catch((error) => {
-      throw error;
+      toastr.error(error.response.data.msg);
     });
 }
 
@@ -56,6 +69,8 @@ function receiveGroupsSuccess(groups) {
 export function fetchGroups() {
   return dispatch => axios.get('/api/v1/group')
   .then(response => dispatch(receiveGroupsSuccess(response.data)))
-  .catch((error) => { throw error; });
+  .catch((error) => {
+    toastr.error(error.response.data.msg);
+  });
 }
 

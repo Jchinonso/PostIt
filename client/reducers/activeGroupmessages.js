@@ -16,7 +16,7 @@ const activeGroupMessages = (state = [], action) => {
   }
   default:
     return state;
-}
+  }
 };
 
 export default activeGroupMessages;

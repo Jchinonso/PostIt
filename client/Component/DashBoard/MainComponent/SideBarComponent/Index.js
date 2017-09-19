@@ -2,33 +2,13 @@ import React from 'react';
 import $ from 'jquery';
 import Proptypes from 'prop-types';
 import { connect } from 'react-redux';
-import CreateGroupModal from './CreateGroupModal';
 import GroupListItem from './GroupListItem';
-import { fetchGroups } from '../../actions/groupActions';
+import { fetchGroups } from '../../../../actions/groupActions';
 
 
 class SideBarComponent extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      selectedGroup: null,
-      priority: 'normal'
-    };
-
-    this.handleChangeGroup = this.handleChangeGroup.bind(this);
-  }
   componentDidMount() {
     this.props.fetchGroups();
-  }
-   /**
-   * @method selectGroup
-   * @returns {void}
-   * @memberof TwoColumnDiv
-   * @param {Object} event
-   */
-  handleChangeGroup(event) {
-    event.preventDefault();
-    this.setState({ selectedGroup: event.target.id });
   }
   render() {
     return (
@@ -46,21 +26,25 @@ class SideBarComponent extends React.Component {
         <li id="dashboard">
           <span>Groups</span>
           <a className="secondary-content modal-trigger" href="#modal1"><span className="caption"> + </span></a>
-          <CreateGroupModal />
         </li>
-        <GroupListItem handleChangeGroup={this.handleChangeGroup} groups={this.props.groups} />
+        <GroupListItem handleChangeGroup={this.props.handleChangeGroup} groups={this.props.groups} />
       </ul>
     );
   }
 }
 
-const mapStateToProps = state => ({
-  groups: state.groups,
-  username: state.auth.user.username
-});
+function mapStateToProps(state) {
+  return {
+    username: state.auth.user.username,
+    groups: state.groups
+  };
+}
+
 SideBarComponent.propTypes = {
+  handleChangeGroup: Proptypes.func.isRequired,
   groups: Proptypes.objectOf.isRequired,
   username: Proptypes.string.isRequired,
+  fetchGroups: Proptypes.func.isRequired,
 };
 
 export default connect(mapStateToProps, { fetchGroups })(SideBarComponent);

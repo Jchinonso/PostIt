@@ -18,6 +18,11 @@ export function setCurrentUser(user) {
   };
 }
 
+export function signOutSuccess() {
+  return {
+    type: types.SIGNOUT_SUCCESS,
+  };
+}
 /**
  * async helper function: log out user
  * @function logOutUser
@@ -27,7 +32,7 @@ export function signOut() {
   return (dispatch) => {
     window.localStorage.removeItem('tokenize');
     setAuthorizationToken(false);
-    dispatch(setCurrentUser({ user: {} }));
+    dispatch(signOutSuccess());
     toastr.success('Successfully Log out');
     browserHistory.push('/');
   };
@@ -51,10 +56,10 @@ export function signUp(user) {
       setAuthorizationToken(token);
       dispatch(setCurrentUser(jwtDecode(token)));
       toastr.success('signed up successfully');
-      browserHistory.push('/sidebar');
+      browserHistory.push('/dashboard');
     })
     .catch((error) => {
-      toastr.error(error.response.data.message);
+      toastr.error(error.response.data.msg);
     });
 }
 
@@ -74,10 +79,10 @@ export function signIn(user) {
       setAuthorizationToken(token);
       dispatch(setCurrentUser(jwtDecode(token)));
       toastr.success('Signed in Succesfully');
-      browserHistory.push('/sidebar');
+      browserHistory.push('/dashboard');
     })
     .catch((error) => {
-      throw (error);
+      toastr.error(error.response.data.msg);
     }));
 }
 
