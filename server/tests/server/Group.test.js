@@ -34,7 +34,7 @@ describe('POST api/group', () => {
       .send(goodGroup)
       .end((err, res) => {
         if (err) return err;
-        done();
+        return done();
       });
     });
   });
@@ -49,7 +49,7 @@ describe('POST api/group', () => {
       expect(res.status).to.equal(201);
       expect(res.body).to.have.property('name');
       expect(res.body).to.have.property('description');
-      done();
+      return done();
     });
   });
   it('should not create group with missing property ', (done) => {
@@ -77,7 +77,7 @@ describe('POST api/group', () => {
     .set({ Authorization: userResponse.token })
     .end((err, res) => {
       expect(res.status).to.equal(201);
-      done();
+      return done();
     });
   });
   it('should not add user to group if user has not signup', (done) => {
@@ -87,7 +87,7 @@ describe('POST api/group', () => {
     .set('Accept', 'application/json')
     .end((err, res) => {
       expect(res.status).to.equal(409);
-      done();
+      return done();
     });
   });
   it('should not add user to group if user already exist', (done) => {
@@ -97,7 +97,7 @@ describe('POST api/group', () => {
     .set('Accept', 'application/json')
     .end((err, res) => {
       expect(res.status).to.equal(400);
-      done();
+      return done();
     });
   });
   it('should get all users in a group', (done) => {
@@ -106,7 +106,7 @@ describe('POST api/group', () => {
     .set('Accept', 'application/json')
     .end((err, res) => {
       expect(res.body.length).to.equal(1);
-      done();
+      return done();
     });
   });
   it('should not get user if group doesnt exist', (done) => {
@@ -115,7 +115,7 @@ describe('POST api/group', () => {
     .set('Accept', 'application/json')
     .end((err, res) => {
       expect(res.status).to.equal(404);
-      done();
+      return done();
     });
   });
   it('should add message to group', (done) => {

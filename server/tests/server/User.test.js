@@ -2,21 +2,15 @@ import chai from 'chai';
 import supertest from 'supertest';
 import app from '../../config/app';
 import db from '../../models';
-import userHelper from '../Helpers/UserHelper';
+import * as userHelper from '../Helpers/UserHelper';
 
 const expect = chai.expect;
 const request = supertest(app);
-const goodUser = userHelper.goodUser;
-const badUser1 = userHelper.badUser1;
-const badUser2 = userHelper.badUser2;
-const anotherUser = userHelper.anotherUser;
-const userDoesntExist = userHelper.userDoesntExist;
-const anotherUser2 = userHelper.anotherUser2;
 
 describe('POST api/user/signup', () => {
   beforeEach((done) => {
     request.post('/api/v1/user/signup')
-    .send(goodUser)
+    .send(userHelper.goodUser)
     .end((err, res) => {
       if (err) return err;
       done();
@@ -25,53 +19,63 @@ describe('POST api/user/signup', () => {
   after(() => db.sequelize.sync({ force: true }));
   it('should create a new user', (done) => {
     request.post('/api/v1/user/signup')
-    .send(anotherUser)
+    .send(userHelper.anotherUser)
     .set('Accept', 'application/json')
     .end((err, res) => {
       if (err) return err;
       expect(res.status).to.equal(201);
-      expect(res.body).to.have.property('username');
-      expect(res.body).to.have.property('email');
+      expect(res.body.username).to.equal('jdoe');
+      expect(res.body.email).to.equal('jdoe@example.com');
+      expect(res.body.phoneNumber).to.equal('09081890018');
       done();
     });
   });
 
-  it('should not create user with missing property ', (done) => {
+  it('should return validation error if a field is missing', (done) => {
     request.post('/api/v1/user/signup')
-    .send(badUser1)
+    .send(userHelper.badUserOne)
     .set('Accept', 'application/json')
     .end((err, res) => {
-      expect(res.body.message).to.equal('Unexpected error occured');
+      expect(res.body.msg).to.equal('Username, password, email and phoneNo required');
       return done();
     });
   });
   it('should not create a user if already exist ', (done) => {
     request.post('/api/v1/user/signup')
-    .send(goodUser)
+    .send(userHelper.goodUser)
     .set('Accept', 'application/json')
     .end((err, res) => {
       expect(res.status).to.equal(409);
-      expect(res.body.message).to.equal('user already exist');
+      expect(res.body.msg).to.equal('user already exist');
+      return done();
+    });
+  });
+  it('should return validation error if username exist', (done) => {
+    request.post('/api/v1/user/signup')
+    .send(userHelper.anotherUserTwo)
+    .set('Accept', 'application/json')
+    .end((err, res) => {
+      expect(res.body.msg).to.equal('username must be unique');
       return done();
     });
   });
   it('should signin a user', (done) => {
     request.post('/api/v1/user/signin')
-    .send(goodUser)
+    .send(userHelper.goodUser)
     .set('Accept', 'application/json')
     .end((err, res) => {
       expect(res.status).to.equal(200);
-      expect(res.body.message).to.equal('You have been loggedin successfully');
+      expect(res.body.msg).to.equal('You have been loggedin successfully');
       return done();
     });
   });
   it('should not signin a user if user does not exist', (done) => {
     request.post('/api/v1/user/signin')
-    .send(userDoesntExist)
+    .send(userHelper.userDoesntExist)
     .set('Accept', 'application/json')
     .end((err, res) => {
-      expect(res.status).to.equal(409);
-      expect(res.body.message).to.equal('incorrect Email and password');
+      expect(res.status).to.equal(401);
+      expect(res.body.msg).to.equal('incorrect Email and password');
       return done();
     });
   });
@@ -84,21 +88,11 @@ describe('POST api/user/signup', () => {
   });
   it('should validate email address', (done) => {
     request.post('/api/v1/user/signup')
-    .send(badUser2)
+    .send(userHelper.badUserTwo)
     .set('Accept', 'application/json')
     .end((err, res) => {
       if (err) return err;
-      expect(res.body.message).to.equal('Unexpected error occured');
-      return done();
-    });
-  });
-  it('should unique username', (done) => {
-    request.post('/api/v1/user/signup')
-    .send(anotherUser2)
-    .set('Accept', 'application/json')
-    .end((err, res) => {
-      if (err) return err;
-      expect(res.body.message).to.equal('Unexpected error occured');
+      expect(res.body.msg).to.equal('incorrect Email');
       return done();
     });
   });

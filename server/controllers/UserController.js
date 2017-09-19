@@ -29,27 +29,32 @@ const UsersController = {
    * @returns {void} Returns void
    */
   signUp(req, res) {
-    db.Users.findOrCreate({
-      where: {
-        email: req.body.email,
-      },
-      defaults: {
-        username: req.body.username,
-        password: helper.hashedPassword(req.body.password),
-        phoneNumber: req.body.phoneNumber
-      }
-    })
-    .spread((user, created) => {
-      if (created) {
-        return res.status(201).json({
-          username: user.username,
-          email: user.email,
-          phonenumber: user.phoneNumber,
-          token: Auth.generateToken(user)
-        });
-      }
-      return res.status(409).json({ msg: 'user already exist' });
-    }).catch(err => res.json({ msg: err.errors[0].message }));
+    const { email, password, username, phoneNumber } = req.body;
+    if (email && password && username && phoneNumber) {
+      db.Users.findOrCreate({
+        where: {
+          email
+        },
+        defaults: {
+          username,
+          password: helper.hashedPassword(password),
+          phoneNumber
+        }
+      })
+      .spread((user, created) => {
+        if (created) {
+          return res.status(201).json({
+            username: user.username,
+            email: user.email,
+            phoneNumber: user.phoneNumber,
+            token: Auth.generateToken(user)
+          });
+        }
+        return res.status(409).json({ msg: 'user already exist' });
+      }).catch(err => res.json({ msg: err.errors[0].message }));
+    } else {
+      res.json({ msg: 'Username, password, email and phoneNo required' });
+    }
   },
  /**
    * signin - Log in a user
@@ -75,7 +80,7 @@ const UsersController = {
           msg: 'incorrect Email and password'
         });
       }
-    }).catch((err => res.json({ msg: err.errors[0].message })));
+    }).catch((err => res.json({ msg: err.errors[0].msg })));
   },
   /**
    * signOut - Log Out a user

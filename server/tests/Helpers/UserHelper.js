@@ -18,6 +18,12 @@ module.exports = {
     password: 'abacus3456',
     phoneNumber: '09081890018'
   },
+  another: {
+    username: 'jdoe',
+	  email: 'jdoe@example.com',
+    password: 'abacus3456',
+    phoneNumber: 'iamyouhkjhkjh'
+  },
   userDoesntExist: {
     username: 'mkdim',
 	  email: 'mkdim@example.com',
@@ -25,13 +31,15 @@ module.exports = {
     phoneNumber: '09081890018'
   },
 
-  badUser1: {
+  badUserOne: {
     username: 'tayo19',
 	  email: 'tayo12@example.com',
   },
-  badUser2: {
+  badUserTwo: {
     username: 'tayo192',
-	  email: 'tayo12'
+    email: 'tayo12',
+    password: 'abacus3456',
+    phoneNumber: '09081890018'
   },
   userName: {
     username: 'jdoe'
