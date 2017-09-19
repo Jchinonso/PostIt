@@ -18,11 +18,11 @@ module.exports = (sequelize, DataTypes) => {
       }
     },
     password: {
-      allowNull: false,
       type: DataTypes.STRING,
+      allowNull: false,
       validate: {
-        len: {
-          args: [6, 255],
+        min: {
+          args: 6,
           msg: 'password must be at least six characters long'
         }
       }
@@ -30,8 +30,15 @@ module.exports = (sequelize, DataTypes) => {
     phoneNumber: {
       type: DataTypes.STRING,
       allowNull: false,
-      unique: false
-    }
+      validate: {
+        notEmpty: {
+          msg: 'mobile number cannot be an empty string'
+        },
+        isNumeric: {
+          msg: 'mobile number is invalid'
+        }
+      }
+    },
   });
   Users.associate = (models) => {
     Users.belongsToMany(models.Groups, {

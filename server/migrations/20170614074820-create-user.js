@@ -26,14 +26,21 @@ module.exports = {
       phoneNumber: {
         type: Sequelize.STRING,
         allowNull: false,
-        unique: false,
+        validate: {
+          notEmpty: {
+            msg: 'mobile number cannot be an empty string'
+          },
+          isNumeric: {
+            msg: 'mobile number is invalid'
+          }
+        }
       },
       password: {
-        allowNull: false,
         type: Sequelize.STRING,
+        allowNull: false,
         validate: {
-          len: {
-            args: [6, 255],
+          min: {
+            args: 6,
             msg: 'password must be at least six characters long'
           }
         }
@@ -48,5 +55,7 @@ module.exports = {
       }
     });
   },
-  down: queryInterface => queryInterface.dropTable('Users')
+  down(queryInterface) {
+    return queryInterface.dropTable('Users', { cascade: true });
+  }
 };
