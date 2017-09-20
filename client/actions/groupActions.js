@@ -40,6 +40,7 @@ export function createGroupSuccess(group) {
 export function createGroup(group) {
   return dispatch => axios.post('/api/v1/group', group)
     .then((response) => {
+      console.log('======here======')
       dispatch(createGroupSuccess(response.data));
     })
     .catch((error) => {

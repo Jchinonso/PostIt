@@ -49,6 +49,7 @@ GET /api/group/groupid/message |   Get all messages that belongs to group.
   * `username` The first name of the new user
   * `email`     Email address of the new user
   * `password` A secure password
+  * `phoneNumber` Phone number
 
 * POST `/api/user/signin` Use this route to sign in to the application. The following fields are required:
   * `email`     Email address of the new user
@@ -89,3 +90,13 @@ Tests
 *  The tests have been written using Mocha framework and Chai assertion library
 *  Run the test with `npm test`
 
+### Limitations
+
+The app currently cannot handle more than 3,000,000,000 users or documents but can be scalled up if the need arises.
+
+### Contributing
+
+Contributions are welcome. Simply fork the repository, after working on the feature, raise a PR.
+
+### Licence
+MIT

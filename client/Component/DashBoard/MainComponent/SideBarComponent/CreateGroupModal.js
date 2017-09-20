@@ -1,6 +1,6 @@
 import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
-import { createGroup } from '../../../../actions/actions';
+import { createGroup } from '../../../../actions/groupActions';
 
 class CreateGroupModal extends React.Component {
   constructor(props) {
@@ -17,12 +17,16 @@ class CreateGroupModal extends React.Component {
   }
   handleOnClick(event) {
     event.preventDefault();
-    const group = {
-      name: this.state.name,
-      description: this.state.description
-    };
-    this.props.createGroup(group);
-    this.setState({ name: '', description: '' });
+    const { name, description } = this.state;
+    if (name !== undefined && description !== undefined) {
+      const group = {
+        name,
+        description
+      };
+      this.props.createGroup(group).then(() => {
+        this.setState({ name: '', description: '' });
+      });
+    }
   }
   render() {
     return (
