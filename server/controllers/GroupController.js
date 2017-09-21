@@ -71,33 +71,43 @@ const GroupController = {
 
   addUserToGroup(req, res) {
     const groupId = req.params.id;
-    db.Users.findOne({
+    db.UserGroups.findOne({
       where: {
-        username: req.body.username
-      }
-    }).then((user) => {
-      if (user) {
-        db.Groups.findOne({where: {
-          id: groupId
-        }}).then((group) => {
-          if(group) {
-            group.addUser(user.id).then((newUserGroup) => {
-              res.status(200).json({
-                msg: 'User added successfully Group'
-              });
-            })
-          } else {
-            res.status(404).json({
-              msg: 'Group not found'
-            })
-          }
-        })
-      } else {
-        res.status(401).json({
-          msg: 'User not found'
-        })
-      }
-    })
+        userId: req.decoded.userId
+      }}).then((userExist) => {
+        if(!userExist) {
+          db.Users.findOne({
+            where: {
+              username: req.body.username
+            }
+          }).then((user) => {
+            if (user) {
+              db.Groups.findOne({where: {
+                id: groupId
+              }}).then((group) => {
+                if(group) {
+                  group.addUser(user.id).then((newUserGroup) => {
+                    res.status(200).json({
+                      msg: 'User added successfully to Group'
+                    });
+                  })
+                } else {
+                  res.status(404).json({
+                    msg: 'Group not found'
+                  })
+                }
+              })
+            } else {
+              res.status(401).json({
+                msg: 'User does not exist'
+              })
+            }
+          })
+        } else {
+          res.status(400).json({'msg': 'User already exist'})
+        }
+      })
+
   },
 
 

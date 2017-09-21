@@ -16,13 +16,13 @@ const anotherGroup = groupHelper.goodGroup2;
 const user = userHelper.anotherUser;
 const userDoesntExist = userHelper.goodUser;
 const badGroup = groupHelper.badGroup;
-const username = userHelper.userName;
+
 let groupId;
 let userResponse;
 
 
 describe('POST api/group', () => {
-  beforeEach((done) => {
+  before((done) => {
     request.post('/api/v1/user/signup')
     .send(user)
     .end((err, res) => {
@@ -38,7 +38,6 @@ describe('POST api/group', () => {
       });
     });
   });
-  after(() => db.sequelize.sync({ force: true }));
   it('should create a new group', (done) => {
     request.post('/api/v1/group')
     .send(anotherGroup)
@@ -47,8 +46,8 @@ describe('POST api/group', () => {
     .end((err, res) => {
       if (err) return err;
       expect(res.status).to.equal(201);
-      expect(res.body).to.have.property('name');
-      expect(res.body).to.have.property('description');
+      expect(res.body.name).to.equal(anotherGroup.name);
+      expect(res.body.description).to.equal(anotherGroup.description);
       return done();
     });
   });
@@ -57,7 +56,7 @@ describe('POST api/group', () => {
     .send(badGroup)
     .set({ Authorization: userResponse.token })
     .end((err, res) => {
-      expect(res.body.message).to.equal('unexpected error occured');
+      expect(res.body.msg).to.equal('Name, Description required');
       return done();
     });
   });
@@ -67,18 +66,22 @@ describe('POST api/group', () => {
     .set({ Authorization: userResponse.token })
     .end((err, res) => {
       expect(res.status).to.equal(409);
-      expect(res.body.message).to.equal('Group already exist');
+      expect(res.body.msg).to.equal('Group already exist');
       return done();
     });
   });
   it('should add users to group', (done) => {
-    request.post('/api/v1/group/1/user')
-    .send(username)
-    .set({ Authorization: userResponse.token })
-    .end((err, res) => {
-      expect(res.status).to.equal(201);
-      return done();
-    });
+    db.Users.create(userHelper.anotherUserTwo)
+    .then((user) => {
+      request.post('/api/v1/group/1/user')
+      .set({ Authorization: userResponse.token })
+      .set('Accept', 'application/json')
+      .send(userHelper.userName)
+      .end((err, res) => {
+        expect(res.body.msg).to.equal('User added successfully to Group')
+        return done();
+      });
+    })   
   });
   it('should not add user to group if user has not signup', (done) => {
     request.post('/api/v1/group/1/user')
@@ -86,7 +89,8 @@ describe('POST api/group', () => {
     .set({ Authorization: userResponse.token })
     .set('Accept', 'application/json')
     .end((err, res) => {
-      expect(res.status).to.equal(409);
+      expect(res.status).to.equal(401);
+      expect(res.body.msg).to.equal('User does not exist')
       return done();
     });
   });
@@ -186,4 +190,3 @@ describe('POST api/group', () => {
   //   });
   // });
 });
-
