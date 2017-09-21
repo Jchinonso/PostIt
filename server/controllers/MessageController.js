@@ -49,7 +49,7 @@ const MessageController = {
           where: {
             groupId: req.params.id
           }
-        }).then(messages => res.status(200).send(messages));
+        }).then(messages => res.status(200).send({'messages': messages}));
       } else {
         return res.status(404).send({ message: 'Group not found' });
       }

@@ -44,6 +44,7 @@ const UsersController = {
       .spread((user, created) => {
         if (created) {
           return res.status(201).json({
+            id: user.id,
             username: user.username,
             email: user.email,
             phoneNumber: user.phoneNumber,

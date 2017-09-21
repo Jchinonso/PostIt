@@ -13,7 +13,7 @@ module.exports = {
     phoneNumber: '09081890018'
   },
   anotherUserTwo: {
-    username: 'jdoe',
+    username: 'jkdoe',
 	  email: 'mkdoe@example.com',
     password: 'abacus3456',
     phoneNumber: '09081890018'
@@ -42,7 +42,7 @@ module.exports = {
     phoneNumber: '09081890018'
   },
   userName: {
-    username: 'jdoe'
+    username: 'jkdoe'
   }
 
 };
