@@ -22,14 +22,14 @@ export function createMessage(groupId, messageData) {
     dispatch(addMessageToGroupSuccess(response.data));
   })
   .catch((error) => {
-    toastr.error(error.response.data.message);
+    toastr.error(error.response.data.msg);
   });
 }
 
 export function getAllGroupMessages(groupId) {
   return dispatch => axios.get(`/api/v1/group/${groupId}/message`)
   .then((response) => {
-    dispatch(getGroupMessagesSuccess(response.data));
+    dispatch(getGroupMessagesSuccess(response.data.messages));
   })
   .catch((error) => {
     toastr.error(error.response.data.message);
