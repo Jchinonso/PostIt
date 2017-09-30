@@ -8,7 +8,7 @@ export default {
   entry: [
     'eventsource-polyfill', // necessary for hot reloading with IE
     'webpack-hot-middleware/client',
-    './client/index'
+    './client/index.js'
   ],
   target: 'web',
   output: {
@@ -22,15 +22,10 @@ export default {
   plugins: [
     new webpack.HotModuleReplacementPlugin(),
     new webpack.NoErrorsPlugin(),
-    new webpack.ProvidePlugin({
-      $: 'jquery',
-      jquery: 'jquery',
-      'window.jQuery': 'jquery'
-    })
   ],
   module: {
     loaders: [
-      { test: /\.js$/, include: path.join(__dirname, 'client'), loaders: ['babel'] },
+      { test: /\.js$/, include: path.join(__dirname, 'client'), loader: 'babel-loader' },
       { test: /(\.css)$/, loaders: ['style', 'css?sourceMap'] },
       { test: /\.eot(\?v=\d+\.\d+\.\d+)?$/, loader: "file" },
       { test: /\.(woff|woff2)$/, loader: "url?prefix=font/&limit=5000" },

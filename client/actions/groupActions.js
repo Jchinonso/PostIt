@@ -28,6 +28,18 @@ export function createGroupSuccess(group) {
     group
   };
 }
+/**
+ * create action: create group failure
+ * @function createGroupFailure
+ * @param {string} error
+ * @returns {object} action: type and error
+ */
+export function createGroupFailure(error) {
+  return {
+    type: types.CREATE_GROUP_FAILURE,
+    error
+  };
+}
 
 /**
  * async helper function: create a group
@@ -41,8 +53,10 @@ export function createGroup(group) {
   return dispatch => axios.post('/api/v1/group', group)
     .then((response) => {
       dispatch(createGroupSuccess(response.data));
+      toastr.success('Group Successfully Created');
     })
     .catch((error) => {
+      dispatch(createGroupFailure(error.response.data.msg));
       toastr.error(error.response.data.msg);
     });
 }
@@ -50,14 +64,27 @@ export function createGroup(group) {
 /**
  * receive group action: receive a group success
  * @function receiveGroupsSuccess
- * @param {object} response
- * @returns {object} action: type and response
+ * @param {object} groups
+ * @returns {object} action: type and groups
  */
 
 function receiveGroupsSuccess(groups) {
   return {
     type: types.RECEIVE_GROUPS_SUCCESS,
     groups
+  };
+}
+/**
+ * receive group action: receive a group failure
+ * @function receiveGroupsFailure
+ * @param {object} grpups
+ * @returns {object} action: type and error
+ */
+
+function receiveGroupsFailure(error) {
+  return {
+    type: types.RECEIVE_GROUPS_FAILURE,
+    error
   };
 }
 
@@ -68,7 +95,9 @@ function receiveGroupsSuccess(groups) {
 
 export function fetchGroups() {
   return dispatch => axios.get('/api/v1/group')
-  .then(response => dispatch(receiveGroupsSuccess(response.data)))
+  .then((response) => {
+    dispatch(receiveGroupsSuccess(response.data.groups));
+  })
   .catch((error) => {
     toastr.error(error.response.data.msg);
   });

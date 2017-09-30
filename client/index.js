@@ -15,7 +15,7 @@ if (token) {
   setAuthorizationToken(token);
   store.dispatch(setCurrentUser(jwtDecode(token)));
 }
-render(<Provider store={store} >
+render(<Provider store={store}>
   <Router history={browserHistory} routes={routes} />
-</Provider >, document.getElementById('app'));
+</Provider>, document.getElementById('app'));
 

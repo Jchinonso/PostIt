@@ -1,58 +1,67 @@
 import axios from 'axios';
+import toastr from 'toastr';
 import * as types from '../constants/ActionTypes';
-import { member, ERROR_OCCURRED } from './actionTypes';
 
-function addMembersSuccess(message) {
+export function addMembersSuccess(member) {
   return {
     type: types.ADD_MEMBERS_SUCCESS,
-    message
+    member
+  };
+}
+function fetchUserSuccess(users) {
+  return {
+    type: types.FETCH_USER_SUCCESS,
+    users
+  };
+}
+function fetchGroupMembersSuccess(members) {
+  return {
+    type: types.FETCH_GROUP_MEMBERS_SUCCESS,
+    members
+  };
+}
+export function addMembersFailure(error) {
+  return {
+    type: types.ADD_MEMBERS_FAILURE,
+    error
   };
 }
 
-export const addMemberToGroup = (groupId, username) => (
-  dispatch => (
-    axios.post(`/api/group/${groupId}/user`, username)
+export function addMemberToGroup(groupId, username) {
+  return (dispatch) => {
+    axios.post(`/api/v1/group/${groupId}/user`, username)
       .then((response) => {
-        dispatch(addMembersSuccess(response.data.message));
+        toastr.success(response.data.msg);
+        dispatch(addMembersSuccess(response.data.msg));
       })
       .catch((err) => {
-        throw err;
-      })
-  )
-);
-
-export const listGroupMembers = groupId => (
-  dispatch => (
-    axios.get(`/api/group/${groupId}/users`)
-      .then(({ data }) => {
-        dispatch({
-          type: member.LIST_SUCCESS,
-          list: data,
-          groupId
-        });
-      })
-      .catch(({ response: { data } }) => {
-        dispatch({
-          type: ERROR_OCCURRED,
-          error: data
-        });
-      })
-  )
-);
-
-export const searchUsers = (username) => (dispatch) => {
-    axios.get(`/api/users?q=${username}`)
-      .then(({ data }) => {
-        dispatch({
-          type: member.SEARCH_SUCCESS,
-          list: data
-        });
-      })
-      .catch((error) => {
-        const data = error.response ? error.response.data : error;
-        dispatch({
-          type: ERROR_OCCURRED,
-          error: data
-        });
+        toastr.error(err.response.data.msg);
+        dispatch(addMembersFailure(err.response.data.msg));
       });
   };
+}
+
+export function fetchUsers() {
+  return (dispatch) => {
+    axios.get('/api/v1/user')
+      .then((response) => {
+        dispatch(fetchUserSuccess(response.data.users));
+      })
+      .catch((err) => {
+        toastr.error(err.response.data.msg);
+      });
+  };
+}
+
+export function fetchGroupMembers(groupId) {
+  return (dispatch) => {
+    axios.get(`/api/v1/group/${groupId}/user`)
+      .then((response) => {
+        dispatch(fetchGroupMembersSuccess(response.data.groupMembers));
+      })
+      .catch((err) => {
+        toastr.error(err.response.data.msg);
+      });
+  };
+}
+
