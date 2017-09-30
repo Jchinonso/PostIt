@@ -15,12 +15,47 @@ const UsersController = {
    * @returns {void}
    */
   showUsers(req, res) {
+    const { username, limit, offset } = req.query;
+
+    if (!req.query) {
+      res.status(200).json([]);
+    } else {
+      db.Users.findAndCountAll({
+        where: {
+          username: {
+            $iLike: `%${username}%`
+          }
+        },
+        limit,
+        offset,
+        attributes: { exclude: ['password', 'salt', 'createdAt', 'updatedAt', 'verificationCode'] }
+      })
+        .then((result) => {
+          res.status(200).json(result);
+        })
+        .catch((error) => {
+          res.status(404).json({
+            success: false,
+            error
+          });
+        });
+    }
+  },
+  /**
+   * fetchUsers
+   * @desc gets details for all users
+   * @param {Object} req request object
+   * @param {Object} res response object
+   * @returns {void}
+   */
+  fetchUsers(req, res) {
     db.Users.findAll({
       where: {}
     }).then(users => res.json({
       users,
     }));
   },
+
 
   /**
    * signUp - Create a user
@@ -30,7 +65,6 @@ const UsersController = {
    */
   signUp(req, res) {
     const { email, password, username, phoneNumber } = req.body;
-    if (email && password && username && phoneNumber) {
       db.Users.findOrCreate({
         where: {
           email
@@ -52,10 +86,7 @@ const UsersController = {
           });
         }
         return res.status(409).json({ msg: 'user already exist' });
-      }).catch(err => res.json({ msg: err.errors[0].message }));
-    } else {
-      res.json({ msg: 'Username, password, email and phoneNo required' });
-    }
+      }).catch(err => res.status(400).json({ msg: err.errors[0].message }));
   },
  /**
    * signin - Log in a user
@@ -94,6 +125,36 @@ const UsersController = {
       msg: 'User successfully logged out'
     });
   },
+
+  googleSignIn(req, res) {
+    const { username, email, password, phoneNumber} = req.body;
+    db.Users.findOne({
+      where: {
+        email
+      }
+    }).then((user) => {
+      if(user) {
+        res.status(200).json({
+          msg: 'You have been loggedin successfully',
+          token: Auth.generateToken(user)
+        });
+      } else {
+        db.Users.create({
+          username,
+          email,
+          password: helper.hashedPassword(password),
+          phoneNumber
+        }).then((user) => {
+          if (user) {
+            res.status(201).json({
+              msg: 'You have been loggedin successfully',
+              token: Auth.generateToken(user)
+            });
+          }
+        })
+      }
+    })
+  }
 
 };
 

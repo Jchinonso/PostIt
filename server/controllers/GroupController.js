@@ -52,10 +52,14 @@ const GroupController = {
         username: req.decoded.username
       }
     }).then((user) => {
-      user.getGroups({
-        attributes: ['id', 'name', 'description', 'creator', 'createdAt'],
-        joinTableAttributes: []
-      }).then(groups => res.status(200).json({ groups: groups}));
+      if(user) {
+        user.getGroups({
+          attributes: ['id', 'name', 'description', 'creator', 'createdAt'],
+          joinTableAttributes: []
+        }).then(groups => res.status(200).json({ groups: groups}));
+      } else {
+        res.status(401).json({msg: 'User does not exist'})
+      }
     }).catch(error => res.status(500).json({
       message: 'server error'
     }));
@@ -71,43 +75,41 @@ const GroupController = {
 
   addUserToGroup(req, res) {
     const groupId = req.params.id;
-    db.UserGroups.findOne({
+    const { username } = req.body;
+    db.Groups.findOne({
       where: {
-        userId: req.decoded.userId
-      }}).then((userExist) => {
-        if(!userExist) {
-          db.Users.findOne({
-            where: {
-              username: req.body.username
-            }
-          }).then((user) => {
-            if (user) {
-              db.Groups.findOne({where: {
-                id: groupId
-              }}).then((group) => {
-                if(group) {
-                  group.addUser(user.id).then((newUserGroup) => {
-                    res.status(200).json({
-                      msg: 'User added successfully to Group'
-                    });
-                  })
-                } else {
-                  res.status(404).json({
-                    msg: 'Group not found'
-                  })
-                }
+        id: groupId
+      }
+    }).then((group) =>{
+      if(group) {
+        db.Users.findAll({
+          where: {
+            username
+          }
+        }).then((user) => {
+          if(user.length !== 0) {
+            group.addUsers(user).then((groupUsers) => {
+              if (groupUsers.length !== 0) {
+                return res.status(200).json({
+                  msg: 'User added successfully to group'
+                })
+              }
+              return res.status(409).json({
+                msg: 'User already a member of this group'
               })
-            } else {
-              res.status(401).json({
-                msg: 'User does not exist'
-              })
-            }
-          })
-        } else {
-          res.status(400).json({'msg': 'User already exist'})
-        }
-      })
-
+            })
+          } else {
+            res.status(404).json({
+              msg: 'User does not exist'
+            })
+          }
+        })
+      } else {
+        res.status(404).json({
+          msg: 'Group Does not exist'
+        })
+      }
+    })
   },
 
 
