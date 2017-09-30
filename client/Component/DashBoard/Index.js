@@ -1,5 +1,5 @@
 import React from 'react';
-import Proptypes from 'prop-types';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import HeaderComponent from './HeaderComponent/Index';
 import MainComponent from './MainComponent/Index';
@@ -26,5 +26,9 @@ class Dashboard extends React.Component {
     );
   }
 }
+
+Dashboard.propTypes = {
+  signOut: PropTypes.func.isRequired
+};
 
 export default connect(null, { signOut })(Dashboard);

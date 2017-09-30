@@ -15,7 +15,7 @@ class MessageArea extends Component {
     super(props);
     this.state = {
       content: '',
-      priority: '',
+      priority: 'normal',
     };
     this.handleInputChange = this.handleInputChange.bind(this);
     this.setPriority = this.setPriority.bind(this);
@@ -47,7 +47,7 @@ class MessageArea extends Component {
   handleSubmitMessage(event) {
     const { priority, content } = this.state;
     if (content) {
-      this.props.createMessage(this.props.selectedGroup, { content, priority });
+      this.props.createMessage(this.props.activeGroup, { content, priority });
     }
   }
 
@@ -71,23 +71,22 @@ class MessageArea extends Component {
   render() {
     return (
       <div>
-        {this.props.selectedGroup !== null &&
-      this.props.groups.length !== 0 ?
-        <footer style={{ paddingLeft: 300 }}>
-          <div className="message-input row">
-            <form className="col s12">
-              <div className="row">
-                <MessageInputBox
-                  handleInputChange={this.handleInputChange}
-                  handleSubmitMessage={this.handleSubmitMessage}
-                  content={this.state.content}
-                />
-                <PriorityButtons setPriority={this.setPriority} defaultPriority={this.state.priority} />
+        {this.props.activeGroup ?
+          <footer style={{ paddingLeft: 300 }}>
+            <div className="message-input row">
+              <form className="col s12">
+                <div className="row">
+                  <MessageInputBox
+                    handleInputChange={this.handleInputChange}
+                    handleSubmitMessage={this.handleSubmitMessage}
+                    content={this.state.content}
+                  />
+                  <PriorityButtons setPriority={this.setPriority} defaultPriority={this.state.priority} />
 
-              </div>
-            </form>
-          </div>
-        </footer> : null
+                </div>
+              </form>
+            </div>
+          </footer> : null
     }
       </div>
 
@@ -97,14 +96,18 @@ class MessageArea extends Component {
 
 function mapStateToProps(state) {
   return {
-    selectedGroup: state.activeGroup,
-    groups: state.groups
+    activeGroup: state.activeGroupReducer,
+    groups: state.groupReducer.groups
   };
 }
-
 MessageArea.propTypes = {
-  selectedGroup: PropTypes.string.isRequired,
+  activeGroup: PropTypes.string.isRequired,
   createMessage: PropTypes.func.isRequired
 };
+
+MessageArea.defaultProps = {
+  activeGroup: ''
+};
+
 
 export default connect(mapStateToProps, { createMessage })(MessageArea);

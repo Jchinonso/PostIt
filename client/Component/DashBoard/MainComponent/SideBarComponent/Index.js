@@ -25,7 +25,11 @@ class SideBarComponent extends React.Component {
         </li>
         <li id="dashboard">
           <span>Groups</span>
-          <a className="secondary-content modal-trigger" href="#modal1"><span className="caption"> + </span></a>
+          <a
+            className="secondary-content modal-trigger"
+            href="#modal1"
+          >
+            <span className="caption"> + </span></a>
         </li>
         <GroupListItem handleChangeGroup={this.props.handleChangeGroup} groups={this.props.groups} />
       </ul>
@@ -35,14 +39,14 @@ class SideBarComponent extends React.Component {
 
 function mapStateToProps(state) {
   return {
-    username: state.auth.user.username,
-    groups: state.groups
+    username: state.authReducer.user.username,
+    groups: state.groupReducer.groups
   };
 }
 
 SideBarComponent.propTypes = {
   handleChangeGroup: Proptypes.func.isRequired,
-  groups: Proptypes.objectOf.isRequired,
+  groups: Proptypes.arrayOf(Proptypes.object).isRequired,
   username: Proptypes.string.isRequired,
   fetchGroups: Proptypes.func.isRequired,
 };
