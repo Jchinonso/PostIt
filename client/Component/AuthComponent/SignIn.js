@@ -1,5 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import toastr from 'toastr';
+import { browserHistory } from 'react-router';
+import GoogleLogin from 'react-google-login';
 
 /**
  * @class SignIn
@@ -19,6 +22,7 @@ class SignIn extends React.Component {
     };
     this.handleInputChange = this.handleInputChange.bind(this);
     this.handleOnSubmit = this.handleOnSubmit.bind(this);
+    this.responseGoogle = this.responseGoogle.bind(this);
   }
 
   /**
@@ -49,10 +53,20 @@ class SignIn extends React.Component {
         password: this.state.password,
         email: this.state.email,
       };
-      this.props.signIn(userObj).then(() => {
-        this.setState({ email: '', password: '' });
-      });
+      this.props.signIn(userObj);
     }
+  }
+
+  responseGoogle(response) {
+    const { email, givenName, familyName } = response.profileObj;
+    const userObj = {
+      username: givenName,
+      email,
+      password: familyName,
+      phoneNumber: '08139308818',
+    };
+    console.log(userObj);
+    this.props.googleSignIn(userObj);
   }
 
   /**
@@ -68,7 +82,7 @@ class SignIn extends React.Component {
           <div className="card-panel">
             <h4 className="header2 center">Sign In</h4>
             <div className="row">
-              <form className="col s12" onSubmit={this.handleOnSubmit}>
+              <form className="col s12">
                 <div className="row">
                   <div className="input-field col s12" style={{ margin: 0 }}>
                     <i className="material-icons prefix">email</i>
@@ -102,14 +116,24 @@ class SignIn extends React.Component {
                         className="btn indigo waves-effect waves-light right"
                         type="submit"
                         name="action"
+                        onClick={this.handleOnSubmit}
                       >
                         <i className="material-icons right">send</i>
                         Submit
                         </button>
+                      <GoogleLogin
+                        clientId={'682330105302-4frgtepd1nj81n3gd82e97usq6ul0ier.apps.googleusercontent.com'}
+                        onSuccess={this.responseGoogle}
+                        onFailure={this.responseGoogle}
+                        className="btn red waves-effect waves-light left"
+                      >
+                        <i className="material-icons right">send</i>
+                       Login With Google
+                      </GoogleLogin>
                     </div>
                   </div>
                 </div>
-                <div className="center">Don&apos;t have a PostIt account?<a href="#" onClick={this.props.showSignup}>Sign Up</a></div>
+                <div className="center">Don&apos;t have a PostIt account?<a href="#?" onClick={this.props.showSignup}>Sign Up</a></div>
               </form>
             </div>
           </div>
@@ -121,7 +145,8 @@ class SignIn extends React.Component {
 
 SignIn.propTypes = {
   signIn: PropTypes.func.isRequired,
-  showSignup: PropTypes.func.isRequired
+  showSignup: PropTypes.func.isRequired,
+  googleSignIn: PropTypes.func.isRequired
 };
 
 export default SignIn;

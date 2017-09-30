@@ -1,4 +1,6 @@
 import React, { PropTypes } from 'react';
+import toastr from 'toastr';
+import { browserHistory } from 'react-router';
 /**
  * @class SignUp
  * @extends React.Component
@@ -38,17 +40,15 @@ class SignUp extends React.Component {
    */
   handleOnSubmit(event) {
     event.preventDefault();
-    if (this.state.username.length && this.state.password.length && this.state.phoneNumber.length && this.state.email.length) {
-      const userObj = {
-        username: this.state.username,
-        password: this.state.password,
-        email: this.state.email,
-        phoneNumber: this.state.phoneNumber
-      };
-      this.props.signUp(userObj).then(() => {
-        this.setState({ username: '', email: '', password: '', phoneNumber: '' });
-      });
-    }
+    const userObj = {
+      username: this.state.username,
+      password: this.state.password,
+      email: this.state.email,
+      phoneNumber: this.state.phoneNumber
+    };
+    this.props.signUp(userObj).then(() => {
+      this.setState({ username: '', email: '', password: '', phoneNumber: '' });
+    });
   }
 
   /**
@@ -131,7 +131,7 @@ class SignUp extends React.Component {
                     </div>
                   </div>
                 </div>
-                <div className="center">Already have an account <a href="#" onClick={this.props.showSignin}>Sign In</a></div>
+                <div className="center">Already have an account <a href="#?" onClick={this.props.showSignin}>Sign In</a></div>
               </form>
             </div>
           </div>
