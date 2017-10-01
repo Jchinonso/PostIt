@@ -11,7 +11,7 @@ const MessageBoardComponent = (props) => {
           <div className="row" style={{ minWidth: '100%', marginBottom: '-24px' }}>
             <div className="col s10 left">
               <div className="message-text">
-                <a><span className="author-name">{username}</span></a>
+                <a><span className="author-name">{message.sender}</span></a>
                 <div className="message">{message.content}</div>
               </div>
             </div>

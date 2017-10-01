@@ -6,7 +6,7 @@ import SignIn from './SignIn';
 import SignUp from './SignUp';
 
 /**
- * @class
+ * @class Authentication
  * @extends React.Component
  */
 class Authentication extends React.Component {

@@ -2,6 +2,10 @@ import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { createGroup } from '../../../../actions/groupActions';
 
+/**
+ * @class CreateGroupModal
+ * @extends React.Component
+ */
 class CreateGroupModal extends React.Component {
   constructor(props) {
     super(props);
@@ -9,34 +13,45 @@ class CreateGroupModal extends React.Component {
     this.handleOnChange = this.handleOnChange.bind(this);
     this.handleOnClick = this.handleOnClick.bind(this);
   }
+   /**
+   * Handle onChange events on form inputs
+   * @method handleInputChange
+   * @member SignUp
+   * @param {object} event
+   * @returns {function} a function that handles change event on inputs
+   */
   handleOnChange(event) {
     event.preventDefault();
     this.setState({
       [event.target.name]: event.target.value
     });
   }
+  /**
+   * Handle onClick events on form inputs
+   * @method handleOnClick
+   * @member CreateGroupModal
+   * @param {object} event
+   * @returns {function} a function that handles onClick event on inputs
+   */
   handleOnClick(event) {
     event.preventDefault();
-    const { name, description } = this.state;
-    if (name !== undefined && description !== undefined) {
-      const group = {
-        name: this.state.name,
-        description: this.state.description
-      };
-      this.props.createGroup(group);
-      this.setState(
-        {
-          name: '',
-          description: ''
-        });
-    } else {
-      this.setState(
-        {
-          name: '',
-          description: ''
-        });
-    }
+    const group = {
+      name: this.state.name,
+      description: this.state.description
+    };
+    this.props.createGroup(group);
+    this.setState(
+      {
+        name: '',
+        description: ''
+      });
   }
+  /**
+   * render component
+   * @method render
+   * @member CreateGroupModal
+   * @returns {object} component
+   */
   render() {
     return (
       <div id="modal1" className="modal modal-fixed-footer" style={{ zIndex: 1051, opacity: 1, transform: 'scaleX(1)', top: '10%' }}>

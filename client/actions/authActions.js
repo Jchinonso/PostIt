@@ -108,6 +108,12 @@ export function signIn(user) {
   );
 }
 
+/**
+ * async helper function: sign in user
+ * @function googleSignIn
+ * @param {string} user
+ * @returns {function} asynchronous action
+ */
 export function googleSignIn(user) {
   return (dispatch => axios.post('api/v1/user/googleLogin', user)
   .then((response) => {

@@ -4,7 +4,16 @@ import { connect } from 'react-redux';
 import Chips from 'react-chips';
 import { addMemberToGroup } from '../../../../actions/memberActions';
 
+/**
+ * @class AddGroupUserModal
+ * @extends React.Component
+ */
 class AddGroupUserModal extends React.Component {
+  /**
+   * @constructor
+   * @extends React.Component
+   * @param {object} props
+   */
   constructor(props) {
     super(props);
     this.state = {
@@ -13,15 +22,38 @@ class AddGroupUserModal extends React.Component {
     this.handleOnChange = this.handleOnChange.bind(this);
     this.handleOnClick = this.handleOnClick.bind(this);
   }
+  /**
+   * Handle onChange events on form inputs
+   * @method handleOnChange
+   * @member SignUp
+   * @param {object} chips
+   * @returns {function} a function that handles change event on react-chips
+   */
   handleOnChange(chips) {
     this.setState({
       members: chips
     });
   }
+   /**
+   * Handle onSubmit events on form inputs
+   * @method handleOnClick
+   * @member AddGroupUserModal
+   * @param {object} event
+   * @returns {function} a function that handles onClick event on a form
+   */
   handleOnClick(event) {
     event.preventDefault();
-    this.props.addMemberToGroup(this.props.activeGroup, this.state.username);
+    if (this.state.members.length > 0) {
+      this.props.addMemberToGroup(this.props.activeGroup, this.state);
+      this.setState({ members: [] });
+    }
   }
+  /**
+   * render component
+   * @method render
+   * @member AddGroupUserModal
+   * @returns {object} component
+   */
   render() {
     const allUsers = this.props.allUsers;
     const groupMembers = this.props.groupMembers;
@@ -54,7 +86,7 @@ class AddGroupUserModal extends React.Component {
             onClick={this.handleOnClick}
             className="modal-action modal-close waves-effect waves-green btn-flat"
           >
-            Create
+            Add
             <i className="material-icons right">send</i>
           </a>
         </div>
@@ -62,14 +94,20 @@ class AddGroupUserModal extends React.Component {
     );
   }
 }
-
+AddGroupUserModal.defaultProps = {
+  activeGroup: null
+};
 AddGroupUserModal.propTypes = {
+  activeGroup: PropTypes.number,
   addMemberToGroup: PropTypes.func.isRequired,
   allUsers: PropTypes.arrayOf(PropTypes.object).isRequired,
   groupMembers: PropTypes.arrayOf(PropTypes.object).isRequired,
 };
+
+
 function mapStateToProp(state) {
   return {
+    activeGroup: state.activeGroupReducer,
     allUsers: state.membersReducer.users,
     groupMembers: state.groupMembersReducer.members
   };

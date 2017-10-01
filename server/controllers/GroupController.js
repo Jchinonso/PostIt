@@ -75,7 +75,7 @@ const GroupController = {
 
   addUserToGroup(req, res) {
     const groupId = req.params.id;
-    const { username } = req.body;
+    const members = [].concat(req.body.members);
     db.Groups.findOne({
       where: {
         id: groupId
@@ -84,7 +84,7 @@ const GroupController = {
       if(group) {
         db.Users.findAll({
           where: {
-            username
+            username: members
           }
         }).then((user) => {
           if(user.length !== 0) {

@@ -50,7 +50,7 @@ const UsersController = {
    */
   fetchUsers(req, res) {
     db.Users.findAll({
-      where: {}
+      attributes: {exclude: ['password', 'createdAt', 'updatedAt']}
     }).then(users => res.json({
       users,
     }));

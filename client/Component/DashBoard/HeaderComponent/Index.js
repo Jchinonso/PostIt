@@ -9,12 +9,18 @@ const HeaderComponent = ({ signOut }) => (
           <a href="#?" className="brand-logo center">Post It</a>
           <ul className="right hide-on-med-and-down">
             <li >
-              <i
-                className="fa fa-sign-out fa-2x right dropdown-button"
-                aria-hidden="true"
+              <a
+                href="#?"
+                className="tooltipped"
                 onClick={signOut}
+                data-position="left"
                 style={{ paddingRight: 10 }}
-              />
+                data-tooltip="Sign Out"
+              >
+                <i
+                  className="fa fa-sign-out fa-2x right"
+                />
+              </a>
             </li>
           </ul>
         </div>
