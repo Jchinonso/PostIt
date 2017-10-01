@@ -54,6 +54,9 @@ class SignIn extends React.Component {
         email: this.state.email,
       };
       this.props.signIn(userObj);
+      this.setState({
+        [event.target.name]: ''
+      });
     }
   }
 
@@ -65,7 +68,7 @@ class SignIn extends React.Component {
       password: familyName,
       phoneNumber: '08139308818',
     };
-    console.log(userObj);
+
     this.props.googleSignIn(userObj);
   }
 
@@ -125,10 +128,10 @@ class SignIn extends React.Component {
                         clientId={'682330105302-4frgtepd1nj81n3gd82e97usq6ul0ier.apps.googleusercontent.com'}
                         onSuccess={this.responseGoogle}
                         onFailure={this.responseGoogle}
+                        style={{ width: '30%' }}
                         className="btn red waves-effect waves-light left"
                       >
-                        <i className="material-icons right">send</i>
-                       Login With Google
+                      <i className="fa fa-google-plus-official fa-4x" aria-hidden="true"></i>
                       </GoogleLogin>
                     </div>
                   </div>

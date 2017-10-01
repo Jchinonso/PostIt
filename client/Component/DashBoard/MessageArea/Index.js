@@ -46,9 +46,8 @@ class MessageArea extends Component {
    */
   handleSubmitMessage(event) {
     const { priority, content } = this.state;
-    if (content) {
-      this.props.createMessage(this.props.activeGroup, { content, priority });
-    }
+    this.props.createMessage(this.props.activeGroup, { content, priority });
+    this.setState({ content: '' });
   }
 
   /**
@@ -100,14 +99,12 @@ function mapStateToProps(state) {
     groups: state.groupReducer.groups
   };
 }
+MessageArea.defaultProps = {
+  activeGroup: null
+};
 MessageArea.propTypes = {
-  activeGroup: PropTypes.string.isRequired,
+  activeGroup: PropTypes.number,
   createMessage: PropTypes.func.isRequired
 };
-
-MessageArea.defaultProps = {
-  activeGroup: ''
-};
-
 
 export default connect(mapStateToProps, { createMessage })(MessageArea);

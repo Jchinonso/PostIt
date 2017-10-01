@@ -3,13 +3,30 @@ import $ from 'jquery';
 import Proptypes from 'prop-types';
 import { connect } from 'react-redux';
 import GroupListItem from './GroupListItem';
-import { fetchGroups } from '../../../../actions/groupActions';
+import { fetchGroups, selectGroup } from '../../../../actions/groupActions';
+import { getAllGroupMessages } from '../../../../actions/messageActions';
 
-
+/**
+ * @constructor
+ * @extends React.Component
+ * @param {object} props
+ */
 class SideBarComponent extends React.Component {
   componentDidMount() {
-    this.props.fetchGroups();
+    this.props.fetchGroups()
+    .then(() => {
+      if (this.props.groups.length > 0) {
+        this.props.selectGroup(this.props.groups[0].id);
+        this.props.getAllGroupMessages(this.props.groups[0].id);
+      }
+    });
   }
+/**
+ * render component
+ * @method render
+ * @member SideBarComponent
+ * @returns {object} component
+ */
   render() {
     return (
       <ul id="slide-out" className="side-nav fixed z-depth-2 col s10 m3 l3 ">
@@ -26,12 +43,15 @@ class SideBarComponent extends React.Component {
         <li id="dashboard">
           <span>Groups</span>
           <a
-            className="secondary-content modal-trigger"
+            className="secondary-content  tooltipped modal-trigger"
             href="#modal1"
+            data-position="right"
+            data-delay="50"
+            data-tooltip="Create New Group"
           >
             <span className="caption"> + </span></a>
         </li>
-        <GroupListItem handleChangeGroup={this.props.handleChangeGroup} groups={this.props.groups} />
+        <GroupListItem handleChangeGroup={this.props.handleChangeGroup} groups={this.props.groups} activeGroup={this.props.activeGroup} />
       </ul>
     );
   }
@@ -40,15 +60,25 @@ class SideBarComponent extends React.Component {
 function mapStateToProps(state) {
   return {
     username: state.authReducer.user.username,
-    groups: state.groupReducer.groups
+    groups: state.groupReducer.groups,
+    activeGroup: state.activeGroupReducer
   };
 }
 
+SideBarComponent.defaultProps = {
+  activeGroup: null
+};
+
 SideBarComponent.propTypes = {
+  activeGroup: Proptypes.number,
+  selectGroup: Proptypes.func.isRequired,
+  getAllGroupMessages: Proptypes.func.isRequired,
   handleChangeGroup: Proptypes.func.isRequired,
   groups: Proptypes.arrayOf(Proptypes.object).isRequired,
   username: Proptypes.string.isRequired,
   fetchGroups: Proptypes.func.isRequired,
 };
 
-export default connect(mapStateToProps, { fetchGroups })(SideBarComponent);
+
+export default connect(mapStateToProps,
+  { fetchGroups, selectGroup, getAllGroupMessages })(SideBarComponent);

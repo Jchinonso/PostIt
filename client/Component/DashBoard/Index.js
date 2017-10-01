@@ -7,15 +7,47 @@ import MessageArea from './MessageArea/Index';
 import { signOut } from '../../actions/authActions';
 
 
+/**
+ * @class AddGroupUserModal
+ * @extends React.Component
+ */
 class Dashboard extends React.Component {
+
+  /**
+ * @constructor
+ * @extends React.Component
+ * @param {object} props
+ */
   constructor(props) {
     super(props);
     this.state = {};
     this.handleSignOut = this.handleSignOut.bind(this);
   }
+
+  componentDidMount() {
+    $(document).ready(() => {
+      $('.modal').modal();
+      $('.tooltipped').tooltip({ delay: 50 });
+    });
+  }
+
+  /**
+   * Handle signout event
+   * @method handleOnChange
+   * @member Dashboard
+   * @param {object} event
+   * @returns {function} a function that dispatch signOut action
+   */
   handleSignOut(event) {
     this.props.signOut();
   }
+
+  /**
+   * render component
+   * @method render
+   * @member Dashbaord
+   * @returns {object} component
+   */
   render() {
     return (
       <div>
