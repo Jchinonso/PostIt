@@ -2,7 +2,7 @@
 module.exports = (sequelize, DataTypes) => {
   const Messages = sequelize.define('Messages', {
     content: {
-      type: DataTypes.STRING,
+      type: DataTypes.TEXT,
     },
     priority: {
       type: DataTypes.STRING,
