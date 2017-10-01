@@ -5,6 +5,7 @@ const {
   password,
   database,
   host,
+  URL,
   port
 } = process.env;
 
@@ -27,7 +28,7 @@ module.exports = {
     logging: false
   },
   production: {
-    use_env_variable: 'URL',
+    use_env_variable: URL,
     dialect: 'postgres'
   }
 };
