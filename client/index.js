@@ -3,7 +3,12 @@ import { render } from 'react-dom';
 import jwtDecode from 'jwt-decode';
 import { browserHistory, Router } from 'react-router';
 import { Provider } from 'react-redux';
+import 'jquery/dist/jquery';
+import 'materialize-css/dist/css/materialize.css';
+import 'materialize-css/dist/js/materialize';
+import 'toastr/build/toastr.min.css';
 import { setCurrentUser } from './actions/authActions';
+import { fetchUsers } from './actions/memberActions';
 import store from './store';
 import setAuthorizationToken from './utils/setAuthorizationToken';
 import App from './Component/App';
@@ -14,7 +19,10 @@ const token = window.localStorage.getItem('tokenize');
 if (token) {
   setAuthorizationToken(token);
   store.dispatch(setCurrentUser(jwtDecode(token)));
+  store.dispatch(fetchUsers());
 }
+
+
 render(<Provider store={store}>
   <Router history={browserHistory} routes={routes} />
 </Provider>, document.getElementById('app'));
