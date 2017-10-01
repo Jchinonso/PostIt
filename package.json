@@ -4,7 +4,7 @@
   "description": "postit is a simple application that post notification to members of a group",
   "main": "app.js",
   "scripts": {
-    "start": "NODE_ENV=production npm run migrations && npm run build",
+    "start": "NODE_ENV=production && npm run build",
     "clean-dist": "npm run remove-dist && mkdir dist",
     "remove-dist": "node_modules/.bin/rimraf ./dist",
     "build:html": "babel-node tools/buildHtml.js",
