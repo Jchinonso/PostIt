@@ -2,24 +2,51 @@ import axios from 'axios';
 import toastr from 'toastr';
 import * as types from '../constants/ActionTypes';
 
-export function addMembersSuccess(member) {
+
+/**
+ * create action: add members to group
+ * @function addMembersSuccess
+ * @param {object} message
+ * @returns {object} action: type and message
+ */
+export function addMembersSuccess(message) {
   return {
     type: types.ADD_MEMBERS_SUCCESS,
-    member
+    message
   };
 }
+
+/**
+ * get action: fetch all users
+ * @function fetchUserSuccess
+ * @param {object} users
+ * @returns {object} action: type and users
+ */
 function fetchUserSuccess(users) {
   return {
     type: types.FETCH_USER_SUCCESS,
     users
   };
 }
+
+/**
+ * get action: fetch all group members
+ * @function fetchGroupMembersSuccess
+ * @param {object} members
+ * @returns {object} action: type and members
+ */
 function fetchGroupMembersSuccess(members) {
   return {
     type: types.FETCH_GROUP_MEMBERS_SUCCESS,
     members
   };
 }
+/**
+ * create action: failure action for add members
+ * @function addMembersFailure
+ * @param {object} error
+ * @returns {object} action: type and error
+ */
 export function addMembersFailure(error) {
   return {
     type: types.ADD_MEMBERS_FAILURE,
@@ -27,9 +54,16 @@ export function addMembersFailure(error) {
   };
 }
 
-export function addMemberToGroup(groupId, username) {
+/**
+ * async helper function: add Members to Group
+ * @function addMemberToGroup
+ * @param{integer} groupId,
+ * @param{array} members,
+ * @returns {function} asynchronous action
+ */
+export function addMemberToGroup(groupId, members) {
   return (dispatch) => {
-    axios.post(`/api/v1/group/${groupId}/user`, username)
+    axios.post(`/api/v1/group/${groupId}/user`, members)
       .then((response) => {
         toastr.success(response.data.msg);
         dispatch(addMembersSuccess(response.data.msg));
@@ -41,6 +75,11 @@ export function addMemberToGroup(groupId, username) {
   };
 }
 
+/**
+ * async helper function: add Members to Group
+ * @function fetchUsers
+ * @returns {function} asynchronous action
+ */
 export function fetchUsers() {
   return (dispatch) => {
     axios.get('/api/v1/user')
@@ -53,6 +92,12 @@ export function fetchUsers() {
   };
 }
 
+/**
+ * async helper function: fetches Members in Group
+ * @function fetchGroupMembers
+ * @param{integer} groupId
+ * @returns {function} asynchronous action
+ */
 export function fetchGroupMembers(groupId) {
   return (dispatch) => {
     axios.get(`/api/v1/group/${groupId}/user`)
