@@ -9,7 +9,7 @@ import Routes from '../server/routes/index';
 require('dotenv').config();
 /* eslint-disable no-console */
 
-const port = 5000;
+const port = process.env.PORT || 5000;
 const app = express();
 const router = express.Router();
 
