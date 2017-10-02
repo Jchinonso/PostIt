@@ -2,6 +2,7 @@ import webpack from 'webpack';
 import path from 'path';
 import ExtractTextPlugin from 'extract-text-webpack-plugin';
 
+const JSON = require('circular-json');
 
 export default {
   debug: true,
