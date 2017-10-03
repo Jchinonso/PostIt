@@ -3,13 +3,9 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import MessageBoardComponent from './MessageBoardComponent/Index';
-import CreateGroupModal from './SideBarComponent/CreateGroupModal';
-import SideBarComponent from './SideBarComponent/Index';
 import AddGroupUser from './AddGroupUser/Index';
 import AddGroupUserModal from './AddGroupUser/AddGroupUserModal';
-import { getAllGroupMessages } from '../../../actions/messageActions';
-import { selectGroup } from '../../../actions/groupActions';
-import { fetchGroupMembers } from '../../../actions/memberActions';
+
 
 /**
  * @class MainComponent
@@ -22,21 +18,8 @@ class MainComponent extends React.Component {
       selectedGroup: null,
       priority: 'normal'
     };
-    this.handleChangeGroup = this.handleChangeGroup.bind(this);
   }
 
-  /**
-  * Handle Change Group
-  * @method handleChangeGroup
-  * @member MainComponent
-  * @param {object} groupId
-  * @returns {function} a function that changes group and dispatches some actions
-  */
-  handleChangeGroup(groupId) {
-    this.props.selectGroup((groupId));
-    this.props.getAllGroupMessages(groupId);
-    this.props.fetchGroupMembers(groupId);
-  }
   /**
    * render component
    * @method render
@@ -47,7 +30,6 @@ class MainComponent extends React.Component {
     $('.tooltipped').tooltip({delay: 50});
     return (
       <main>
-        <SideBarComponent handleChangeGroup={this.handleChangeGroup} />
         { this.props.activeGroup ?
           <AddGroupUser /> : null
         }
@@ -56,9 +38,7 @@ class MainComponent extends React.Component {
             <h1>Create a New Group </h1>
           </div> : null
         }
-
         <AddGroupUserModal />
-        <CreateGroupModal />
         <MessageBoardComponent messages={this.props.messages} username={this.props.username} />
       </main>
     );
@@ -82,11 +62,9 @@ MainComponent.propTypes = {
   activeGroup: PropTypes.number,
   username: PropTypes.string.isRequired,
   messages: PropTypes.arrayOf(PropTypes.object).isRequired,
-  getAllGroupMessages: PropTypes.func.isRequired,
-  selectGroup: PropTypes.func.isRequired,
-  fetchGroupMembers: PropTypes.func.isRequired,
+
 };
 
 
 export default
-  connect(mapStateToProps, { getAllGroupMessages, selectGroup, fetchGroupMembers })(MainComponent);
+  connect(mapStateToProps)(MainComponent);

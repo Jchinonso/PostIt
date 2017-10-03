@@ -1,6 +1,7 @@
 import React, { PropTypes } from 'react';
+import toastr from 'toastr';
 import { connect } from 'react-redux';
-import { createGroup } from '../../../../actions/groupActions';
+import { createGroup } from '../../../actions/groupActions';
 
 /**
  * @class CreateGroupModal
@@ -21,7 +22,6 @@ class CreateGroupModal extends React.Component {
    * @returns {function} a function that handles change event on inputs
    */
   handleOnChange(event) {
-    event.preventDefault();
     this.setState({
       [event.target.name]: event.target.value
     });
@@ -35,17 +35,28 @@ class CreateGroupModal extends React.Component {
    */
   handleOnClick(event) {
     event.preventDefault();
+    const { name, description } = this.state;
+    if (name.trim().length === 0 || description.trim().length === 0) {
+      return toastr.error('Group Credentials must be supplied');
+    }
     const group = {
-      name: this.state.name,
-      description: this.state.description
+      name: name.trim(),
+      description: description.trim()
     };
     this.props.createGroup(group);
-    this.setState(
-      {
-        name: '',
-        description: ''
-      });
   }
+
+  // clearGroupState() {
+  //   this.setState({
+  //     name: '',
+  //     description: ''
+  //   });
+  // }
+  // openCreateGroupModal() {
+  //   $('.modal').open('modal', {
+  //     complete: this.clearGroupState()
+  //   });
+  // }
   /**
    * render component
    * @method render
