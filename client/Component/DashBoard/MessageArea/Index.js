@@ -71,7 +71,7 @@ class MessageArea extends Component {
     return (
       <div>
         {this.props.activeGroup ?
-          <footer style={{ paddingLeft: 300 }}>
+          <footer >
             <div className="message-input row">
               <form className="col s12">
                 <div className="row">

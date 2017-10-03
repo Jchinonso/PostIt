@@ -3,8 +3,8 @@ import $ from 'jquery';
 import Proptypes from 'prop-types';
 import { connect } from 'react-redux';
 import GroupListItem from './GroupListItem';
-import { fetchGroups, selectGroup } from '../../../../actions/groupActions';
-import { getAllGroupMessages } from '../../../../actions/messageActions';
+import { fetchGroups, selectGroup } from '../../../actions/groupActions';
+import { getAllGroupMessages } from '../../../actions/messageActions';
 
 /**
  * @constructor
@@ -29,7 +29,7 @@ class SideBarComponent extends React.Component {
  */
   render() {
     return (
-      <ul id="slide-out" className="side-nav fixed z-depth-2 col s10 m3 l3 ">
+      <ul id="nav-mobile"className="side-nav fixed">
         <li className="center no-padding">
           <div className="indigo darken-2 white-text" style={{ height: 180 }}>
             <div className="row">
