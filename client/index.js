@@ -11,7 +11,7 @@ import { setCurrentUser } from './actions/authActions';
 import { fetchUsers } from './actions/memberActions';
 import store from './store';
 import setAuthorizationToken from './utils/setAuthorizationToken';
-import App from './Component/App';
+import App from './Component/App.jsx';
 import routes from './routes';
 import './assets/css/post.css';
 

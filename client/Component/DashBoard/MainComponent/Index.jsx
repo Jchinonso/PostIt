@@ -2,9 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import MessageBoardComponent from './MessageBoardComponent/Index';
-import AddGroupUser from './AddGroupUser/Index';
-import AddGroupUserModal from './AddGroupUser/AddGroupUserModal';
+import MessageBoardComponent from './MessageBoardComponent/Index.jsx';
+import AddGroupUser from './AddGroupUser/Index.jsx';
+import AddGroupUserModal from './AddGroupUser/AddGroupUserModal.jsx';
 
 
 /**

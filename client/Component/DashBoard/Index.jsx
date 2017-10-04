@@ -1,11 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import NavComponent from './NavComponent/Index';
-import SideBarComponent from './SideBarComponent/Index';
-import MainComponent from './MainComponent/Index';
-import MessageArea from './MessageArea/Index';
-import CreateGroupModal from './SideBarComponent/CreateGroupModal';
+import NavComponent from './NavComponent/Index.jsx';
+import SideBarComponent from './SideBarComponent/Index.jsx';
+import MainComponent from './MainComponent/Index.jsx';
+import MessageArea from './MessageArea/Index.jsx';
+import CreateGroupModal from './SideBarComponent/CreateGroupModal.jsx';
 import { getAllGroupMessages } from '../../actions/messageActions';
 import { selectGroup } from '../../actions/groupActions';
 import { fetchGroupMembers } from '../../actions/memberActions';

@@ -1,8 +1,8 @@
 import React from 'react';
 import { Route, IndexRoute } from 'react-router';
-import App from './Component/App';
-import AuthenticationPage from './Component/AuthComponent/index';
-import DashBoard from './Component/DashBoard/Index';
+import App from './Component/App.jsx';
+import AuthenticationPage from './Component/AuthComponent/index.jsx';
+import DashBoard from './Component/DashBoard/Index.jsx';
 
 const onEnter = (next, replace, cb) => {
   if (localStorage.getItem('tokenize') !== null && next.location.pathname === '/') {
