@@ -2,8 +2,8 @@ import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { signIn, signUp, googleSignIn } from '../../actions/authActions';
-import SignIn from './SignIn';
-import SignUp from './SignUp';
+import SignIn from './SignIn.jsx';
+import SignUp from './SignUp.jsx';
 
 /**
  * @class Authentication

@@ -2,8 +2,8 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { createMessage } from '../../../actions/messageActions';
-import MessageInputBox from './MessageInputBox';
-import PriorityButtons from './PriorityButtons';
+import MessageInputBox from './MessageInputBox.jsx';
+import PriorityButtons from './PriorityButtons.jsx';
 
 
 /**
@@ -46,7 +46,11 @@ class MessageArea extends Component {
    */
   handleSubmitMessage(event) {
     const { priority, content } = this.state;
-    this.props.createMessage(this.props.activeGroup, { content, priority });
+    const messageData = {
+      content: content.trim(),
+      priority
+    };
+    this.props.createMessage(this.props.activeGroup, messageData);
     this.setState({ content: '' });
   }
 
