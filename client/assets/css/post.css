@@ -1,3 +1,9 @@
+body {
+  font-family: Bree Serif Acme Zilla Slab;
+  background: #EEEEEE;
+  overflow: hidden;
+}
+
 .side-nav.fixed {
   left: 0;
   -webkit-transform: translateX(0);
@@ -41,12 +47,9 @@
   min-height: 300px
 }
 .message-board {
-  position: relative;
-  width: 100%;
-  height: 98%;
-  top: 10%;
-  overflow: auto;
-  padding-bottom: 5%;
+  margin: 0 0 130px 0;
+  overflow-y: scroll;
+  height: 500px;
 }
 div[data-priority=normal] {
   border-top-color: #59b300;
@@ -79,10 +82,11 @@ div[data-priority=normal] {
 footer {
   position: fixed;
   top: 85%;
+  bottom: 0;
   left: 0;
+  height: 20vh;
   padding-left: 250px;
   width: 100%;
-  min-height: 15%;
   background-color: #f9f7f7;
   border: 1px solid #ccc;
 }
@@ -103,6 +107,9 @@ footer {
   margin: 0;
   padding: 0;
   height: 100%;
+}
+.message-date {
+  color: #585858
 }
 
 button, input, optgroup, select, textarea {
@@ -186,6 +193,11 @@ footer {
     }
   }
 
+  @media only screen and (min-device-width : 320px) and (max-device-width : 480px) {
+    .container {
+      padding-left: 0 !important
+    }
+  }
 
 
 /* Authentication css */
@@ -194,4 +206,15 @@ footer {
   width: 40%;
   padding:0;
 }
+#no-messages {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
 
+#google-button {
+  padding-top: 20px;
+  padding-bottom: 20px
+}

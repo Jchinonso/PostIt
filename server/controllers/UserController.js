@@ -154,7 +154,46 @@ const UsersController = {
         })
       }
     })
+  },
+
+  forgetPassword(req, res) {
+    db.Users.findOne({
+      where: {
+        email: req.body.email
+      }
+    }).then((user) => {
+      if(user) {
+
+      } else {
+        res.status(404).json({
+          msg: 'User with email not found'
+        })
+      }
+    })
+  },
+
+  resetPassword(req, res) {
+    const { newPassword, retypePassword} = req.body;
+    if (newPassword === retypePassword) {
+      db.Users.findOne({
+        where: {
+          email: req.decoded.user.email
+        }
+      }).then((user) => {
+        const hashedPassword = helper.hashedPassword(newPassword);
+        user.update({hashedPassword}).then(() => {
+          res.status(200).json({
+            msg: 'Password reset successfully'
+          });
+        })
+      })
+    } else {
+      res.json({
+        msg: 'Password does not match'
+      })
+    }
   }
+
 
 
 

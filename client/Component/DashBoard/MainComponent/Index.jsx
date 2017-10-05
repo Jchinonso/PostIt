@@ -1,4 +1,5 @@
 import React from 'react';
+import * as ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
@@ -20,6 +21,18 @@ class MainComponent extends React.Component {
     };
   }
 
+  componentDidUpdate() {
+    this.scrollToBottom();
+  }
+
+  scrollToBottom() {
+    const { messageList } = this;
+    const scrollHeight = messageList.scrollHeight;
+    const height = messageList.clientHeight;
+    const maxScrollTop = scrollHeight - height;
+    ReactDOM.findDOMNode(messageList).scrollTop = maxScrollTop > 0 ? maxScrollTop : 0;
+  }
+
   /**
    * render component
    * @method render
@@ -34,12 +47,16 @@ class MainComponent extends React.Component {
           <AddGroupUser /> : null
         }
         {this.props.groups.length === 0 ?
-          <div className="center">
-            <h1>Create a New Group </h1>
+          <div id="no-messages">
+            <p>Select a group or click the<q>plus</q> button to create group.</p>
           </div> : null
         }
         <AddGroupUserModal />
-        <MessageBoardComponent messages={this.props.messages} username={this.props.username} />
+        <div className="container" style={{ paddingLeft: '30px', width: '90%' }}>
+          <div className="message-board" ref={(el) => { this.messageList = el; }} onScroll={this.onScroll} >
+            <MessageBoardComponent messages={this.props.messages} username={this.props.username} />
+          </div>
+        </div>
       </main>
     );
   }

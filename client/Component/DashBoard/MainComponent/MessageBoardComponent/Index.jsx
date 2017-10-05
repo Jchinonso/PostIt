@@ -5,23 +5,21 @@ import moment from 'moment';
 const MessageBoardComponent = (props) => {
   const { messages, username } = props;
   return (
-    <div className="container" style={{ paddingLeft: '30px', width: '90%' }}>
-      <div className="message-board">
-        {messages && messages.length !== 0 && messages.map(message =>
-          (<div className="card" style={{ padding: ' 10px 15px 10px 15px' }} key={message.id}>
-            <div className="row">
-              <div className="col s8 m8 l8">
-                <a href="#?"><span className="author-name">{message.sender}</span></a>
-                <div className="message">{message.content}</div>
-              </div>
-              <div className="col s2 m2 l2 right">
-                <a href=""><span style={{ paddingBottom: '5px' }}> {message.priority} </span></a>
-                <div className="message">{moment(new Date(message.createdAt)).fromNow()}</div>
-              </div>
+    <div>
+      {messages && messages.length !== 0 && messages.map(message =>
+        (<div className="card" style={{ padding: ' 10px 15px 10px 15px' }} key={message.id}>
+          <div className="row">
+            <div className="col s8 m8 l8">
+              <a href="#?"><span className="author-name">{message.sender}</span></a>
+              <div className="message">{message.content}</div>
             </div>
-          </div>)
-        )}
-      </div>
+            <div className="col s2 m2 l2 right">
+              <a href=""><span style={{ paddingBottom: '5px' }}> {message.priority} </span></a>
+              <div className="message-date">{moment(new Date(message.createdAt)).fromNow()}</div>
+            </div>
+          </div>
+        </div>)
+      )}
     </div>
   );
 };
