@@ -1,46 +1,13 @@
 
 import jwt from 'jsonwebtoken';
+import nodemailer from 'nodemailer';
+import bcrypt from 'bcryptjs';
 import Auth from '../middleware/Auth';
 import db from '../models';
 import helper from './helper';
 
 
 const UsersController = {
-
-  /**
-   * showUsers
-   * @desc gets details for all users
-   * @param {Object} req request object
-   * @param {Object} res response object
-   * @returns {void}
-   */
-  showUsers(req, res) {
-    const { username, limit, offset } = req.query;
-
-    if (!req.query) {
-      res.status(200).json([]);
-    } else {
-      db.Users.findAndCountAll({
-        where: {
-          username: {
-            $iLike: `%${username}%`
-          }
-        },
-        limit,
-        offset,
-        attributes: { exclude: ['password', 'salt', 'createdAt', 'updatedAt', 'verificationCode'] }
-      })
-        .then((result) => {
-          res.status(200).json(result);
-        })
-        .catch((error) => {
-          res.status(404).json({
-            success: false,
-            error
-          });
-        });
-    }
-  },
   /**
    * fetchUsers
    * @desc gets details for all users
@@ -155,15 +122,50 @@ const UsersController = {
       }
     })
   },
-
-  forgetPassword(req, res) {
+/**
+   * Send mail to reset user password
+   * @method
+   * @memberof UserController
+   * @returns {function} Express middleware function which sends
+   * a password reset mail to user
+   */
+  forgotPassword(req, res) {
     db.Users.findOne({
       where: {
         email: req.body.email
       }
     }).then((user) => {
       if(user) {
-
+        const token = Auth.generateToken(user);
+        const transporter = nodemailer.createTransport({
+          service: 'gmail',
+          secure: false,
+          auth: {
+            user: 'noreply.mypostit@gmail.com',
+            pass: process.env.PASSWORD
+          },
+          tls: {
+          }
+        });
+        const mailOptions = {
+          from: 'noreply.postitapp@gmail.com',
+          to: req.body.email,
+          subject: 'Reset Password',
+          html: `<p>You have received this mail because you asked to reset your account on PostIt. Please
+          <a href="http://${process.env.SITE_URL}/reset-password?secret=${token}">Click here</a> to begin the process</p><br />
+          <p>Please ignore this mail if you did not make this request.</p>
+          <p>Note: This link will expire after one hour</p>`,
+        };
+        transporter.sendMail(mailOptions, (error) => {
+          if (error) {
+            return res.status(501).json({
+              msg: 'Failure delivery'
+            });
+          }
+          return res.status(200).json({
+            msg: 'Please check your mail for the reset link!'
+          });
+        })
       } else {
         res.status(404).json({
           msg: 'User with email not found'
@@ -171,32 +173,38 @@ const UsersController = {
       }
     })
   },
-
+/**
+   * reset user password
+   * @method
+   * @memberof UserController
+   * @static
+   * @returns {function} reset password
+   */
   resetPassword(req, res) {
-    const { newPassword, retypePassword} = req.body;
+    const { newPassword, retypePassword, token} = req.body;
     if (newPassword === retypePassword) {
-      db.Users.findOne({
-        where: {
-          email: req.decoded.user.email
-        }
-      }).then((user) => {
-        const hashedPassword = helper.hashedPassword(newPassword);
-        user.update({hashedPassword}).then(() => {
-          res.status(200).json({
-            msg: 'Password reset successfully'
+      jwt.verify(token, process.env.JWT_SECRET_TOKEN, (error, decoded) => {
+        if(error) {
+          return res.status(401).json({
+            msg: 'This link has expired or is invalid. Please try again'
           });
-        })
-      })
+        }
+        const salt = bcrypt.genSaltSync(10);
+        const hashedPassword = bcrypt.hashSync(newPassword, salt);
+        db.Users.update({ password: hashedPassword }, {
+          where: { email: decoded.email }
+        }).then(() => {
+          res.status(201).json({
+            msg: 'password reset successful, Please login to continue!'
+          });
+        });
+      });
     } else {
-      res.json({
-        msg: 'Password does not match'
-      })
-    }
+        res.status(400).json({
+          msg: 'Password does not match'
+        })
+      }
   }
-
-
-
-
 };
 
 

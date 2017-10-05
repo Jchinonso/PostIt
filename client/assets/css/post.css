@@ -49,7 +49,7 @@ body {
 .message-board {
   margin: 0 0 130px 0;
   overflow-y: scroll;
-  height: 500px;
+  height: 77vh;
 }
 div[data-priority=normal] {
   border-top-color: #59b300;

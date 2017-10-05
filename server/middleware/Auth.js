@@ -2,7 +2,7 @@ import jwt from 'jsonwebtoken';
 import db from '../models';
 
 
-const secret = process.env.JWT_SECRET_TOKEN || 'Keep my secret';
+const secret = process.env.JWT_SECRET_TOKEN
 
 const Auth = {
   verifyToken(request, response, next) {
@@ -36,7 +36,7 @@ const Auth = {
       username: user.username,
       userId: user.id,
       email: user.email,
-    }, secret, { expiresIn: '2 days' });
+    }, secret, { expiresIn: 60 * 60 * 24 });
   },
 };
 export default Auth;

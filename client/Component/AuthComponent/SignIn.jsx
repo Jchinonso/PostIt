@@ -142,7 +142,7 @@ class SignIn extends React.Component {
                         Submit
                         </button>
                     </div>
-                    <div className="col s4" style={{ marginLeft: '8%', width: 'auto', marginTop: '8px' }}> <a href="#?">Forgot Password</a></div>
+                    <div className="col s4" style={{ marginLeft: '8%', width: 'auto', marginTop: '8px' }}> <Link to="/forgot-password">Forgot Password</Link></div>
                   </div>
                 </div>
                 <div className="center">Don&apos;t have a PostIt account? <a href="#?" onClick={this.props.showSignup}>Sign Up</a></div>
