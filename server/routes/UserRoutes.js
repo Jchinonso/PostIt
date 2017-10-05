@@ -10,14 +10,18 @@ const UserRoutes = (router) => {
 
   router.route('/user/signin')
     .post(UsersController.signIn);
+
   router.route('/user/signOut')
     .post(UsersController.signOut);
+
   router.route('/user/googleLogin')
     .post(UsersController.googleSignIn);
-  router.route('/user/forgetPassword')
-    .post(UsersController.forgetPassword);
+
+  router.route('/user/forgotPassword')
+    .post(UsersController.forgotPassword);
+
   router.route('/user/resetPassword')
-    .post(Auth.verifyToken, UsersController.resetPassword);
+    .post(UsersController.resetPassword);
 };
 
 export default UserRoutes;
