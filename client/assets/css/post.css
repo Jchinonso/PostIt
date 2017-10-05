@@ -199,6 +199,17 @@ footer {
     }
   }
 
+  @media only screen and (min-device-width : 320px) and (max-device-width : 480px) {
+    .auth {
+      padding: 0 !important;
+      min-width: 100% !important;
+    }
+  }
+  @media only screen and (min-width : 768px) {
+    .auth {
+     width: 490px !important
+    }
+  }
 
 /* Authentication css */
 .auth {
