@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import toastr from 'toastr';
-import { browserHistory } from 'react-router';
+import { Link, browserHistory } from 'react-router';
 import GoogleLogin from 'react-google-login';
 
 /**
@@ -83,8 +83,25 @@ class SignIn extends React.Component {
       <div className="card auth">
         <div className="col s12 m12 l6">
           <div className="card-panel">
-            <h4 className="header2 center">Sign In</h4>
+            <h4 className="header2 center" style={{ fontFamily: 'Bree Serif' }}>Sign In</h4>
             <div className="row">
+              <div className="col s12 m12 l12 center">
+                <div className="container" id="google-button">
+                  <GoogleLogin
+                    clientId={'682330105302-4frgtepd1nj81n3gd82e97usq6ul0ier.apps.googleusercontent.com'}
+                    onSuccess={this.responseGoogle}
+                    onFailure={this.responseGoogle}
+                    style={{ width: '100%', }}
+                    className="btn red waves-effect waves-light left"
+                  >
+                    <i className="fa fa-google-plus-official fa-4x" aria-hidden="true" />
+                    <span> Login with Google</span>
+                  </GoogleLogin>
+                </div>
+                <div className="col s12 m12 l12 center" style={{ paddingTop: '10px' }}> Or </div>
+              </div>
+            </div>
+            <div className="row " style={{ paddingTop: '10px' }}>
               <form className="col s12">
                 <div className="row">
                   <div className="input-field col s12" style={{ margin: 0 }}>
@@ -114,9 +131,9 @@ class SignIn extends React.Component {
                 </div>
                 <div className="row">
                   <div className="row">
-                    <div className="input-field col s12" style={{ margin: 0 }}>
+                    <div className="input-field col s8" style={{ paddingLeft: '60px', margin: '0 auto', width: 'auto' }}>
                       <button
-                        className="btn indigo waves-effect waves-light right"
+                        className="btn indigo waves-effect waves-light left"
                         type="submit"
                         name="action"
                         onClick={this.handleOnSubmit}
@@ -124,19 +141,11 @@ class SignIn extends React.Component {
                         <i className="material-icons right">send</i>
                         Submit
                         </button>
-                      <GoogleLogin
-                        clientId={'682330105302-4frgtepd1nj81n3gd82e97usq6ul0ier.apps.googleusercontent.com'}
-                        onSuccess={this.responseGoogle}
-                        onFailure={this.responseGoogle}
-                        style={{ width: '30%' }}
-                        className="btn red waves-effect waves-light left"
-                      >
-                      <i className="fa fa-google-plus-official fa-4x" aria-hidden="true"></i>
-                      </GoogleLogin>
                     </div>
+                    <div className="col s4" style={{ marginLeft: '8%', width: 'auto', marginTop: '8px' }}> <a href="#?">Forgot Password</a></div>
                   </div>
                 </div>
-                <div className="center">Don&apos;t have a PostIt account?<a href="#?" onClick={this.props.showSignup}>Sign Up</a></div>
+                <div className="center">Don&apos;t have a PostIt account? <a href="#?" onClick={this.props.showSignup}>Sign Up</a></div>
               </form>
             </div>
           </div>
