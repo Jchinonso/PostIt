@@ -33,7 +33,10 @@ export function logError(error) {
 /**
 * create action:signout user success
 * @function signOutSuccess
+* @param {viod}
+* @returns {void}
 */
+
 export function signOutSuccess() {
   return {
     type: types.SIGNOUT_USER_SUCCESS,
@@ -129,3 +132,36 @@ export function googleSignIn(user) {
   );
 }
 
+/**
+ * async helper function: sign in user
+ * @function forgotPassword
+ * @param {object} email
+ * @returns {function} asynchronous action
+ */
+export function forgotPassword(email) {
+  return (dispatch => axios.post('/api/v1/user/forgotPassword', {
+    email })
+  .then((response) => {
+    toastr.success(response.data.msg);
+    browserHistory.push('/');
+  }).catch((err) => {
+    toastr.error(err.response.data.msg);
+  })
+  );
+}
+/**
+ * async helper function: sign in user
+ * @function forgotPassword
+ * @param {object} email
+ * @returns {function} asynchronous action
+ */
+export function resetPassword({ newPassword, retypePassword, token }) {
+  return (dispatch => axios.post('/api/v1/user/resetPassword', { newPassword, retypePassword, token })
+  .then((response) => {
+    toastr.success(response.data.msg);
+    browserHistory.push('/');
+  }).catch((err) => {
+    toastr.error(err.response.data.msg);
+  })
+  );
+}

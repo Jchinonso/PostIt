@@ -111,9 +111,9 @@ class SignUp extends React.Component {
                 </div>
                 <div className="row">
                   <div className="row">
-                    <div className="input-field col s12" style={{ margin: 0 }}>
+                    <div className="input-field col s8" style={{ paddingLeft: '60px', margin: '0 auto', width: 'auto' }}>
                       <button
-                        className="btn indigo waves-effect waves-light right"
+                        className="btn indigo waves-effect waves-light left"
                         type="submit"
                         name="action"
                       >

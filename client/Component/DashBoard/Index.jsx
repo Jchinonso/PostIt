@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import toastr from 'toastr';
 import { connect } from 'react-redux';
 import NavComponent from './NavComponent/Index.jsx';
 import SideBarComponent from './SideBarComponent/Index.jsx';
@@ -7,7 +8,7 @@ import MainComponent from './MainComponent/Index.jsx';
 import MessageArea from './MessageArea/Index.jsx';
 import CreateGroupModal from './SideBarComponent/CreateGroupModal.jsx';
 import { getAllGroupMessages } from '../../actions/messageActions';
-import { selectGroup } from '../../actions/groupActions';
+import { selectGroup, createGroup } from '../../actions/groupActions';
 import { fetchGroupMembers } from '../../actions/memberActions';
 import { signOut } from '../../actions/authActions';
 
@@ -25,9 +26,15 @@ class Dashboard extends React.Component {
  */
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+      name: '',
+      description: ''
+    };
     this.handleSignOut = this.handleSignOut.bind(this);
     this.handleChangeGroup = this.handleChangeGroup.bind(this);
+    this.handleOnChange = this.handleOnChange.bind(this);
+    this.handleOnClick = this.handleOnClick.bind(this);
+    this.openCreateGroupModal = this.openCreateGroupModal.bind(this);
   }
 
   componentDidMount() {
@@ -37,6 +44,49 @@ class Dashboard extends React.Component {
       $(".button-collapse").sideNav({
         menuWidth: 250
       });
+    });
+  }
+  /**
+   * Handle onChange events on form inputs
+   * @method handleInputChange
+   * @member SignUp
+   * @param {object} event
+   * @returns {function} a function that handles change event on inputs
+   */
+  handleOnChange(event) {
+    this.setState({
+      [event.target.name]: event.target.value
+    });
+  }
+  /**
+   * Handle onClick events on form inputs
+   * @method handleOnClick
+   * @member CreateGroupModal
+   * @param {object} event
+   * @returns {function} a function that handles onClick event on inputs
+   */
+  handleOnClick(event) {
+    event.preventDefault();
+    const { name, description } = this.state;
+    if (name.trim().length === 0 || description.trim().length === 0) {
+      return toastr.error('Group Credentials must be supplied');
+    }
+    const group = {
+      name: name.trim(),
+      description: description.trim()
+    };
+    this.props.createGroup(group);
+  }
+  clearGroupState() {
+    this.setState({
+      name: '',
+      description: ''
+    });
+  }
+  openCreateGroupModal() {
+   // event.preventDefault();
+    $('#moda').modal('open', {
+      complete: this.clearGroupState()
     });
   }
   /**
@@ -74,9 +124,9 @@ class Dashboard extends React.Component {
       <div>
         <header>
           <NavComponent signOut={this.handleSignOut} />
-          <SideBarComponent handleChangeGroup={this.handleChangeGroup} />
+          <SideBarComponent openModal={this.openCreateGroupModal} handleChangeGroup={this.handleChangeGroup} />
         </header>
-        <CreateGroupModal />
+        <CreateGroupModal handleOnChange={this.handleOnChange} handleOnClick={this.handleOnClick} />
         <MainComponent />
         <MessageArea />
       </div>
@@ -89,6 +139,9 @@ Dashboard.propTypes = {
   getAllGroupMessages: PropTypes.func.isRequired,
   selectGroup: PropTypes.func.isRequired,
   fetchGroupMembers: PropTypes.func.isRequired,
+  createGroup: PropTypes.func.isRequired
 };
 
-export default connect(null, { signOut, getAllGroupMessages, selectGroup, fetchGroupMembers   })(Dashboard);
+export default connect(null,
+  { signOut, getAllGroupMessages, selectGroup, createGroup, fetchGroupMembers }
+)(Dashboard);
