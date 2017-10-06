@@ -152,7 +152,7 @@ const UsersController = {
           to: req.body.email,
           subject: 'Reset Password',
           html: `<p>You have received this mail because you asked to reset your account on PostIt. Please
-          <a href="http://${process.env.SITE_URL}/reset-password?secret=${token}">Click here</a> to begin the process</p><br />
+          <a href="https://${process.env.SITE_URL}/reset-password?secret=${token}">Click here</a> to begin the process</p><br />
           <p>Please ignore this mail if you did not make this request.</p>
           <p>Note: This link will expire after one hour</p>`,
         };
