@@ -40,11 +40,12 @@ class MainComponent extends React.Component {
    * @returns {object} component
    */
   render() {
+    $('#add-user').modal()
     $('.tooltipped').tooltip({delay: 50});
     return (
       <main>
         { this.props.activeGroup ?
-          <AddGroupUser /> : null
+          <AddGroupUser handleAddUserModal={this.handleAddUserModal} /> : null
         }
         {this.props.groups.length === 0 ?
           <div id="no-messages">
