@@ -20,7 +20,11 @@ const UsersController = {
       attributes: {exclude: ['password', 'createdAt', 'updatedAt']}
     }).then(users => res.json({
       users,
-    }));
+    })).catch((error) => {
+      res.status(500).json({
+        msg: 'Internal server error'
+      })
+    });
   },
 
 
@@ -53,7 +57,7 @@ const UsersController = {
           });
         }
         return res.status(409).json({ msg: 'user already exist' });
-      }).catch(err => res.status(400).json({ msg: err.errors[0].message }));
+      }).catch(err => res.json({ msg: err.errors[0].message }));
   },
  /**
    * signin - Log in a user
