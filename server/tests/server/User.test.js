@@ -87,5 +87,54 @@ describe('POST api/user/signup', () => {
       return done();
     });
   });
+  it('should signin with google', (done) => {
+    request.post('/api/v1/user/googleLogin')
+    .send(userHelper.goodUser)
+    .set('Accept', 'application/json')
+    .end((err, res) => {
+      if (err) return err;
+      expect(res.status).to.equal(200);
+      expect(res.body.msg).to.equal('You have been loggedin successfully');
+      return done();
+    });
+  });
+  it('should signup a user with google if user does not exist ', (done) => {
+    request.post('/api/v1/user/googleLogin')
+    .send({
+      username: 'melkol',
+      password: 'abacus555',
+      email: 'melkol@example.com',
+      phoneNumber: '08139308818'
+    })
+    .set('Accept', 'application/json')
+    .end((err, res) => {
+      if (err) return err;
+      expect(res.status).to.equal(201);
+      expect(res.body.msg).to.equal('You have been loggedin successfully');
+      return done();
+    });
+  });
+  it('should send a reset password link if user forgot password', (done) => {
+    request.post('/api/v1/user/forgotPassword')
+    .send({email: 'jchinonso@example.com'})
+    .set('Accept', 'application/json')
+    .end((err, res) => {
+      if (err) return err;
+      expect(res.status).to.equal(200);
+      expect(res.body.msg).to.equal('Please check your mail for the reset link!');
+      return done();
+    });
+  });
+  it('should not send a reset password link if user did not provide a valid email', (done) => {
+    request.post('/api/v1/user/forgotPassword')
+    .send({email: 'mkdoe@gmail.com' })
+    .set('Accept', 'application/json')
+    .end((err, res) => {
+      if (err) return err;
+      expect(res.status).to.equal(404);
+      expect(res.body.msg).to.equal('User with email not found');
+      return done();
+    });
+  });
 });
 
