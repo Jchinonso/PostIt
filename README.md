@@ -59,6 +59,7 @@ GET /api/group/groupid/message |   Get all messages that belongs to group.
   * `username` The first name of the new user
   * `email`     Email address of the new user
   * `password` A secure password
+  * `phoneNumber` Phone number
 
 * POST `/api/user/signin` Use this route to sign in to the application. The following fields are required:
   * `email`     Email address of the new user

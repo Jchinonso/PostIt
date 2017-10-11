@@ -41,7 +41,7 @@ class SignIn extends React.Component {
   /**
    * Handle onSubmit events on form inputs
    * @method handleOnSubmit
-   * @member SignUp
+   * @member SignIn
    * @param {object} event
    * @returns {function} a function that handles submit event on inputs
    */
@@ -147,6 +147,7 @@ class SignIn extends React.Component {
                 </div>
                 <div className="center">Don&apos;t have a PostIt account? <a href="#?" onClick={this.props.showSignup}>Sign Up</a></div>
               </form>
+              <Link to="/password/reset">Forgot Password</Link>
             </div>
           </div>
         </div>
