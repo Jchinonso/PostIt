@@ -36,6 +36,7 @@ const UsersController = {
    */
   signUp(req, res) {
     const { email, password, username, phoneNumber } = req.body;
+    if(email !== undefined && password !== undefined && username !== undefined && phoneNumber !== undefined) {
       db.Users.findOrCreate({
         where: {
           email
@@ -57,7 +58,10 @@ const UsersController = {
           });
         }
         return res.status(409).json({ msg: 'user already exist' });
-      }).catch(err => res.json({ msg: err.errors[0].message }));
+      }).catch(err => helper.handleError(err, res));
+    } else {
+      res.status(400).json({ msg: 'Username, password, email and phoneNo required'})
+    }
   },
  /**
    * signin - Log in a user
@@ -83,7 +87,7 @@ const UsersController = {
           msg: 'incorrect Email and password'
         });
       }
-    }).catch((err => res.json({ msg: err.errors[0].msg })));
+    }).catch((err =>  helper.handleError(err, res)));
   },
   /**
    * signOut - Log Out a user

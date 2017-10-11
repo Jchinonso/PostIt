@@ -7,7 +7,6 @@
   },
   "plugins": [
     "transform-object-rest-spread",
-    "istanbul",
-    "transform-runtime"
+    "istanbul"
   ]
 }

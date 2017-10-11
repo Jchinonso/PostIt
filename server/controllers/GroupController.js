@@ -138,7 +138,7 @@ const GroupController = {
         })
          .then(groups => res.status(200).json({'groupMembers':groups}));
       } else {
-        return res.status(404).json({ message: 'Group does not exist' });
+        return res.status(404).json({ msg: 'Group does not exist' });
       }
     }).catch((error) => {
       res.status(500).json({

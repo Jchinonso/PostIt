@@ -12,9 +12,10 @@
     "build": "babel-node tools/build.js",
     "start": "babel-node tools/distServer.js",
     "start:dev": "babel-watch server.js",
+    "setup:test": "npm run migrations && NODE_ENV=test sequelize db:seed:all",
     "transpile": "rm -rf dist/ && babel ./ --out-dir dist/ --ignore ./node_modules,./tests,./coverage --copy-files",
-    "migrations": "sequelize db:migrate",
-    "test": "NODE_ENV=test nyc mocha server/tests/**/*.js --timeout 15000",
+    "migrations": "NODE_ENV=test sequelize db:migrate:undo:all && NODE_ENV=test sequelize db:migrate ",
+    "test": "npm run setup:test && NODE_ENV=test nyc --reporter=html --reporter=text mocha --compilers js:babel-core/register ./server/tests/**/*.js --timeout 15000",
     "coverage": "nyc report --reporter=text-lcov | coveralls"
   },
   "repository": {
@@ -101,6 +102,9 @@
   "devDependencies": {
     "babel-jest": "^21.2.0",
     "chai": "^4.0.2",
+    "chai-http": "^3.0.0",
+    "coveralls": "^2.13.1",
+    "enzyme": "2.2.0",
     "coveralls": "^2.13.1",
     "enzyme": "^2.2.0",
     "eslint": "^3.19.0",
