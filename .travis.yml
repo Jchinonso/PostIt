@@ -1,15 +1,24 @@
 language: node_js
-node_js:
-  - "7"
-services:
-  - postgresql
 before_script:
-  - npm install -g sequelize-cli
-  - psql -c 'create database postit;' -U postgres
-  - psql -c 'create database postit_test;' -U postgres
-script: 
-  - npm install
-  - npm run migrations
-  - npm test
-after_success:
-  - npm run coverage
+- psql -c 'create database travis_ci_test;' -U postgres
+- npm install -g mocha
+- npm install -g nyc
+- npm install -g sequelize-cli
+- npm run setup:test
+after_script:
+- npm run coverage
+services:
+- postgresql
+node_js:
+- node
+- '6'
+env:
+  global:
+  - CXX=g++-4.8
+  - NODE_ENV=test
+addons:
+  apt:
+    sources:
+    - ubuntu-toolchain-r-test
+    packages:
+    - g++-4.8

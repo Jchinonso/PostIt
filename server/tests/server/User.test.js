@@ -8,24 +8,14 @@ const expect = chai.expect;
 const request = supertest(app);
 
 describe('POST api/user/signup', () => {
-  beforeEach((done) => {
-    request.post('/api/v1/user/signup')
-    .send(userHelper.goodUser)
-    .end((err, res) => {
-      if (err) return err;
-      done();
-    });
-  });
-  after(() => db.sequelize.sync({ force: true }));
   it('should create a new user', (done) => {
     request.post('/api/v1/user/signup')
-    .send(userHelper.anotherUser)
+    .send(userHelper.goodUser)
     .set('Accept', 'application/json')
     .end((err, res) => {
-      if (err) return err;
       expect(res.status).to.equal(201);
-      expect(res.body.username).to.equal('jdoe');
-      expect(res.body.email).to.equal('jdoe@example.com');
+      expect(res.body.username).to.equal('jchinonso');
+      expect(res.body.email).to.equal('jchinonso@example.com');
       expect(res.body.phoneNumber).to.equal('09081890018');
       done();
     });
@@ -42,7 +32,7 @@ describe('POST api/user/signup', () => {
   });
   it('should not create a user if already exist ', (done) => {
     request.post('/api/v1/user/signup')
-    .send(userHelper.goodUser)
+    .send(userHelper.anotherUser)
     .set('Accept', 'application/json')
     .end((err, res) => {
       expect(res.status).to.equal(409);
@@ -61,7 +51,7 @@ describe('POST api/user/signup', () => {
   });
   it('should signin a user', (done) => {
     request.post('/api/v1/user/signin')
-    .send(userHelper.goodUser)
+    .send(userHelper.anotherUser)
     .set('Accept', 'application/json')
     .end((err, res) => {
       expect(res.status).to.equal(200);
@@ -82,7 +72,8 @@ describe('POST api/user/signup', () => {
   it('should get all existing users', (done) => {
     request.get('/api/v1/user')
     .end((err, res) => {
-      expect(res.body.users.length).to.equal(2);
+      expect(res.body).to.be.an('object');
+      expect(res.body.users).to.be.an('array');
       return done();
     });
   });

@@ -32,9 +32,9 @@ const GroupController = {
           });
         }
         return res.status(409).json({ msg: 'Group already exist' });
-      }).catch(err => res.status(400).json({ msg: err.errors[0] }));
+      }).catch(err => res.status(500).json({ msg: 'Internal server error'}));
     } else {
-      res.json({ msg: 'Name, Description required' });
+      res.status(400).json({ msg: 'Name, Description required' });
     }
   },
 
@@ -103,6 +103,10 @@ const GroupController = {
               msg: 'User does not exist'
             })
           }
+        }).catch((error) => {
+          res.status(500).json({
+            msg: 'Internal server error'
+          })
         })
       } else {
         res.status(404).json({
@@ -134,8 +138,12 @@ const GroupController = {
         })
          .then(groups => res.status(200).json({'groupMembers':groups}));
       } else {
-        return res.status(404).json({ message: 'Group does not exist' });
+        return res.status(404).json({ msg: 'Group does not exist' });
       }
+    }).catch((error) => {
+      res.status(500).json({
+        msg: 'Internal server error'
+      })
     });
   },
 };

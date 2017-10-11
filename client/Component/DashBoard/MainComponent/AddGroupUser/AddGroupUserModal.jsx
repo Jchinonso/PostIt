@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import Chips from 'react-chips';
-import { addMemberToGroup } from '../../../../actions/memberActions';
+import { addMemberToGroup, fetchUsers } from '../../../../actions/memberActions';
 
 /**
  * @class AddGroupUserModal
@@ -21,6 +21,10 @@ class AddGroupUserModal extends React.Component {
     };
     this.handleOnChange = this.handleOnChange.bind(this);
     this.handleOnClick = this.handleOnClick.bind(this);
+  }
+
+  componentDidMount() {
+    this.props.fetchUsers();
   }
   /**
    * Handle onChange events on form inputs
@@ -102,6 +106,7 @@ AddGroupUserModal.propTypes = {
   addMemberToGroup: PropTypes.func.isRequired,
   allUsers: PropTypes.arrayOf(PropTypes.object).isRequired,
   groupMembers: PropTypes.arrayOf(PropTypes.object).isRequired,
+  fetchUsers: PropTypes.func.isRequired
 };
 
 
@@ -115,4 +120,4 @@ function mapStateToProp(state) {
 
 
 export default connect(mapStateToProp,
-  { addMemberToGroup })(AddGroupUserModal);
+  { addMemberToGroup, fetchUsers })(AddGroupUserModal);

@@ -9,6 +9,7 @@ import webpackConfig from '../webpack.config.prod';
 process.env.NODE_ENV = 'production';
 // this assures the Babel dev config (for hot reloading) doesn't apply.
 
+/* eslint-disable no-console */
 console.log('Generating minified bundle for production via Webpack. This will take a moment...'.blue);
 
 webpack(webpackConfig).run((err, stats) => {
