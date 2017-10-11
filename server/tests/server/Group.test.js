@@ -29,7 +29,6 @@ describe('POST api/group', () => {
     request.post('/api/v1/user/signup')
     .send(user)
     .end((err, res) => {
-      console.log(res.body);
       token = res.body.token;
       done()
     })
