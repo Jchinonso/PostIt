@@ -62,7 +62,6 @@ const UsersController = {
     } else {
       res.status(400).json({ msg: 'Username, password, email and phoneNo required'})
     }
-
   },
  /**
    * signin - Log in a user
