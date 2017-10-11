@@ -1,7 +1,16 @@
 import React, { PropTypes } from 'react';
+import toastr from 'toastr';
 import { connect } from 'react-redux';
+<<<<<<< HEAD:client/Component/DashBoard/MainComponent/SideBarComponent/CreateGroupModal.js
 import { createGroup } from '../../../../actions/groupActions';
+=======
+import { createGroup } from '../../../actions/groupActions';
+>>>>>>> 780ef42e71094f2f4d4e09b0c6074abdc0e9636d:client/Component/DashBoard/SideBarComponent/CreateGroupModal.jsx
 
+/**
+ * @class CreateGroupModal
+ * @extends React.Component
+ */
 class CreateGroupModal extends React.Component {
   constructor(props) {
     super(props);
@@ -9,16 +18,30 @@ class CreateGroupModal extends React.Component {
     this.handleOnChange = this.handleOnChange.bind(this);
     this.handleOnClick = this.handleOnClick.bind(this);
   }
+   /**
+   * Handle onChange events on form inputs
+   * @method handleInputChange
+   * @member SignUp
+   * @param {object} event
+   * @returns {function} a function that handles change event on inputs
+   */
   handleOnChange(event) {
-    event.preventDefault();
     this.setState({
       [event.target.name]: event.target.value
     });
   }
+  /**
+   * Handle onClick events on form inputs
+   * @method handleOnClick
+   * @member CreateGroupModal
+   * @param {object} event
+   * @returns {function} a function that handles onClick event on inputs
+   */
   handleOnClick(event) {
     event.preventDefault();
     const { name, description } = this.state;
     if (name !== undefined && description !== undefined) {
+<<<<<<< HEAD:client/Component/DashBoard/MainComponent/SideBarComponent/CreateGroupModal.js
       const group = {
         name,
         description
@@ -26,8 +49,27 @@ class CreateGroupModal extends React.Component {
       this.props.createGroup(group).then(() => {
         this.setState({ name: '', description: '' });
       });
+=======
+      const groupName = name.trim();
+      const groupDescription = description.trim();
+      if (groupName.length === 0 && groupDescription.length === 0) {
+        return toastr.error('Group Credentials must be supplied');
+      }
+      const group = {
+        name: groupName,
+        description: groupDescription
+      };
+      this.props.createGroup(group);
+>>>>>>> 780ef42e71094f2f4d4e09b0c6074abdc0e9636d:client/Component/DashBoard/SideBarComponent/CreateGroupModal.jsx
     }
   }
+
+  /**
+   * render component
+   * @method render
+   * @member CreateGroupModal
+   * @returns {object} component
+   */
   render() {
     return (
       <div id="modal1" className="modal modal-fixed-footer" style={{ zIndex: 1051, opacity: 1, transform: 'scaleX(1)', top: '10%' }}>

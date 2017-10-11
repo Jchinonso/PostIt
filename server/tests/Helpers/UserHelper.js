@@ -1,19 +1,19 @@
 
 module.exports = {
   goodUser: {
-    username: 'johnny19',
-	  email: 'chinonso@example.com',
+    username: 'jchinonso',
+	  email: 'jchinonso@example.com',
     password: 'abacus3456',
     phoneNumber: '09081890018'
   },
   anotherUser: {
-    username: 'jdoe',
+    username: 'lolo',
 	  email: 'jdoe@example.com',
     password: 'abacus3456',
     phoneNumber: '09081890018'
   },
   anotherUserTwo: {
-    username: 'jdoe',
+    username: 'lolo',
 	  email: 'mkdoe@example.com',
     password: 'abacus3456',
     phoneNumber: '09081890018'
@@ -42,7 +42,22 @@ module.exports = {
     phoneNumber: '09081890018'
   },
   userName: {
-    username: 'jdoe'
-  }
+    members: 'jdoe'
+  },
+
+  bulkUsers: [
+    {
+      username: 'kidoti',
+      email: 'kidoti@gmail.com',
+      password: 'abacus555',
+      phoneNumber: '08139308818',
+    },
+    {
+      username: 'lolo',
+      email: 'lolo@gmail.com',
+      password: 'abacus555',
+      phoneNumber: '08139308818',
+    },
+  ]
 
 };

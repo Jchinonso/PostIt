@@ -1,35 +1,45 @@
-[![Build Status](https://travis-ci.org/Jchinonso/PostIt.svg?branch=server-side)](https://travis-ci.org/Jchinonso/PostIt)
+[![Build Status](https://travis-ci.org/Jchinonso/PostIt.svg?branch=development)](https://travis-ci.org/Jchinonso/PostIt)
 [![Coverage Status](https://coveralls.io/repos/github/Jchinonso/PostIt/badge.svg?branch=development)](https://coveralls.io/github/Jchinonso/PostIt?branch=development)
+[![Code Climate](https://codeclimate.com/github/Jchinonso/PostIt/badges/gpa.svg)](https://codeclimate.com/github/Jchinonso/PostIt)
+
 ## PostIt
 
  postit is a simple application that allows friends and colleagues create groups for notifications. This way one person can post notifications to everyone by sending a message once. The application allows people create accounts, create groups and add registered users to the groups, and then send messages out to these groups whenever they want.
+ 
+![image](https://user-images.githubusercontent.com/23220841/31301111-920a9d7e-aaef-11e7-8369-7f8f5ef04b33.png)
+![image](https://user-images.githubusercontent.com/23220841/31301016-f3bb1a9a-aaee-11e7-854d-68c7bde5b9ac.png)
 
-## Server-side Api Documentation
------
+ 
+
+ Development
+-------------
+The application was developed with [NodeJs](http://nodejs.org) and [Express](http://expressjs.com) is used for routing. The [Postgres](http://postgresql.com) database was used with [sequelize](http://sequelizejs.com) as the ORM
+The frontend was built using reactJs with redux framework.
+
+
+API DOCUMENTATION
+-----------------
 The API has routes, each dedicated to a single task that uses HTTP response codes to indicate API status and errors.
-#### API Features
 
+#### API Features
 The following features make up the PostIt Application Api:
 
+#### Authentication
+- It makes use of jsonwebtoken(jwt) for authentication
+- It generates a token on successful login and send it as part of response
+- It accepts the generated token before given access to all the protected routes
+
 ###### Users
-
 - It allows users to be created.  
-
 - It allows users to login  
 
 
 ###### Groups
-
 - It allows new Group to be created by users.  
-
 - It ensures all Groups are accessible based on the permission specified.  
-
 - It allows creator of group to add members to the group
-
 - It ensures members of group can add and retrieve messages to group and from group 
 
-## Hosted App on Heroku
-[Heroku Link](https://postit-myapi.herokuapp.com/)
 
 ---
 
@@ -71,9 +81,18 @@ GET /api/group/groupid/message |   Get all messages that belongs to group.
 * GET `/api/user` Use this route to load all registered members 
 
 
-Development
------------
-The application was developed with [NodeJs](http://nodejs.org) and [Express](http://expressjs.com) is used for routing. The [Postgres](http://postgresql.com) database was used with [sequelize](http://sequelizejs.com) as the ORM
+
+Technologies Used
+-----------------
+
+* [NodeJS:](https://nodejs.org/en/) is an open-source, cross-platform JavaScript run-time environment for executing JavaScript code on the server-side.
+* [Javascript ES6:](https://en.wikipedia.org/wiki/ECMAScript) ES6 is the sixth major release of the javascript language specification. It enables features like constants, arrow functions, template literals, spread opeartor, etc.
+* [React:](https://facebook.github.io/react/tutorial/tutorial.html) Facebook open source, efficient, javascript library for building front-end projects.
+* [PostgreSQL:](https://www.postgresql.org/) PostgreSQL is a powerful, open source object-relational database system (ORDBMS) that offers modern database features such as complex queries, foreign keys, etc.
+* [Sequelize:](http://docs.sequelizejs.com/) Sequelize is a promise-based ORM for Node.js that supports different dialects such PostgreSQL, MySQL, and SQLite.
+* [Babel:](https://babeljs.io/)  Babel transpiles es6 codes to es5.
+* [Webpack:](https://webpack.github.io/docs/what-is-webpack.html) Webpack is used to bundle modules and does tasks automation.
+* [Axios:](https://www.npmjs.com/package/axios) Axios is an http client library used in consuming API.
 
 Installation
 ------------
@@ -90,13 +109,25 @@ Tests
 *  The tests have been written using Mocha framework and Chai assertion library
 *  Run the test with `npm test`
 
-### Limitations
+Limitations
+-----------
+- Group creator cannot remove users from groups
+- Users cannot update their profile
+- Users cannot deactivate their accounts
 
-The app currently cannot handle more than 3,000,000,000 users or documents but can be scalled up if the need arises.
+Coding Style
+------------
+- Airbnb: Airbnb is a coding style guide that guides developers to write clean codes
 
-### Contributing
+How to Contribute
+-----------------
+- Fork this repository.
+- Clone it.
+- Create your feature branch on your local machine with ```git checkout -b your-feature-branch```
+- Push your changes to your remote branch with ```git push origin your-feature-branch```
+- Open a pull request to the master branch, and describe how your feature works
 
-Contributions are welcome. Simply fork the repository, after working on the feature, raise a PR.
+The full API documentation can be viewed at <a href="https://jchinonso.github.io/slate/" target="_blank">here</a>
 
-### Licence
-MIT
+### Author
+Johnson Chinonso

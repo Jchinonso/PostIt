@@ -1,58 +1,112 @@
 import axios from 'axios';
+import toastr from 'toastr';
 import * as types from '../constants/ActionTypes';
-import { member, ERROR_OCCURRED } from './actionTypes';
 
-function addMembersSuccess(message) {
+
+/**
+ * create action: add members to group
+ * @function addMembersSuccess
+ * @param {object} message
+ * @returns {object} action: type and message
+ */
+export function addMembersSuccess(message) {
   return {
     type: types.ADD_MEMBERS_SUCCESS,
     message
   };
 }
 
-export const addMemberToGroup = (groupId, username) => (
-  dispatch => (
-    axios.post(`/api/group/${groupId}/user`, username)
+/**
+ * get action: fetch all users
+ * @function fetchUserSuccess
+ * @param {object} users
+ * @returns {object} action: type and users
+ */
+function fetchUserSuccess(users) {
+  return {
+    type: types.FETCH_USER_SUCCESS,
+    users
+  };
+}
+
+/**
+ * get action: fetch all group members
+ * @function fetchGroupMembersSuccess
+ * @param {object} members
+ * @returns {object} action: type and members
+ */
+function fetchGroupMembersSuccess(members) {
+  return {
+    type: types.FETCH_GROUP_MEMBERS_SUCCESS,
+    members
+  };
+}
+/**
+ * create action: failure action for add members
+ * @function addMembersFailure
+ * @param {object} error
+ * @returns {object} action: type and error
+ */
+export function addMembersFailure(error) {
+  return {
+    type: types.ADD_MEMBERS_FAILURE,
+    error
+  };
+}
+
+/**
+ * async helper function: add Members to Group
+ * @function addMemberToGroup
+ * @param{integer} groupId,
+ * @param{array} members,
+ * @returns {function} asynchronous action
+ */
+export function addMemberToGroup(groupId, members) {
+  return (dispatch) => {
+    axios.post(`/api/v1/group/${groupId}/user`, members)
       .then((response) => {
-        dispatch(addMembersSuccess(response.data.message));
+        toastr.success(response.data.msg);
+        dispatch(addMembersSuccess(response.data.msg));
       })
       .catch((err) => {
-        throw err;
-      })
-  )
-);
-
-export const listGroupMembers = groupId => (
-  dispatch => (
-    axios.get(`/api/group/${groupId}/users`)
-      .then(({ data }) => {
-        dispatch({
-          type: member.LIST_SUCCESS,
-          list: data,
-          groupId
-        });
-      })
-      .catch(({ response: { data } }) => {
-        dispatch({
-          type: ERROR_OCCURRED,
-          error: data
-        });
-      })
-  )
-);
-
-export const searchUsers = (username) => (dispatch) => {
-    axios.get(`/api/users?q=${username}`)
-      .then(({ data }) => {
-        dispatch({
-          type: member.SEARCH_SUCCESS,
-          list: data
-        });
-      })
-      .catch((error) => {
-        const data = error.response ? error.response.data : error;
-        dispatch({
-          type: ERROR_OCCURRED,
-          error: data
-        });
+        toastr.error(err.response.data.msg);
+        dispatch(addMembersFailure(err.response.data.msg));
       });
   };
+}
+
+/**
+ * async helper function: add Members to Group
+ * @function fetchUsers
+ * @returns {function} asynchronous action
+ */
+export function fetchUsers() {
+  return (dispatch) => {
+    axios.get('/api/v1/user')
+      .then((response) => {
+        dispatch(fetchUserSuccess(response.data.users));
+      })
+      .catch((err) => {
+        toastr.error(err.response.data.msg);
+      });
+  };
+}
+
+/**
+ * async helper function: fetches Members in Group
+ * @function fetchGroupMembers
+ * @param{integer} groupId
+ * @returns {function} asynchronous action
+ */
+export function fetchGroupMembers(groupId) {
+  return (dispatch) => {
+    axios.get(`/api/v1/group/${groupId}/user`)
+      .then((response) => {
+        dispatch(fetchGroupMembersSuccess(response.data.groupMembers));
+      })
+      .catch((err) => {
+        toastr.error(err.response.data.msg);
+      });
+  };
+}
+

@@ -2,7 +2,7 @@ import {
   SELECT_GROUP
 } from '../constants/ActionTypes';
 
-const activeGroup = (state = null, action) => {
+export default function activeGroupReducer(state = null, action) {
   switch (action.type) {
   case SELECT_GROUP: {
     return action.groupId;
@@ -10,6 +10,4 @@ const activeGroup = (state = null, action) => {
   default:
     return state;
   }
-};
-
-export default activeGroup;
+}

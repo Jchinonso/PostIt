@@ -32,9 +32,9 @@ const GroupController = {
           });
         }
         return res.status(409).json({ msg: 'Group already exist' });
-      }).catch(err => res.status(400).json({ msg: err.errors[0] }));
+      }).catch(err => res.status(500).json({ msg: 'Internal server error'}));
     } else {
-      res.json({ msg: 'Name, Description required' });
+      res.status(400).json({ msg: 'Name, Description required' });
     }
   },
 
@@ -52,7 +52,14 @@ const GroupController = {
         username: req.decoded.username
       }
     }).then((user) => {
-      user.getGroups().then(groups => res.status(200).json(groups));
+      if(user) {
+        user.getGroups({
+          attributes: ['id', 'name', 'description', 'creator', 'createdAt'],
+          joinTableAttributes: []
+        }).then(groups => res.status(200).json({ groups: groups}));
+      } else {
+        res.status(401).json({msg: 'User does not exist'})
+      }
     }).catch(error => res.status(500).json({
       message: 'server error'
     }));
@@ -68,49 +75,45 @@ const GroupController = {
 
   addUserToGroup(req, res) {
     const groupId = req.params.id;
+    const members = [].concat(req.body.members);
     db.Groups.findOne({
       where: {
         id: groupId
       }
-    }).then((group) => {
-      if (group) {
-        db.Users.findOne({
+    }).then((group) =>{
+      if(group) {
+        db.Users.findAll({
           where: {
-            username: req.body.username,
+            username: members
           }
         }).then((user) => {
-          if (user) {
-            db.UserGroups.findOrCreate({
-              where: { $and: {
-                groupId: req.params.id,
-                userId: user.id
-              } },
-              defaults: {
-                groupId: req.params.id,
-                userId: user.id
-              }
-            }).spread((userGroup, created) => {
-              if (created) {
-                return res.status(201).json({
-                  msg: 'successfully added user to group'
-                });
+          if(user.length !== 0) {
+            group.addUsers(user).then((groupUsers) => {
+              if (groupUsers.length !== 0) {
+                return res.status(200).json({
+                  msg: 'User added successfully to group'
+                })
               }
               return res.status(409).json({
-                msg: 'user already exist'
-              });
-            });
+                msg: 'User already a member of this group'
+              })
+            })
           } else {
-            return res.status(404).json({
+            res.status(404).json({
               msg: 'User does not exist'
-            });
+            })
           }
-        });
+        }).catch((error) => {
+          res.status(500).json({
+            msg: 'Internal server error'
+          })
+        })
       } else {
-        return res.status(404).json({
-          msg: 'Group does not exist'
-        });
+        res.status(404).json({
+          msg: 'Group Does not exist'
+        })
       }
-    });
+    })
   },
 
 
@@ -129,11 +132,18 @@ const GroupController = {
       }
     }).then((group) => {
       if (group) {
-        group.getUsers()
-         .then(groups => res.status(200).json(groups));
+        group.getUsers({
+          attributes: ['id', 'username', 'email', 'phoneNumber', 'createdAt'],
+          joinTableAttributes: []
+        })
+         .then(groups => res.status(200).json({'groupMembers':groups}));
       } else {
-        return res.status(404).json({ message: 'Group does not exist' });
+        return res.status(404).json({ msg: 'Group does not exist' });
       }
+    }).catch((error) => {
+      res.status(500).json({
+        msg: 'Internal server error'
+      })
     });
   },
 };

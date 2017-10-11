@@ -4,7 +4,8 @@
   "env": {
     "node": true,
     "es6": true,
-    "mocha": true
+    "mocha": true,
+    "browser": true
   },
   "parserOptions": {
     "ecmaFeatures": {
@@ -13,7 +14,6 @@
   },
   "plugins": [ "react" ],
   "rules": {
-    "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
     "import/no-unresolved": 0,
     "max-len":[1, 80, 2],
     "indent": [1, 2],

@@ -18,7 +18,21 @@ const helper = {
      * @param {String} password
      * @return {Boolean} return validity of the password
      */
-  hashedPassword: password => bcrypt.hashSync(password, bcrypt.genSaltSync(8))
+  hashedPassword: password => bcrypt.hashSync(password, bcrypt.genSaltSync(8)),
+
+    /**
+   * Handle promise errors
+   *
+   * @param {Object} error error object
+   * @param {Function} res server response function
+   * @returns {Function} function that displays an error message
+   */
+    handleError: (error, res)  => {
+      return error.errors ?
+        res.status(400).send({ msg: error.errors[0].message }) :
+        res.status(400).send({ msg: error.message });
+    }
+
 };
 
 export default helper;

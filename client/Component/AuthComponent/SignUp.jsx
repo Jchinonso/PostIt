@@ -1,4 +1,6 @@
 import React, { PropTypes } from 'react';
+import toastr from 'toastr';
+import { browserHistory } from 'react-router';
 /**
  * @class SignUp
  * @extends React.Component
@@ -38,17 +40,7 @@ class SignUp extends React.Component {
    */
   handleOnSubmit(event) {
     event.preventDefault();
-    if (this.state.username.length && this.state.password.length && this.state.phoneNumber.length && this.state.email.length) {
-      const userObj = {
-        username: this.state.username,
-        password: this.state.password,
-        email: this.state.email,
-        phoneNumber: this.state.phoneNumber
-      };
-      this.props.signUp(userObj).then(() => {
-        this.setState({ username: '', email: '', password: '', phoneNumber: '' });
-      });
-    }
+    this.props.signUp(this.state);
   }
 
   /**
@@ -119,9 +111,9 @@ class SignUp extends React.Component {
                 </div>
                 <div className="row">
                   <div className="row">
-                    <div className="input-field col s12" style={{ margin: 0 }}>
+                    <div className="input-field col s8" style={{ paddingLeft: '60px', margin: '0 auto', width: 'auto' }}>
                       <button
-                        className="btn indigo waves-effect waves-light right"
+                        className="btn indigo waves-effect waves-light left"
                         type="submit"
                         name="action"
                       >
@@ -131,7 +123,7 @@ class SignUp extends React.Component {
                     </div>
                   </div>
                 </div>
-                <div className="center">Already have an account <a href="#" onClick={this.props.showSignin}>Sign In</a></div>
+                <div className="center">Already have an account <a href="#?" onClick={this.props.showSignin}>Sign In</a></div>
               </form>
             </div>
           </div>

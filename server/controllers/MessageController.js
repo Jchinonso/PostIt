@@ -8,29 +8,34 @@ const MessageController = {
    * @returns {object} Returns created message
    */
   createMessage(req, res) {
-    db.Groups.findOne({
-      where: {
-        id: req.params.id
-      }
-    }).then((group) => {
-      if (group) {
-        db.Messages.create({
-          content: req.body.content,
-          priority: req.body.priority,
-          groupId: req.params.id,
-          sender: req.decoded.username
-        }).then(messageCreated => res.status(201).send({
-          id: messageCreated.id,
-          content: messageCreated.content,
-          sender: messageCreated.sender,
-          priority: messageCreated.priority,
-          isRead: messageCreated.isRead,
-          createdAt: messageCreated.createdAt
-        }));
-      } else {
-        return res.status(409).send({ message: 'Group doesnt exist' });
-      }
-    });
+    if (req.body.content) {
+      db.Groups.findOne({
+        where: {
+          id: req.params.id
+        }
+      }).then((group) => {
+        if (group) {
+          db.Messages.create({
+            content: req.body.content,
+            priority: req.body.priority,
+            groupId: req.params.id,
+            sender: req.decoded.username
+          }).then(messageCreated => res.status(201).send({
+            id: messageCreated.id,
+            content: messageCreated.content,
+            sender: messageCreated.sender,
+            priority: messageCreated.priority,
+            isRead: messageCreated.isRead,
+            createdAt: messageCreated.createdAt
+          }));
+        } else {
+          return res.status(409).json({ msg: 'Group doesnt exist' });
+        }
+      });
+    } else {
+      return res.status(400).json({ msg: 'Content cannot be empty'})
+    }
+    
   },
 
     /** Retrieve all message that partains to Group
@@ -49,7 +54,7 @@ const MessageController = {
           where: {
             groupId: req.params.id
           }
-        }).then(messages => res.status(200).send(messages));
+        }).then(messages => res.status(200).send({'messages': messages}));
       } else {
         return res.status(404).send({ message: 'Group not found' });
       }
