@@ -145,11 +145,7 @@ class SignIn extends React.Component {
                     <div className="col s4" style={{ marginLeft: '8%', width: 'auto', marginTop: '8px' }}> <Link to="/forgot-password">Forgot Password</Link></div>
                   </div>
                 </div>
-<<<<<<< HEAD:client/Component/AuthComponent/SignIn.js
-                <div className="center">Don&apos;t have a PostIt account?<a href="#?" onClick={this.props.showSignup}>Sign Up</a></div>
-=======
                 <div className="center">Don&apos;t have a PostIt account? <a href="#?" onClick={this.props.showSignup}>Sign Up</a></div>
->>>>>>> 780ef42e71094f2f4d4e09b0c6074abdc0e9636d:client/Component/AuthComponent/SignIn.jsx
               </form>
               <Link to="/password/reset">Forgot Password</Link>
             </div>

@@ -1,11 +1,7 @@
 import React, { PropTypes } from 'react';
 import toastr from 'toastr';
 import { connect } from 'react-redux';
-<<<<<<< HEAD:client/Component/DashBoard/MainComponent/SideBarComponent/CreateGroupModal.js
-import { createGroup } from '../../../../actions/groupActions';
-=======
 import { createGroup } from '../../../actions/groupActions';
->>>>>>> 780ef42e71094f2f4d4e09b0c6074abdc0e9636d:client/Component/DashBoard/SideBarComponent/CreateGroupModal.jsx
 
 /**
  * @class CreateGroupModal
@@ -41,15 +37,6 @@ class CreateGroupModal extends React.Component {
     event.preventDefault();
     const { name, description } = this.state;
     if (name !== undefined && description !== undefined) {
-<<<<<<< HEAD:client/Component/DashBoard/MainComponent/SideBarComponent/CreateGroupModal.js
-      const group = {
-        name,
-        description
-      };
-      this.props.createGroup(group).then(() => {
-        this.setState({ name: '', description: '' });
-      });
-=======
       const groupName = name.trim();
       const groupDescription = description.trim();
       if (groupName.length === 0 && groupDescription.length === 0) {
@@ -60,7 +47,6 @@ class CreateGroupModal extends React.Component {
         description: groupDescription
       };
       this.props.createGroup(group);
->>>>>>> 780ef42e71094f2f4d4e09b0c6074abdc0e9636d:client/Component/DashBoard/SideBarComponent/CreateGroupModal.jsx
     }
   }
 
