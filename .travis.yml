@@ -3,6 +3,7 @@ before_script:
 - psql -c 'create database travis_ci_test;' -U postgres
 - npm install -g mocha
 - npm install -g nyc
+- npm install -g codeclimate-test-reporter
 - npm install -g sequelize-cli
 - npm run setup:test
 after_script:
