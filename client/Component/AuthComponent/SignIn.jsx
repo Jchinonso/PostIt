@@ -69,7 +69,12 @@ class SignIn extends React.Component {
       phoneNumber: '08139308818',
     };
 
-    this.props.googleSignIn(userObj);
+    this.props.googleSignIn(userObj).then(() => {
+      this.setState({
+        email: '',
+        password: ''
+      });
+    });
   }
 
   /**
@@ -112,6 +117,7 @@ class SignIn extends React.Component {
                       name="email"
                       onChange={this.handleInputChange}
                       className="validate"
+                      value={this.state.email}
                     />
                     <label htmlFor="email">Email</label>
                   </div>
@@ -125,6 +131,7 @@ class SignIn extends React.Component {
                       name="password"
                       onChange={this.handleInputChange}
                       className="validate"
+                      value={this.state.password}
                     />
                     <label htmlFor="password">Password</label>
                   </div>

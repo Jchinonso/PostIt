@@ -10,7 +10,10 @@ import { createGroup } from '../../../actions/groupActions';
 class CreateGroupModal extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+      name: '',
+      description: ''
+    };
     this.handleOnChange = this.handleOnChange.bind(this);
     this.handleOnClick = this.handleOnClick.bind(this);
   }
@@ -46,7 +49,11 @@ class CreateGroupModal extends React.Component {
         name: groupName,
         description: groupDescription
       };
-      this.props.createGroup(group);
+      this.props.createGroup(group)
+      .then(() => {
+        this.setState({ name: '', description: '' }, () => {
+        });
+      });
     }
   }
 
@@ -70,6 +77,7 @@ class CreateGroupModal extends React.Component {
                 onChange={this.handleOnChange}
                 placeholder="Enter Group Name"
                 className="validate"
+                value={this.state.name}
               />
               <input
                 type="text"
@@ -78,6 +86,7 @@ class CreateGroupModal extends React.Component {
                 onChange={this.handleOnChange}
                 placeholder="Give A Group Description"
                 className="validate"
+                value={this.state.description}
               />
             </div>
           </form>
