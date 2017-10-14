@@ -34,7 +34,6 @@ class Dashboard extends React.Component {
     this.handleChangeGroup = this.handleChangeGroup.bind(this);
     this.handleOnChange = this.handleOnChange.bind(this);
     this.handleOnClick = this.handleOnClick.bind(this);
-    this.openCreateGroupModal = this.openCreateGroupModal.bind(this);
   }
 
   componentDidMount() {
@@ -68,28 +67,24 @@ class Dashboard extends React.Component {
   handleOnClick(event) {
     event.preventDefault();
     const { name, description } = this.state;
-    if (name.trim().length === 0 || description.trim().length === 0) {
-      return toastr.error('Group Credentials must be supplied');
+    if (name !== undefined && description !== undefined) {
+      const groupName = name.trim();
+      const groupDescription = description.trim();
+      if (groupName.length === 0 && groupDescription.length === 0) {
+        return toastr.error('Group Credentials must be supplied');
+      }
+      const group = {
+        name: groupName,
+        description: groupDescription
+      };
+      this.props.createGroup(group)
+      .then(() => {
+        this.setState({ name: '', description: '' }, () => {
+        });
+      });
     }
-    const group = {
-      name: name.trim(),
-      description: description.trim()
-    };
-    this.props.createGroup(group);
   }
-  clearGroupState() {
-    this.setState({
-      name: '',
-      description: ''
-    });
-  }
-  openCreateGroupModal() {
-   // event.preventDefault();
-    $('#moda').modal('open', {
-      complete: this.clearGroupState()
-    });
-  }
-  /**
+  /*
   * Handle Change Group
   * @method handleChangeGroup
   * @member MainComponent
@@ -120,13 +115,14 @@ class Dashboard extends React.Component {
    * @returns {object} component
    */
   render() {
+    const { name, description } = this.state;
     return (
       <div>
         <header>
           <NavComponent signOut={this.handleSignOut} />
-          <SideBarComponent openModal={this.openCreateGroupModal} handleChangeGroup={this.handleChangeGroup} />
+          <SideBarComponent handleChangeGroup={this.handleChangeGroup} />
         </header>
-        <CreateGroupModal handleOnChange={this.handleOnChange} handleOnClick={this.handleOnClick} />
+        <CreateGroupModal handleOnChange={this.handleOnChange} handleOnClick={this.handleOnClick} description={description} name={name} />
         <MainComponent />
         <MessageArea />
       </div>
