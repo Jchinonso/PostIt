@@ -20,17 +20,7 @@
 //         }
 //       });
 //       const store = mockStore({});
-//       const expectedAction = [
-//         {
-//           type: 'REGISTRATION_BEGINS'
-//         },
-//         {
-//           type: 'REGISTRATION_SUCCESSFUL',
-//           payload:
-//           {
-//             message: 'Registration successful'
-//           }
-//         }];
+
 //       store.dispatch(UserActions.registerUser('akinoau', 'akin@gmail.com',
 //         'nigeria123', '07045324156'))
 //         .then(() => {

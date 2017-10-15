@@ -24,6 +24,7 @@ const SignIn = ({
                 <GoogleLogin
                   clientId={'682330105302-4frgtepd1nj81n3gd82e97usq6ul0ier.apps.googleusercontent.com'}
                   onSuccess={responseGoogle}
+                  id="google-login"
                   onFailure={responseGoogle}
                   style={{ width: '100%', }}
                   className="btn red waves-effect waves-light left"
@@ -41,7 +42,7 @@ const SignIn = ({
                 <div className="input-field col s12" style={{ margin: 0 }}>
                   <i className="material-icons prefix">email</i>
                   <input
-                    id="email4"
+                    id="email"
                     type="email"
                     name="email"
                     onChange={handleInputChange}
@@ -55,7 +56,7 @@ const SignIn = ({
                 <div className="input-field col s12" style={{ margin: 0 }}>
                   <i className="material-icons prefix">lock_outline</i>
                   <input
-                    id="password5"
+                    id="password"
                     type="password"
                     name="password"
                     onChange={handleInputChange}
