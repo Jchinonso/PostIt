@@ -78,7 +78,7 @@ class ResetPassword extends React.Component {
                     <div className="input-field col s12" style={{ margin: 0 }}>
                       <i className="material-icons prefix">lock_outline</i>
                       <input
-                        id="password5"
+                        id="password"
                         type="password"
                         name="newPassword"
                         onChange={this.handleInputChange}
@@ -91,7 +91,7 @@ class ResetPassword extends React.Component {
                     <div className="input-field col s12" style={{ margin: 0 }}>
                       <i className="material-icons prefix">lock_outline</i>
                       <input
-                        id="password5"
+                        id="verifyPassword"
                         type="password"
                         name="retypePassword"
                         onChange={this.handleInputChange}

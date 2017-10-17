@@ -22,7 +22,7 @@ const SignUp = ({
                 <div className="input-field col s12" style={{ margin: 0 }}>
                   <i className="material-icons prefix">account_circle</i>
                   <input
-                    id="name4"
+                    id="name"
                     onChange={handleInputChange}
                     type="text"
                     name="username"
@@ -36,7 +36,7 @@ const SignUp = ({
                 <div className="input-field col s12" style={{ margin: 0 }}>
                   <i className="material-icons prefix">email</i>
                   <input
-                    id="email4"
+                    id="email"
                     type="email"
                     name="email"
                     onChange={handleInputChange}
@@ -50,7 +50,7 @@ const SignUp = ({
                 <div className="input-field col s12" style={{ margin: 0 }}>
                   <i className="material-icons prefix">lock_outline</i>
                   <input
-                    id="password5"
+                    id="password"
                     type="password"
                     name="password"
                     onChange={handleInputChange}

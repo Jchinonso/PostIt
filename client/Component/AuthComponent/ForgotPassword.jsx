@@ -77,7 +77,7 @@ class ForgetPassword extends React.Component {
                     <div className="input-field col s12" style={{ margin: 0 }}>
                       <i className="material-icons prefix">email</i>
                       <input
-                        id="email4"
+                        id="email"
                         type="email"
                         name="email"
                         onChange={this.handleInputChange}
@@ -93,6 +93,7 @@ class ForgetPassword extends React.Component {
                           className="btn indigo waves-effect waves-light left"
                           type="submit"
                           name="action"
+                          id="mybtn"
                           onClick={this.handleOnSubmit}
                         >
                           <i className="material-icons right">send</i>
