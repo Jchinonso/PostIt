@@ -78,7 +78,7 @@
     "prop-types": "^15.6.0",
     "react": "^15.5.4",
     "react-bootstrap": "^0.28.5",
-    "react-chips": "^0.6.2",
+    "react-chips": "^0.6.4",
     "react-dom": "^15.3.0",
     "react-google-login": "^2.9.3",
     "react-redux": "^3.0.1",

@@ -5,6 +5,12 @@ import db from '../models';
 const secret = process.env.JWT_SECRET_TOKEN
 
 const Auth = {
+
+  /**
+   * verify authentication token
+   * @param {Object} user object
+   * @returns {Object} message based on the response object
+   */
   verifyToken(request, response, next) {
     const token = request.body.token ||
       request.headers.authorization ||

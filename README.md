@@ -125,6 +125,9 @@ How to Contribute
 - Create your feature branch on your local machine with ```git checkout -b your-feature-branch```
 - Push your changes to your remote branch with ```git push origin your-feature-branch```
 - Open a pull request to the master branch, and describe how your feature works
+- Refer to this wiki for proper <a href="https://github.com/Jchinonso/PostIt/wiki">GIT CONVENTION</a>
+
+Ensure your codes follow <a href="https://github.com/airbnb/javascript">AirBnB Javascript Styles Guide</a>
 
 The full API documentation can be viewed at <a href="https://jchinonso.github.io/slate/" target="_blank">here</a>
 
