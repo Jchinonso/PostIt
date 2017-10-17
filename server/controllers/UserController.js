@@ -8,11 +8,12 @@ import helper from './helper';
 
 
 const UsersController = {
+
   /**
    * fetchUsers
    * @desc gets details for all users
-   * @param {Object} req request object
-   * @param {Object} res response object
+   * @memberof UserController
+   * @param {Object} req, res
    * @returns {void}
    */
   fetchUsers(req, res) {
@@ -30,8 +31,8 @@ const UsersController = {
 
   /**
    * signUp - Create a user
-   * @param {Object} req Request Object
-   * @param {Object} res Response Object
+   * @memberof UserController
+   * @param {Object} req, res
    * @returns {void} Returns void
    */
   signUp(req, res) {
@@ -65,8 +66,9 @@ const UsersController = {
   },
  /**
    * signin - Log in a user
-   * @param {Object} req Request Object
-   * @param {Object} res Response Object
+   * @method
+   * @memberof UserController
+   * @param {Object} req, res
    * @returns {void} Returns void
    */
   signIn(req, res) {
@@ -91,8 +93,9 @@ const UsersController = {
   },
   /**
    * signOut - Log Out a user
-   * @param {Object} req Request Object
-   * @param {Object} res Response Object
+   * @method
+   * @memberof UserController
+   * @param {Object} req, res
    * @returns {void} Returns void
    */
   signOut(req, res) {
@@ -101,6 +104,14 @@ const UsersController = {
     });
   },
 
+  /**
+   * googleSignIn - signs user in via gmail
+   * @method
+   * @memberof UserController
+   * @param {object} req, res
+   * @returns {function} Express function that
+   * sign's in a user via gmail
+   */
   googleSignIn(req, res) {
     const { username, email, password, phoneNumber} = req.body;
     db.Users.findOne({
@@ -134,7 +145,8 @@ const UsersController = {
    * Send mail to reset user password
    * @method
    * @memberof UserController
-   * @returns {function} Express middleware function which sends
+   * @param {object} req, res
+   * @returns {function} Express function which sends
    * a password reset mail to user
    */
   forgotPassword(req, res) {
@@ -185,7 +197,7 @@ const UsersController = {
    * reset user password
    * @method
    * @memberof UserController
-   * @static
+   * @param {object} req, res
    * @returns {function} reset password
    */
   resetPassword(req, res) {

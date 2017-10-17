@@ -1,63 +1,10 @@
-import React, { PropTypes } from 'react';
-import toastr from 'toastr';
-import { connect } from 'react-redux';
-import { createGroup } from '../../../actions/groupActions';
+import React from 'react';
+import PropTypes from 'prop-types';
 
-/**
- * @class CreateGroupModal
- * @extends React.Component
- */
-class CreateGroupModal extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {};
-    this.handleOnChange = this.handleOnChange.bind(this);
-    this.handleOnClick = this.handleOnClick.bind(this);
-  }
-   /**
-   * Handle onChange events on form inputs
-   * @method handleInputChange
-   * @member SignUp
-   * @param {object} event
-   * @returns {function} a function that handles change event on inputs
-   */
-  handleOnChange(event) {
-    this.setState({
-      [event.target.name]: event.target.value
-    });
-  }
-  /**
-   * Handle onClick events on form inputs
-   * @method handleOnClick
-   * @member CreateGroupModal
-   * @param {object} event
-   * @returns {function} a function that handles onClick event on inputs
-   */
-  handleOnClick(event) {
-    event.preventDefault();
-    const { name, description } = this.state;
-    if (name !== undefined && description !== undefined) {
-      const groupName = name.trim();
-      const groupDescription = description.trim();
-      if (groupName.length === 0 && groupDescription.length === 0) {
-        return toastr.error('Group Credentials must be supplied');
-      }
-      const group = {
-        name: groupName,
-        description: groupDescription
-      };
-      this.props.createGroup(group);
-    }
-  }
-
-  /**
-   * render component
-   * @method render
-   * @member CreateGroupModal
-   * @returns {object} component
-   */
-  render() {
-    return (
+const CreateGroupModal = ({
+  handleOnChange, handleOnClick, name, description
+}) =>
+    (
       <div id="modal1" className="modal modal-fixed-footer" style={{ zIndex: 1051, opacity: 1, transform: 'scaleX(1)', top: '10%' }}>
         <div className="modal-content">
           <h4>Create a Group</h4>
@@ -67,17 +14,19 @@ class CreateGroupModal extends React.Component {
                 type="text"
                 id="group_name"
                 name="name"
-                onChange={this.handleOnChange}
+                onChange={handleOnChange}
                 placeholder="Enter Group Name"
                 className="validate"
+                value={name}
               />
               <input
                 type="text"
                 id="group_desc"
                 name="description"
-                onChange={this.handleOnChange}
+                onChange={handleOnChange}
                 placeholder="Give A Group Description"
                 className="validate"
+                value={description}
               />
             </div>
           </form>
@@ -85,7 +34,7 @@ class CreateGroupModal extends React.Component {
         <div className="modal-footer">
           <a
             href="#!"
-            onClick={this.handleOnClick}
+            onClick={handleOnClick}
             className="modal-action modal-close waves-effect waves-green btn-flat"
           >
             Create
@@ -94,13 +43,14 @@ class CreateGroupModal extends React.Component {
         </div>
       </div>
     );
-  }
-}
 
 
 CreateGroupModal.propTypes = {
-  createGroup: PropTypes.func.isRequired
+  handleOnChange: PropTypes.func.isRequired,
+  handleOnClick: PropTypes.func.isRequired,
+  name: PropTypes.string.isRequired,
+  description: PropTypes.string.isRequired
 };
 
 
-export default connect((null), { createGroup })(CreateGroupModal);
+export default CreateGroupModal;
