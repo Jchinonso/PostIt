@@ -17,10 +17,10 @@ const onEnter = (next, replace, cb) => {
 };
 
 export default(
-  <Route path="/" component={App}>
+  <Route path="/" component={App} onEnter={onEnter} >
     <IndexRoute component={AuthenticationPage} />
     <Route path="/forgot-password" component={ForgotPassword} />
     <Route path="/reset-password" component={ResetPassword} />
-    <Route path="/dashboard" component={DashBoard} onEnter={onEnter} />
+    <Route path="/dashboard" component={DashBoard} />
   </Route>
 );
