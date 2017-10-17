@@ -52,6 +52,7 @@ export function createGroupFailure(error) {
 export function createGroup(group) {
   return dispatch => axios.post('/api/v1/group', group)
     .then((response) => {
+      console.log('======here======')
       dispatch(createGroupSuccess(response.data));
       toastr.success('Group Successfully Created');
     })

@@ -22,7 +22,8 @@ class Authentication extends React.Component {
       password: '',
       phoneNumber: '',
       showSignin: true,
-      showSignup: false
+      showSignup: false,
+      showResetPassword: false
     };
     this.handleInputChange = this.handleInputChange.bind(this);
     this.handleSignInOnSubmit = this.handleSignInOnSubmit.bind(this);
@@ -30,6 +31,7 @@ class Authentication extends React.Component {
     this.responseGoogle = this.responseGoogle.bind(this);
     this.handleShowSignin = this.handleShowSignin.bind(this);
     this.handleShowSignup = this.handleShowSignup.bind(this);
+    this.handleShowResetPassword = this.handleShowResetPassword.bind(this);
   }
   /**
    * Handle onChange events on form inputs
@@ -88,7 +90,8 @@ class Authentication extends React.Component {
   handleShowSignin() {
     this.setState({
       showSignin: true,
-      showSignup: false
+      showSignup: false,
+      showResetPassword: false
     });
   }
   /**
@@ -114,6 +117,18 @@ class Authentication extends React.Component {
    */
   handleShowSignup() {
     this.setState({
+      showSignin: false,
+      showResetPassword: false,
+      showSignup: true
+    });
+  }
+    /**
+   * @method showResetPassword
+   * @returns {void}
+   */
+  handleShowResetPassword() {
+    this.setState({
+      showResetPassword: true,
       showSignin: false,
       showSignup: true
     });
