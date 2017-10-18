@@ -22,7 +22,7 @@ export function addMembersSuccess(message) {
  * @param {object} users
  * @returns {object} action: type and users
  */
-function fetchUserSuccess(users) {
+export function fetchUserSuccess(users) {
   return {
     type: types.FETCH_USER_SUCCESS,
     users
@@ -35,7 +35,7 @@ function fetchUserSuccess(users) {
  * @param {object} members
  * @returns {object} action: type and members
  */
-function fetchGroupMembersSuccess(members) {
+export function fetchGroupMembersSuccess(members) {
   return {
     type: types.FETCH_GROUP_MEMBERS_SUCCESS,
     members

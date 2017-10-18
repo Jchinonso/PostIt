@@ -17,7 +17,6 @@ const NavComponent = ({ signOut }) => (
           onClick={signOut}
           data-position="left"
           style={{ paddingRight: 10 }}
-          data-tooltip="Sign Out"
         >
           <i className="fa fa-sign-out fa-2x right" />
         </a>
