@@ -52,7 +52,6 @@ export function createGroupFailure(error) {
 export function createGroup(group) {
   return dispatch => axios.post('/api/v1/group', group)
     .then((response) => {
-      console.log('======here======')
       dispatch(createGroupSuccess(response.data));
       toastr.success('Group Successfully Created');
     })
@@ -69,7 +68,7 @@ export function createGroup(group) {
  * @returns {object} action: type and groups
  */
 
-function receiveGroupsSuccess(groups) {
+export function receiveGroupsSuccess(groups) {
   return {
     type: types.RECEIVE_GROUPS_SUCCESS,
     groups
@@ -82,7 +81,7 @@ function receiveGroupsSuccess(groups) {
  * @returns {object} action: type and error
  */
 
-function receiveGroupsFailure(error) {
+export function receiveGroupsFailure(error) {
   return {
     type: types.RECEIVE_GROUPS_FAILURE,
     error
