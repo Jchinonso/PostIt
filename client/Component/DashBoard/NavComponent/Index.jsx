@@ -13,7 +13,7 @@ const NavComponent = ({ signOut }) => (
         <a href="#?" className="brand-logo">Post It</a>
         <a
           href="#?"
-          className="tooltipped"
+          className="sign-out"
           onClick={signOut}
           data-position="left"
           style={{ paddingRight: 10 }}

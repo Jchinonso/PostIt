@@ -12,7 +12,7 @@ function setUp() {
     email: '',
     password: '',
   };
-  return shallow(<SignInForm {...props} />);
+  return mount(<SignInForm {...props} />);
 }
 
 describe('Components', () => {
@@ -33,9 +33,10 @@ describe('Components', () => {
       const wrapper = setUp();
       expect(wrapper.find('#google-login').exists()).toEqual(true);
     });
-    it('should get button with type submit', () => {
+    it('should simulate a click event', () => {
       const wrapper = setUp();
-      expect(wrapper.find('button').type()).toEqual('button');
+      wrapper.find('button').simulate('click');
+      expect(wrapper.props.handleOnSubmit.mock.calls.length).toBe(1);
     });
   });
 });

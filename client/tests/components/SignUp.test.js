@@ -13,7 +13,7 @@ function setUp() {
     phoneNumber: '',
     username: ''
   };
-  return shallow(<SignUpForm {...props} />);
+  return mount(<SignUpForm {...props} />);
 }
 
 describe('Components', () => {
@@ -32,9 +32,10 @@ describe('Components', () => {
       const wrapper = setUp();
       expect(wrapper.find('h4').text()).toEqual('Sign Up');
     });
-    it('should get button with type submit', () => {
+    it('should simulate a click event', () => {
       const wrapper = setUp();
-      expect(wrapper.find('button').type()).toEqual('button');
+      wrapper.find('button').simulate('click');
+      expect(wrapper.props.handleOnSubmit.mock.calls.length).toBe(1);
     });
   });
 });
