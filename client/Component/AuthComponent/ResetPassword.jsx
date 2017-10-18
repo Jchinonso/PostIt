@@ -83,6 +83,7 @@ class ResetPassword extends React.Component {
                         name="newPassword"
                         onChange={this.handleInputChange}
                         className="validate"
+                        required="true"
                       />
                       <label htmlFor="password">New Password</label>
                     </div>
@@ -96,6 +97,7 @@ class ResetPassword extends React.Component {
                         name="retypePassword"
                         onChange={this.handleInputChange}
                         className="validate"
+                        required="true"
                       />
                       <label htmlFor="password">Retype-Password</label>
                     </div>

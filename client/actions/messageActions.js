@@ -8,7 +8,7 @@ import * as types from '../constants/ActionTypes';
  * @param {object} messages
  * @returns {object} action: type and messages
  */
-function addMessageToGroupSuccess(messages) {
+export function addMessageToGroupSuccess(messages) {
   return {
     type: types.ADD_MESSAGE_TO_GROUP_SUCCESS,
     messages
@@ -21,7 +21,7 @@ function addMessageToGroupSuccess(messages) {
  * @param {object} messages
  * @returns {object} action: type and messages
  */
-function getGroupMessagesSuccess(messages) {
+export function getGroupMessagesSuccess(messages) {
   return {
     type: types.GET_GROUP_MESSAGES_SUCCESS,
     messages

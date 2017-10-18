@@ -18,8 +18,8 @@ const Auth = {
     if (token) {
       jwt.verify(token, secret, (error, decoded) => {
         if (error) {
-          response.send({
-            msg: 'Invalid token'
+          return response.status(401).send({
+            msg: 'Your current session as expired'
           });
         } else {
           request.decoded = decoded;
@@ -27,7 +27,7 @@ const Auth = {
         }
       });
     } else {
-      response.status(401).send({
+      return response.status(401).send({
         msg: 'You are not authorized kindly login or sign up'
       });
     }

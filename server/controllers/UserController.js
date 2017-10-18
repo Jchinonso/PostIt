@@ -11,18 +11,22 @@ const UsersController = {
 
   /**
    * fetchUsers
+   *
    * @desc gets details for all users
+   *
    * @memberof UserController
+   *
    * @param {Object} req, res
+   *
    * @returns {void}
    */
   fetchUsers(req, res) {
     db.Users.findAll({
       attributes: {exclude: ['password', 'createdAt', 'updatedAt']}
-    }).then(users => res.json({
+    }).then(users => res.status(200).json({
       users,
     })).catch((error) => {
-      res.status(500).json({
+      return res.status(500).json({
         msg: 'Internal server error'
       })
     });
@@ -31,8 +35,13 @@ const UsersController = {
 
   /**
    * signUp - Create a user
+   *
+   * @desc sign up a user
+   *
    * @memberof UserController
+   *
    * @param {Object} req, res
+   *
    * @returns {void} Returns void
    */
   signUp(req, res) {
@@ -59,58 +68,85 @@ const UsersController = {
           });
         }
         return res.status(409).json({ msg: 'user already exist' });
-      }).catch(err => helper.handleError(err, res));
+      }).catch(err => {return helper.handleError(err, res)})
     } else {
-      res.status(400).json({ msg: 'Username, password, email and phoneNo required'})
+      return res.status(400).json({ msg: 'Username, password, email and phone Number required'})
     }
   },
  /**
    * signin - Log in a user
+   *
+   * @desc sign in an existing user
+   *
    * @method
+   *
    * @memberof UserController
+   *
    * @param {Object} req, res
+   *
    * @returns {void} Returns void
    */
   signIn(req, res) {
-    const email = req.body.email;
-    const password = req.body.password;
+    const { email, password } = req.body;
+    if(!email) {
+      return res.status(400).json({msg: 'Username is required'})
+    } else if (!password) {
+      return res.status(400).json({
+        msg: 'Password is required'
+      })
+    } else {
     db.Users.findOne({
       where: {
         email
       }
     }).then((user) => {
       if (user && helper.validatePassword(user, password)) {
-        res.status(200).json({
+        return res.status(200).json({
           msg: 'You have been loggedin successfully',
           token: Auth.generateToken(user)
         });
       } else {
-        res.status(401).json({
+        return res.status(401).json({
           msg: 'incorrect Email and password'
         });
       }
-    }).catch((err =>  helper.handleError(err, res)));
+    }).catch((err => { return res.status(500).json({
+       msg: 'Internal Server Error'
+      })}));
+    }
   },
   /**
    * signOut - Log Out a user
+   *
+   * @desc sign out a user
+   *
    * @method
+   *
    * @memberof UserController
+   *
    * @param {Object} req, res
+   *
    * @returns {void} Returns void
    */
   signOut(req, res) {
-    res.status(200).json({
+    return res.status(200).json({
       msg: 'User successfully logged out'
     });
   },
 
   /**
-   * googleSignIn - signs user in via gmail
+   * googleSignIn
+   *
+   * @desc signs user in via gmail
+   *
    * @method
+   *
    * @memberof UserController
+   *
    * @param {object} req, res
+   *
    * @returns {function} Express function that
-   * sign's in a user via gmail
+   *
    */
   googleSignIn(req, res) {
     const { username, email, password, phoneNumber} = req.body;
@@ -120,7 +156,7 @@ const UsersController = {
       }
     }).then((user) => {
       if(user) {
-        res.status(200).json({
+        return res.status(200).json({
           msg: 'You have been loggedin successfully',
           token: Auth.generateToken(user)
         });
@@ -132,27 +168,36 @@ const UsersController = {
           phoneNumber
         }).then((user) => {
           if (user) {
-            res.status(201).json({
+            return res.status(200).json({
               msg: 'You have been loggedin successfully',
               token: Auth.generateToken(user)
             });
           }
         })
       }
-    })
+    }).catch(err => { return res.status(500).json(
+      {msg: 'Internal Server Error'}
+    )})
   },
 /**
-   * Send mail to reset user password
+   * forgotPassword
+   *
+   * @desc Send mail to reset user password
+   *
    * @method
+   *
    * @memberof UserController
+   *
    * @param {object} req, res
+   *
    * @returns {function} Express function which sends
-   * a password reset mail to user
+   *
    */
   forgotPassword(req, res) {
+    const { email } = req.body;
     db.Users.findOne({
       where: {
-        email: req.body.email
+        email
       }
     }).then((user) => {
       if(user) {
@@ -187,17 +232,21 @@ const UsersController = {
           });
         })
       } else {
-        res.status(404).json({
+        return res.status(404).json({
           msg: 'User with email not found'
         })
       }
     })
   },
-/**
-   * reset user password
+  /** resetPassword
+   * @desc reset user password
+   *
    * @method
+   *
    * @memberof UserController
+   *
    * @param {object} req, res
+   *
    * @returns {function} reset password
    */
   resetPassword(req, res) {
@@ -214,13 +263,13 @@ const UsersController = {
         db.Users.update({ password: hashedPassword }, {
           where: { email: decoded.email }
         }).then(() => {
-          res.status(201).json({
+          return res.status(201).json({
             msg: 'password reset successful, Please login to continue!'
           });
         });
       });
     } else {
-        res.status(400).json({
+        return res.status(400).json({
           msg: 'Password does not match'
         })
       }

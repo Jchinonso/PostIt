@@ -26,7 +26,7 @@ describe('POST api/user/signup', () => {
     .send(userHelper.badUserOne)
     .set('Accept', 'application/json')
     .end((err, res) => {
-      expect(res.body.msg).to.equal('Username, password, email and phoneNo required');
+      expect(res.body.msg).to.equal('Username, password, email and phone Number required');
       return done();
     });
   });
@@ -109,7 +109,7 @@ describe('POST api/user/signup', () => {
     .set('Accept', 'application/json')
     .end((err, res) => {
       if (err) return err;
-      expect(res.status).to.equal(201);
+      expect(res.status).to.equal(200);
       expect(res.body.msg).to.equal('You have been loggedin successfully');
       return done();
     });
