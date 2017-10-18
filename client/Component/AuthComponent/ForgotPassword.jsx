@@ -72,7 +72,7 @@ class ForgetPassword extends React.Component {
             <div className="card-panel">
               <h4 className="header2 center" style={{ paddingBottom: '20px' }}>Forgot Password</h4>
               <div className="row">
-                <form className="col s12 m12 l12 center">
+                <form className="col s12 m12 l12 center" onSubmit={this.handleOnSubmit}>
                   <div className="row">
                     <div className="input-field col s12" style={{ margin: 0 }}>
                       <i className="material-icons prefix">email</i>
@@ -82,6 +82,7 @@ class ForgetPassword extends React.Component {
                         name="email"
                         onChange={this.handleInputChange}
                         className="validate"
+                        required="true"
                       />
                       <label htmlFor="email">Email</label>
                     </div>
@@ -93,7 +94,6 @@ class ForgetPassword extends React.Component {
                           className="btn indigo waves-effect waves-light left"
                           type="submit"
                           name="action"
-                          onClick={this.handleOnSubmit}
                         >
                           <i className="material-icons right">send</i>
                           Submit

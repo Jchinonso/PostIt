@@ -7,9 +7,12 @@ const GroupController = {
   /**
    *  - Create a group
    * @method
+   *
    * @memberof GroupController
+   *
    * @param {Object} req Request Object
    * @param {Object} res Response Object
+   *
    * @return {function} a response object of the group created
    */
   createGroup(req, res) {
@@ -40,9 +43,12 @@ const GroupController = {
 
   /** Retrieve all Group the User belongs to
    * @method
+   *
    * @memberof GroupController
+   *
    * @param {Object} req Request Object
    * @param {Object} res Response Object
+   *
    * @returns {object} Returns all user Groups
    */
 
@@ -56,7 +62,7 @@ const GroupController = {
         user.getGroups({
           attributes: ['id', 'name', 'description', 'creator', 'createdAt'],
           joinTableAttributes: []
-        }).then(groups => res.status(200).json({ groups: groups}));
+        }).then(groups => res.status(200).json({groups}));
       } else {
         res.status(401).json({msg: 'User does not exist'})
       }
@@ -67,9 +73,12 @@ const GroupController = {
 
   /** Add User To Group
    * @method
+   *
    * @memberof GroupController
+   *
    * @param {Object} req Request Object
    * @param {Object} res Response Object
+   *
    * @returns {object} Returns User object that was added to a group
    */
 
@@ -119,9 +128,12 @@ const GroupController = {
 
    /** Retrieves all Users of a Group
    *  @method
+   *
    * @memberof GroupController
+   *
    * @param {Object} req Request Object
    * @param {Object} res Response Object
+   *
    * @returns {object} Returns all Group members
    */
 
@@ -136,7 +148,7 @@ const GroupController = {
           attributes: ['id', 'username', 'email', 'phoneNumber', 'createdAt'],
           joinTableAttributes: []
         })
-         .then(groups => res.status(200).json({'groupMembers':groups}));
+         .then(groups => res.status(200).json({groupMembers: groups}));
       } else {
         return res.status(404).json({ msg: 'Group does not exist' });
       }

@@ -37,7 +37,7 @@ const SignIn = ({
             </div>
           </div>
           <div className="row " style={{ paddingTop: '10px' }}>
-            <form className="col s12">
+            <form className="col s12" onSubmit={handleOnSubmit}>
               <div className="row">
                 <div className="input-field col s12" style={{ margin: 0 }}>
                   <i className="material-icons prefix">email</i>
@@ -48,6 +48,7 @@ const SignIn = ({
                     onChange={handleInputChange}
                     className="validate"
                     value={email}
+                    required="true"
                   />
                   <label htmlFor="email">Email</label>
                 </div>
@@ -62,6 +63,7 @@ const SignIn = ({
                     onChange={handleInputChange}
                     className="validate"
                     value={password}
+                    required="true"
                   />
                   <label htmlFor="password">Password</label>
                 </div>
@@ -73,7 +75,6 @@ const SignIn = ({
                       className="btn indigo waves-effect waves-light left"
                       type="submit"
                       name="action"
-                      onClick={handleOnSubmit}
                     >
                       <i className="material-icons right">send</i>
                       Submit

@@ -15,7 +15,6 @@ const NavComponent = ({ signOut }) => (
           href="#?"
           className="sign-out"
           onClick={signOut}
-          data-position="left"
           style={{ paddingRight: 10 }}
         >
           <i className="fa fa-sign-out fa-2x right" />

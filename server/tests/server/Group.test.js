@@ -124,6 +124,9 @@ describe('POST api/group', () => {
     .set('Accept', 'application/json')
     .end((err, res) => {
       expect(res.status).to.equal(201);
+      expect(res.body).to.be.an('object')
+      expect(res.body.content).to.equal('i love andela')
+      expect(res.body.priority).to.equal('critical')
       done();
     });
   });
@@ -133,7 +136,8 @@ describe('POST api/group', () => {
     .set('x-access-token', token)
     .set('Accept', 'application/json')
     .end((err, res) => {
-      expect(res.status).to.equal(409);
+      expect(res.status).to.equal(404);
+      expect(res.body.msg).to.equal('Group doesnt exist');
       done();
     });
   });
@@ -144,6 +148,7 @@ describe('POST api/group', () => {
     .set('Accept', 'application/json')
     .end((err, res) => {
       expect(res.status).to.equal(400);
+      expect(res.body.msg).to.equal('Content cannot be empty');
       done();
     });
   });
@@ -153,6 +158,7 @@ describe('POST api/group', () => {
     .set('Accept', 'application/json')
     .end((err, res) => {
       expect(res.status).to.equal(200);
+      expect(res.body).to.be.an('object')
       done();
     });
   });
@@ -162,6 +168,7 @@ describe('POST api/group', () => {
     .set('Accept', 'application/json')
     .end((err, res) => {
       expect(res.status).to.equal(404);
+      expect(res.body.msg).to.equal('Group not found')
       done();
     });
   });

@@ -1,5 +1,4 @@
 import React from 'react';
-import $ from 'jquery';
 import Proptypes from 'prop-types';
 import { connect } from 'react-redux';
 import GroupListItem from './GroupListItem.jsx';

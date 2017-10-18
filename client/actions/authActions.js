@@ -6,9 +6,12 @@ import setAuthorizationToken from '../utils/setAuthorizationToken';
 import * as types from '../constants/ActionTypes';
 
 /**
- * create action:set current user
+ * @desc create action:set current user
+ *
  * @function setCurrentUser
+ *
  * @param {object} user
+ *
  * @returns {object} action: type and user
  */
 export function setCurrentUser(user) {
@@ -18,9 +21,12 @@ export function setCurrentUser(user) {
   };
 }
 /**
-* create action:signup user failure
+* @desc create action:signup user failure
+
 * @function signUpFailure
+
 * @param {object} error
+
 * @returns {object} action: type and error
 */
 export function logError(error) {
@@ -31,9 +37,12 @@ export function logError(error) {
 }
 
 /**
-* create action:signout user success
+* @desc create action:signout user success
+*
 * @function signOutSuccess
+*
 * @param {viod}
+*
 * @returns {void}
 */
 
@@ -43,8 +52,10 @@ export function signOutSuccess() {
   };
 }
 /**
- * async helper function: log out user
+ * @desc async helper function: log out user
+ *
  * @function logOutUser
+ *
  * @returns {function} asynchronous action
  */
 export function signOut() {
@@ -58,12 +69,15 @@ export function signOut() {
 }
 
 /**
-* async helper function: sign up user
+* @desc async helper function: sign up user
+*
 * @function signUpUser
+*
 * @param {string} username
 * @param {string} password
 * @param {string} email
 * @param {string} phoneNo
+*
 * @returns {function} asynchronous action
 */
 
@@ -86,10 +100,13 @@ export function signUp(user) {
 }
 
 /**
- * async helper function: sign in user
+ * @desc async helper function: sign in user
+ *
  * @function signInUser
+ *
  * @param {string} username
  * @param {string} password
+ *
  * @returns {function} asynchronous action
  */
 
@@ -112,9 +129,12 @@ export function signIn(user) {
 }
 
 /**
- * async helper function: sign in user
+ * @desc async helper function: sign in user
+ *
  * @function googleSignIn
+ *
  * @param {string} user
+ *
  * @returns {function} asynchronous action
  */
 export function googleSignIn(user) {
@@ -133,9 +153,12 @@ export function googleSignIn(user) {
 }
 
 /**
- * async helper function: sign in user
+ * @desc async helper function: sign in user
+ *
  * @function forgotPassword
+ *
  * @param {object} email
+ *
  * @returns {function} asynchronous action
  */
 export function forgotPassword(email) {
@@ -150,9 +173,12 @@ export function forgotPassword(email) {
   );
 }
 /**
- * async helper function: sign in user
+ * @desc async helper function: sign in user
+ *
  * @function forgotPassword
+ *
  * @param {object} email
+ *
  * @returns {function} asynchronous action
  */
 export function resetPassword({ newPassword, retypePassword, token }) {

@@ -28,6 +28,7 @@ const SignUp = ({
                     name="username"
                     className="validate"
                     value={username}
+                    required="true"
                   />
                   <label htmlFor="first_name">username</label>
                 </div>
@@ -42,6 +43,7 @@ const SignUp = ({
                     onChange={handleInputChange}
                     className="validate"
                     value={email}
+                    required="true"
                   />
                   <label htmlFor="email">Email</label>
                 </div>
@@ -56,6 +58,7 @@ const SignUp = ({
                     onChange={handleInputChange}
                     className="validate"
                     value={password}
+                    required="true"
                   />
                   <label htmlFor="password">Password</label>
                 </div>
@@ -70,6 +73,7 @@ const SignUp = ({
                     onChange={handleInputChange}
                     className="validate"
                     value={phoneNumber}
+                    required="true"
                   />
                   <label htmlFor="icon_telephone">Telephone</label>
                 </div>

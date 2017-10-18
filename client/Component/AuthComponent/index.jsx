@@ -54,8 +54,8 @@ class Authentication extends React.Component {
    * @returns {function} a function that handles submit event on inputs
    */
   handleSignUpOnSubmit(event) {
-    const { email, password, username, phoneNumber } = this.state;
     event.preventDefault();
+    const { email, password, username, phoneNumber } = this.state;
     const userObj = {
       password,
       email,

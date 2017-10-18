@@ -4,9 +4,12 @@ import toastr from 'toastr';
 import * as types from '../constants/ActionTypes';
 
 /**
- * create action: select a group
+ * @desc create action: select a group
+ *
  * @function selectGroup
+ *
  * @param {string} groupId
+ *
  * @returns {object} action: type and groupId
  */
 export function selectGroup(groupId) {
@@ -16,9 +19,12 @@ export function selectGroup(groupId) {
   };
 }
 /**
- * create action: create a group: success
+ * @desc create action: create a group: success
+ *
  * @function createGroupSuccess
+ *
  * @param {object} response
+ *
  * @returns {object} action: type and response
  */
 
@@ -29,9 +35,12 @@ export function createGroupSuccess(group) {
   };
 }
 /**
- * create action: create group failure
+ * @desc create action: create group failure
+ *
  * @function createGroupFailure
+ *
  * @param {string} error
+ *
  * @returns {object} action: type and error
  */
 export function createGroupFailure(error) {
@@ -42,10 +51,13 @@ export function createGroupFailure(error) {
 }
 
 /**
- * async helper function: create a group
+ * @desc async helper function: create a group
+ *
  * @function createGroup
+ *
  * @param {string} name
  * @param {string} description
+ *
  * @returns {function} asynchronous action
  */
 
@@ -62,9 +74,12 @@ export function createGroup(group) {
 }
 
 /**
- * receive group action: receive a group success
+ * @desc receive group action: receive a group success
+ *
  * @function receiveGroupsSuccess
+ *
  * @param {object} groups
+ *
  * @returns {object} action: type and groups
  */
 
@@ -75,9 +90,12 @@ export function receiveGroupsSuccess(groups) {
   };
 }
 /**
- * receive group action: receive a group failure
+ * @desc receive group action: receive a group failure
+ *
  * @function receiveGroupsFailure
+ *
  * @param {object} grpups
+ *
  * @returns {object} action: type and error
  */
 
@@ -89,7 +107,7 @@ export function receiveGroupsFailure(error) {
 }
 
 /**
- * async helper function: fetches all groups
+ * @desc async helper function: fetches all groups
  * @returns {function} asynchronous action
  */
 
