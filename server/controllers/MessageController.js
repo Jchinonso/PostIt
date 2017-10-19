@@ -48,11 +48,11 @@ const MessageController = {
             });
           })
         } else {
-          return res.status(404).json({ msg: 'Group doesnt exist' });
+          return res.status(404).json({ message: 'Group doesnt exist' });
         }
       });
     } else {
-      return res.status(400).json({ msg: 'Content cannot be empty'})
+      return res.status(400).json({ message: 'Content cannot be empty'})
     }
 
   },
@@ -81,11 +81,11 @@ const MessageController = {
           }
         }).then(messages => res.status(200).json({messages}));
       } else {
-        return res.status(404).json({ msg: 'Group not found' });
+        return res.status(404).json({ message: 'Group not found' });
       }
     }).catch((error) => {
       res.status(500).json({
-        msg: 'Internal Server Error'
+        message: 'Internal Server Error'
       })
     });
   }

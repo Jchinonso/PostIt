@@ -26,7 +26,7 @@ describe('POST api/user/signup', () => {
     .send(userHelper.badUserOne)
     .set('Accept', 'application/json')
     .end((err, res) => {
-      expect(res.body.msg).to.equal('Username, password, email and phone Number required');
+      expect(res.body.message).to.equal('Username, password, email and phone Number required');
       return done();
     });
   });
@@ -36,7 +36,7 @@ describe('POST api/user/signup', () => {
     .set('Accept', 'application/json')
     .end((err, res) => {
       expect(res.status).to.equal(409);
-      expect(res.body.msg).to.equal('user already exist');
+      expect(res.body.message).to.equal('user already exist');
       return done();
     });
   });
@@ -45,7 +45,7 @@ describe('POST api/user/signup', () => {
     .send(userHelper.anotherUserTwo)
     .set('Accept', 'application/json')
     .end((err, res) => {
-      expect(res.body.msg).to.equal('username must be unique');
+      expect(res.body.message).to.equal('username must be unique');
       return done();
     });
   });
@@ -55,7 +55,7 @@ describe('POST api/user/signup', () => {
     .set('Accept', 'application/json')
     .end((err, res) => {
       expect(res.status).to.equal(200);
-      expect(res.body.msg).to.equal('You have been loggedin successfully');
+      expect(res.body.message).to.equal('You have been loggedin successfully');
       return done();
     });
   });
@@ -65,7 +65,7 @@ describe('POST api/user/signup', () => {
     .set('Accept', 'application/json')
     .end((err, res) => {
       expect(res.status).to.equal(401);
-      expect(res.body.msg).to.equal('incorrect Email and password');
+      expect(res.body.message).to.equal('incorrect Email and password');
       return done();
     });
   });
@@ -83,7 +83,7 @@ describe('POST api/user/signup', () => {
     .set('Accept', 'application/json')
     .end((err, res) => {
       if (err) return err;
-      expect(res.body.msg).to.equal('incorrect Email');
+      expect(res.body.message).to.equal('incorrect Email');
       return done();
     });
   });
@@ -94,7 +94,7 @@ describe('POST api/user/signup', () => {
     .end((err, res) => {
       if (err) return err;
       expect(res.status).to.equal(200);
-      expect(res.body.msg).to.equal('You have been loggedin successfully');
+      expect(res.body.message).to.equal('You have been loggedin successfully');
       return done();
     });
   });
@@ -110,7 +110,7 @@ describe('POST api/user/signup', () => {
     .end((err, res) => {
       if (err) return err;
       expect(res.status).to.equal(200);
-      expect(res.body.msg).to.equal('You have been loggedin successfully');
+      expect(res.body.message).to.equal('You have been loggedin successfully');
       return done();
     });
   });
@@ -121,7 +121,7 @@ describe('POST api/user/signup', () => {
     .end((err, res) => {
       if (err) return err;
       expect(res.status).to.equal(200);
-      expect(res.body.msg).to.equal('Please check your mail for the reset link!');
+      expect(res.body.message).to.equal('Please check your mail for the reset link!');
       return done();
     });
   });
@@ -132,7 +132,7 @@ describe('POST api/user/signup', () => {
     .end((err, res) => {
       if (err) return err;
       expect(res.status).to.equal(404);
-      expect(res.body.msg).to.equal('User with email not found');
+      expect(res.body.message).to.equal('User with email not found');
       return done();
     });
   });

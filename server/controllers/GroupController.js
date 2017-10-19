@@ -18,26 +18,39 @@ const GroupController = {
   createGroup(req, res) {
     const { name, description } = req.body;
     if (name && description) {
-      db.Groups.findOrCreate({
-        where: { name },
-        defaults: {
-          description,
-          creator: req.decoded.username
+      db.Groups.findOne({
+        where: {
+          name: {
+            $ilike: name
+          }
+         },
+      }).then((group) => {
+        if (group === null) {
+          db.Groups.create({
+             name,
+             description,
+             creator: req.decoded.username
+          }).then((newGroup) => {
+            if(newGroup) {
+              newGroup.addUser(req.decoded.userId);
+              return res.status(201).json({
+                id: newGroup.id,
+                name: newGroup.name,
+                description: newGroup.description,
+                creator: newGroup.creator
+              });
+            }
+          })
+
+        } else {
+          return res.status(409).json({ message: 'Group already exist' });
         }
-      }).spread((group, created) => {
-        if (created) {
-          group.addUser(req.decoded.userId);
-          return res.status(201).json({
-            id: group.id,
-            name: group.name,
-            description: group.description,
-            creator: group.creator
-          });
-        }
-        return res.status(409).json({ msg: 'Group already exist' });
-      }).catch(err => res.status(500).json({ msg: 'Internal server error'}));
+
+      }).catch(err => res.status(500).json({
+        message: 'Internal server error'
+      }));
     } else {
-      res.status(400).json({ msg: 'Name, Description required' });
+      res.status(400).json({ message: 'Name, Description required' });
     }
   },
 
@@ -64,7 +77,7 @@ const GroupController = {
           joinTableAttributes: []
         }).then(groups => res.status(200).json({groups}));
       } else {
-        res.status(401).json({msg: 'User does not exist'})
+        res.status(401).json({message: 'User does not exist'})
       }
     }).catch(error => res.status(500).json({
       message: 'server error'
@@ -100,26 +113,26 @@ const GroupController = {
             group.addUsers(user).then((groupUsers) => {
               if (groupUsers.length !== 0) {
                 return res.status(200).json({
-                  msg: 'User added successfully to group'
+                  message: 'User added successfully to group'
                 })
               }
               return res.status(409).json({
-                msg: 'User already a member of this group'
+                message: 'User already a member of this group'
               })
             })
           } else {
             res.status(404).json({
-              msg: 'User does not exist'
+              message: 'User does not exist'
             })
           }
         }).catch((error) => {
           res.status(500).json({
-            msg: 'Internal server error'
+            message: 'Internal server error'
           })
         })
       } else {
         res.status(404).json({
-          msg: 'Group Does not exist'
+          message: 'Group Does not exist'
         })
       }
     })
@@ -150,11 +163,11 @@ const GroupController = {
         })
          .then(groups => res.status(200).json({groupMembers: groups}));
       } else {
-        return res.status(404).json({ msg: 'Group does not exist' });
+        return res.status(404).json({ message: 'Group does not exist' });
       }
     }).catch((error) => {
       res.status(500).json({
-        msg: 'Internal server error'
+        message: 'Internal server error'
       })
     });
   },

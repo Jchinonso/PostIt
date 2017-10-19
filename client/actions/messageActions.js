@@ -3,9 +3,11 @@ import toastr from 'toastr';
 import * as types from '../constants/ActionTypes';
 
 /**
- * create action:add message to group
+ * @desc  create action:add message to group
+ *
  * @function addMessageToGroupSuccess
  * @param {object} messages
+ *
  * @returns {object} action: type and messages
  */
 export function addMessageToGroupSuccess(messages) {
@@ -16,9 +18,12 @@ export function addMessageToGroupSuccess(messages) {
 }
 
 /**
- * get action: get group message
+ * @desc get action: get group message
+ *
  * @function getGroupMessagesSuccess
+ *
  * @param {object} messages
+ *
  * @returns {object} action: type and messages
  */
 export function getGroupMessagesSuccess(messages) {
@@ -29,10 +34,13 @@ export function getGroupMessagesSuccess(messages) {
 }
 
 /**
- * async helper function: fetches Members in Group
+ * @desc async helper function: fetches Members in Group
+ *
  * @function createMessage
+ *
  * @param{integer} groupId
  * @param{object} messageData
+ *
  * @returns {function} asynchronous action
  */
 export function createMessage(groupId, messageData) {
@@ -41,14 +49,17 @@ export function createMessage(groupId, messageData) {
     dispatch(addMessageToGroupSuccess(response.data));
   })
   .catch((error) => {
-    toastr.error(error.response.data.msg);
+    toastr.error(error.response.data.message);
   });
 }
 
 /**
- * async helper function: fetches all Group messages
+ * @desc async helper function: fetches all Group messages
+ *
  * @function getAllGroupMessages
+ *
  * @param{integer} groupId
+ *
  * @returns {function} asynchronous action
  */
 export function getAllGroupMessages(groupId) {

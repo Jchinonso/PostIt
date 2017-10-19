@@ -23,7 +23,7 @@ export function selectGroup(groupId) {
  *
  * @function createGroupSuccess
  *
- * @param {object} response
+ * @param {object} group
  *
  * @returns {object} action: type and response
  */
@@ -68,8 +68,8 @@ export function createGroup(group) {
       toastr.success('Group Successfully Created');
     })
     .catch((error) => {
-      dispatch(createGroupFailure(error.response.data.msg));
-      toastr.error(error.response.data.msg);
+      dispatch(createGroupFailure(error.response.data.message));
+      toastr.error(error.response.data.message);
     });
 }
 
@@ -117,7 +117,7 @@ export function fetchGroups() {
     dispatch(receiveGroupsSuccess(response.data.groups));
   })
   .catch((error) => {
-    toastr.error(error.response.data.msg);
+    toastr.error(error.response.data.message);
   });
 }
 
