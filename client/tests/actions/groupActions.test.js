@@ -1,6 +1,16 @@
 import expect from 'expect';
+import thunk from 'redux-thunk';
+import configureMockStore from 'redux-mock-store';
 import * as groupActions from '../../actions/groupActions';
 import * as types from '../../constants/ActionTypes';
+
+const middleware = [thunk];
+const mockStore = configureMockStore(middleware);
+
+describe('async actions', () => {
+  afterEach(() => {
+    nock.cleanAll();
+  });
 
 describe('Group action tests', () => {
   it('should create a select group action', () => {
@@ -55,4 +65,5 @@ describe('Group action tests', () => {
     const action = groupActions.receiveGroupsFailure(error);
     expect(action).toEqual(expectedAction);
   });
+});
 });

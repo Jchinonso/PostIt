@@ -18,24 +18,37 @@ const GroupController = {
   createGroup(req, res) {
     const { name, description } = req.body;
     if (name && description) {
-      db.Groups.findOrCreate({
-        where: { name },
-        defaults: {
-          description,
-          creator: req.decoded.username
+      db.Groups.findOne({
+        where: {
+          name: {
+            $ilike: name
+          }
+         },
+      }).then((group) => {
+        if (group === null) {
+          db.Groups.create({
+             name,
+             description,
+             creator: req.decoded.username
+          }).then((newGroup) => {
+            if(newGroup) {
+              newGroup.addUser(req.decoded.userId);
+              return res.status(201).json({
+                id: newGroup.id,
+                name: newGroup.name,
+                description: newGroup.description,
+                creator: newGroup.creator
+              });
+            }
+          })
+
+        } else {
+          return res.status(409).json({ message: 'Group already exist' });
         }
-      }).spread((group, created) => {
-        if (created) {
-          group.addUser(req.decoded.userId);
-          return res.status(201).json({
-            id: group.id,
-            name: group.name,
-            description: group.description,
-            creator: group.creator
-          });
-        }
-        return res.status(409).json({ message: 'Group already exist' });
-      }).catch(err => res.status(500).json({ message: 'Internal server error'}));
+
+      }).catch(err => res.status(500).json({
+        message: 'Internal server error'
+      }));
     } else {
       res.status(400).json({ message: 'Name, Description required' });
     }
