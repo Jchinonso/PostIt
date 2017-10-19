@@ -4,9 +4,12 @@ import * as types from '../constants/ActionTypes';
 
 
 /**
- * create action: add members to group
+ * @desc create action: add members to group
+ *
  * @function addMembersSuccess
+ *
  * @param {object} message
+ *
  * @returns {object} action: type and message
  */
 export function addMembersSuccess(message) {
@@ -18,8 +21,11 @@ export function addMembersSuccess(message) {
 
 /**
  * get action: fetch all users
+ *
  * @function fetchUserSuccess
+ *
  * @param {object} users
+ *
  * @returns {object} action: type and users
  */
 export function fetchUserSuccess(users) {
@@ -30,9 +36,12 @@ export function fetchUserSuccess(users) {
 }
 
 /**
- * get action: fetch all group members
+ * @desc get action: fetch all group members
+ *
  * @function fetchGroupMembersSuccess
+ *
  * @param {object} members
+ *
  * @returns {object} action: type and members
  */
 export function fetchGroupMembersSuccess(members) {
@@ -42,9 +51,12 @@ export function fetchGroupMembersSuccess(members) {
   };
 }
 /**
- * create action: failure action for add members
+ * @desc create action: failure action for add members
+ *
  * @function addMembersFailure
+ *
  * @param {object} error
+ *
  * @returns {object} action: type and error
  */
 export function addMembersFailure(error) {
@@ -55,29 +67,34 @@ export function addMembersFailure(error) {
 }
 
 /**
- * async helper function: add Members to Group
+ * @desc async helper function: add Members to Group
+ *
  * @function addMemberToGroup
+ *
  * @param{integer} groupId,
  * @param{array} members,
+ *
  * @returns {function} asynchronous action
  */
 export function addMemberToGroup(groupId, members) {
   return (dispatch) => {
     axios.post(`/api/v1/group/${groupId}/user`, members)
       .then((response) => {
-        toastr.success(response.data.msg);
-        dispatch(addMembersSuccess(response.data.msg));
+        toastr.success(response.data.message);
+        dispatch(addMembersSuccess(response.data.message));
       })
       .catch((err) => {
-        toastr.error(err.response.data.msg);
-        dispatch(addMembersFailure(err.response.data.msg));
+        toastr.error(err.response.data.message);
+        dispatch(addMembersFailure(err.response.data.message));
       });
   };
 }
 
 /**
- * async helper function: add Members to Group
+ * @desc async helper function: add Members to Group
+ *
  * @function fetchUsers
+ *
  * @returns {function} asynchronous action
  */
 export function fetchUsers() {
@@ -87,15 +104,17 @@ export function fetchUsers() {
         dispatch(fetchUserSuccess(response.data.users));
       })
       .catch((err) => {
-        toastr.error(err.response.data.msg);
+        toastr.error(err.response.data.message);
       });
   };
 }
 
 /**
- * async helper function: fetches Members in Group
+ * @desc async helper function: fetches Members in Group
+ *
  * @function fetchGroupMembers
  * @param{integer} groupId
+ *
  * @returns {function} asynchronous action
  */
 export function fetchGroupMembers(groupId) {
@@ -105,7 +124,7 @@ export function fetchGroupMembers(groupId) {
         dispatch(fetchGroupMembersSuccess(response.data.groupMembers));
       })
       .catch((err) => {
-        toastr.error(err.response.data.msg);
+        toastr.error(err.response.data.message);
       });
   };
 }

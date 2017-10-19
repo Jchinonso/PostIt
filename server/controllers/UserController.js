@@ -27,7 +27,7 @@ const UsersController = {
       users,
     })).catch((error) => {
       return res.status(500).json({
-        msg: 'Internal server error'
+        message: 'Internal server error'
       })
     });
   },
@@ -67,10 +67,10 @@ const UsersController = {
             token: Auth.generateToken(user)
           });
         }
-        return res.status(409).json({ msg: 'user already exist' });
+        return res.status(409).json({ message: 'user already exist' });
       }).catch(err => {return helper.handleError(err, res)})
     } else {
-      return res.status(400).json({ msg: 'Username, password, email and phone Number required'})
+      return res.status(400).json({ message: 'Username, password, email and phone Number required'})
     }
   },
  /**
@@ -92,7 +92,7 @@ const UsersController = {
       return res.status(400).json({msg: 'Username is required'})
     } else if (!password) {
       return res.status(400).json({
-        msg: 'Password is required'
+        message: 'Password is required'
       })
     } else {
     db.Users.findOne({
@@ -102,16 +102,16 @@ const UsersController = {
     }).then((user) => {
       if (user && helper.validatePassword(user, password)) {
         return res.status(200).json({
-          msg: 'You have been loggedin successfully',
+          message: 'You have been loggedin successfully',
           token: Auth.generateToken(user)
         });
       } else {
         return res.status(401).json({
-          msg: 'incorrect Email and password'
+          message: 'incorrect Email and password'
         });
       }
     }).catch((err => { return res.status(500).json({
-       msg: 'Internal Server Error'
+       message: 'Internal Server Error'
       })}));
     }
   },
@@ -130,7 +130,7 @@ const UsersController = {
    */
   signOut(req, res) {
     return res.status(200).json({
-      msg: 'User successfully logged out'
+      message: 'User successfully logged out'
     });
   },
 
@@ -157,7 +157,7 @@ const UsersController = {
     }).then((user) => {
       if(user) {
         return res.status(200).json({
-          msg: 'You have been loggedin successfully',
+          message: 'You have been loggedin successfully',
           token: Auth.generateToken(user)
         });
       } else {
@@ -169,14 +169,14 @@ const UsersController = {
         }).then((user) => {
           if (user) {
             return res.status(200).json({
-              msg: 'You have been loggedin successfully',
+              message: 'You have been loggedin successfully',
               token: Auth.generateToken(user)
             });
           }
         })
       }
     }).catch(err => { return res.status(500).json(
-      {msg: 'Internal Server Error'}
+      {message: 'Internal Server Error'}
     )})
   },
 /**
@@ -224,16 +224,16 @@ const UsersController = {
         transporter.sendMail(mailOptions, (error) => {
           if (error) {
             return res.status(501).json({
-              msg: 'Failure delivery'
+              message: 'Failure delivery'
             });
           }
           return res.status(200).json({
-            msg: 'Please check your mail for the reset link!'
+            message: 'Please check your mail for the reset link!'
           });
         })
       } else {
         return res.status(404).json({
-          msg: 'User with email not found'
+          message: 'User with email not found'
         })
       }
     })
@@ -255,7 +255,7 @@ const UsersController = {
       jwt.verify(token, process.env.JWT_SECRET_TOKEN, (error, decoded) => {
         if(error) {
           return res.status(401).json({
-            msg: 'This link has expired or is invalid. Please try again'
+            message: 'This link has expired or is invalid. Please try again'
           });
         }
         const salt = bcrypt.genSaltSync(10);
@@ -264,13 +264,13 @@ const UsersController = {
           where: { email: decoded.email }
         }).then(() => {
           return res.status(201).json({
-            msg: 'password reset successful, Please login to continue!'
+            message: 'password reset successful, Please login to continue!'
           });
         });
       });
     } else {
         return res.status(400).json({
-          msg: 'Password does not match'
+          message: 'Password does not match'
         })
       }
   }

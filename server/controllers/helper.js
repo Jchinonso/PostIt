@@ -6,8 +6,10 @@ const secret = process.env.JWT_SECRET_TOKEN || 'Keep my secret';
 const helper = {
 
     /** validate plain password against hashed password
+     *
      * @param {object} user
      * @param {String} password
+     *
      * @return {Boolean} return validity of the password
      */
   validatePassword: (user, password) => {
@@ -15,7 +17,9 @@ const helper = {
   },
 
   /** validate plain password against hashed password
+   *
      * @param {String} password
+     *
      * @return {Boolean} return validity of the password
      */
   hashedPassword: password => bcrypt.hashSync(password, bcrypt.genSaltSync(8)),
@@ -25,12 +29,13 @@ const helper = {
    *
    * @param {Object} error error object
    * @param {Function} res server response function
+   *
    * @returns {Function} function that displays an error message
    */
     handleError: (error, res)  => {
       return error.errors ?
-        res.status(400).send({ msg: error.errors[0].message }) :
-        res.status(400).send({ msg: error.message });
+        res.status(400).send({ message: error.errors[0].message }) :
+        res.status(400).send({ message: error.message });
     }
 
 };

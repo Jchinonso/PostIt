@@ -76,7 +76,7 @@ export function signOut() {
 * @param {string} username
 * @param {string} password
 * @param {string} email
-* @param {string} phoneNo
+* @param {string} phone number
 *
 * @returns {function} asynchronous action
 */
@@ -94,8 +94,8 @@ export function signUp(user) {
       }
     })
     .catch((error) => {
-      toastr.error(error.response.data.msg);
-      dispatch(logError(error.response.data.msg));
+      toastr.error(error.response.data.message);
+      dispatch(logError(error.response.data.message));
     });
 }
 
@@ -122,8 +122,8 @@ export function signIn(user) {
         browserHistory.push('/dashboard');
       }
     }).catch((err) => {
-      toastr.error(err.response.data.msg);
-      dispatch(logError(err.response.data.msg));
+      toastr.error(err.response.data.message);
+      dispatch(logError(err.response.data.message));
     })
   );
 }
@@ -147,7 +147,7 @@ export function googleSignIn(user) {
     toastr.success('Signed in Succesfully');
     browserHistory.push('/dashboard');
   }).catch((err) => {
-    toastr.error(err.response.data.msg);
+    toastr.error(err.response.data.message);
   })
   );
 }
@@ -165,10 +165,10 @@ export function forgotPassword(email) {
   return (dispatch => axios.post('/api/v1/user/forgotPassword', {
     email })
   .then((response) => {
-    toastr.success(response.data.msg);
+    toastr.success(response.data.message);
     browserHistory.push('/');
   }).catch((err) => {
-    toastr.error(err.response.data.msg);
+    toastr.error(err.response.data.message);
   })
   );
 }
@@ -184,10 +184,10 @@ export function forgotPassword(email) {
 export function resetPassword({ newPassword, retypePassword, token }) {
   return (dispatch => axios.post('/api/v1/user/resetPassword', { newPassword, retypePassword, token })
   .then((response) => {
-    toastr.success(response.data.msg);
+    toastr.success(response.data.message);
     browserHistory.push('/');
   }).catch((err) => {
-    toastr.error(err.response.data.msg);
+    toastr.error(err.response.data.message);
   })
   );
 }

@@ -2,21 +2,21 @@ import chai from 'chai';
 import supertest from 'supertest';
 import app from '../../config/app';
 import db from '../../models';
-import groupHelper from '../Helpers/GroupHelper';
-import userHelper from '../Helpers/UserHelper';
-import messageHelper from '../Helpers/MessageHelper';
+import GroupHelper from '../Helpers/GroupHelper';
+import UserHelper from '../Helpers/UserHelper';
+import MessageHelper from '../Helpers/MessageHelper';
 
 
 const expect = chai.expect;
 const should = chai.should()
 const request = supertest(app);
-const goodMessage = messageHelper.goodMessage;
-const badMessage = messageHelper.badMessage;
-const goodGroup = groupHelper.goodGroup1;
-const anotherGroup = groupHelper.goodGroup2;
-const user = userHelper.anotherUser;
-const userDoesntExist = userHelper.goodUser;
-const badGroup = groupHelper.badGroup;
+const goodMessage = MessageHelper.goodMessage;
+const badMessage = MessageHelper.badMessage;
+const goodGroup = GroupHelper.goodGroup1;
+const anotherGroup = GroupHelper.goodGroup2;
+const user = UserHelper.anotherUser;
+const userDoesntExist = UserHelper.goodUser;
+const badGroup = GroupHelper.badGroup;
 
 let groupId;
 let userResponse;
@@ -51,7 +51,7 @@ describe('POST api/group', () => {
     .send(badGroup)
     .set('x-access-token', token)
     .end((err, res) => {
-      expect(res.body.msg).to.equal('Name, Description required');
+      expect(res.body.message).to.equal('Name, Description required');
       done();
     });
   });
@@ -61,7 +61,7 @@ describe('POST api/group', () => {
     .set( 'x-access-token', token )
     .end((err, res) => {
       expect(res.status).to.equal(409);
-      expect(res.body.msg).to.equal('Group already exist');
+      expect(res.body.message).to.equal('Group already exist');
       done();
     });
   });
@@ -71,7 +71,7 @@ describe('POST api/group', () => {
     .set('Accept', 'application/json')
     .send({members: 'johnDoe'})
     .end((err, res) => {
-      expect(res.body.msg).to.equal('User added successfully to group')
+      expect(res.body.message).to.equal('User added successfully to group')
       done();
     });
   })
@@ -82,7 +82,7 @@ describe('POST api/group', () => {
     .set('Accept', 'application/json')
     .end((err, res) => {
       expect(res.status).to.equal(404);
-      expect(res.body.msg).to.equal('User does not exist')
+      expect(res.body.message).to.equal('User does not exist')
       done();
     });
   });
@@ -93,7 +93,7 @@ describe('POST api/group', () => {
     .set('Accept', 'application/json')
     .end((err, res) => {
       expect(res.status).to.equal(409);
-      expect(res.body.msg).to.equal('User already a member of this group')
+      expect(res.body.message).to.equal('User already a member of this group')
       done();
     });
   });
@@ -113,7 +113,7 @@ describe('POST api/group', () => {
     .set('Accept', 'application/json')
     .end((err, res) => {
       expect(res.status).to.equal(404);
-      expect(res.body.msg).to.equal('Group does not exist')
+      expect(res.body.message).to.equal('Group does not exist')
       done();
     });
   });
@@ -137,7 +137,7 @@ describe('POST api/group', () => {
     .set('Accept', 'application/json')
     .end((err, res) => {
       expect(res.status).to.equal(404);
-      expect(res.body.msg).to.equal('Group doesnt exist');
+      expect(res.body.message).to.equal('Group doesnt exist');
       done();
     });
   });
@@ -148,7 +148,7 @@ describe('POST api/group', () => {
     .set('Accept', 'application/json')
     .end((err, res) => {
       expect(res.status).to.equal(400);
-      expect(res.body.msg).to.equal('Content cannot be empty');
+      expect(res.body.message).to.equal('Content cannot be empty');
       done();
     });
   });
@@ -168,7 +168,7 @@ describe('POST api/group', () => {
     .set('Accept', 'application/json')
     .end((err, res) => {
       expect(res.status).to.equal(404);
-      expect(res.body.msg).to.equal('Group not found')
+      expect(res.body.message).to.equal('Group not found')
       done();
     });
   });
