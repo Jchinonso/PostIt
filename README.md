@@ -1,6 +1,6 @@
 [![Build Status](https://travis-ci.org/Jchinonso/PostIt.svg?branch=development)](https://travis-ci.org/Jchinonso/PostIt)
 [![Coverage Status](https://coveralls.io/repos/github/Jchinonso/PostIt/badge.svg?branch=development)](https://coveralls.io/github/Jchinonso/PostIt?branch=development)
-[![Maintainability](https://api.codeclimate.com/v1/badges/5989bca50957038e17bf/maintainability)](https://codeclimate.com/github/Jchinonso/PostIt/maintainability)
+[![Maintainability](https://api.codeclimate.com/v1/badges/71565039e6e5bc314f1c/maintainability)](https://codeclimate.com/github/Jchinonso/PostIt/maintainability)
 
 ## PostIt
 
