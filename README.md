@@ -6,10 +6,6 @@
 
  postit is a simple application that allows friends and colleagues create groups for notifications. This way one person can post notifications to everyone by sending a message once. The application allows people create accounts, create groups and add registered users to the groups, and then send messages out to these groups whenever they want.
  
-![image](https://user-images.githubusercontent.com/23220841/31301111-920a9d7e-aaef-11e7-8369-7f8f5ef04b33.png)
-![image](https://user-images.githubusercontent.com/23220841/31301016-f3bb1a9a-aaee-11e7-854d-68c7bde5b9ac.png)
-
- 
 
  Development
 -------------
